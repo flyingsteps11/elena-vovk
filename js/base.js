@@ -78,6 +78,15 @@
     matchMedia('(min-width: 901px)').addEventListener('change', (m) => { if (m.matches) setOpen(false, false); });
   }
 
+  // "#top" is the very top of the page, above the sticky header
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href="#top"]');
+    if (!a) return;
+    e.preventDefault();
+    scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    if (location.hash) history.replaceState(history.state, '', location.pathname + location.search);
+  });
+
   window.site = { reduce, reveal, roll };
   window.__pageReady = true;
 })();

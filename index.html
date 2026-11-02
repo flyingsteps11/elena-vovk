@@ -39,7 +39,6 @@
 .card__links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 28px;padding:0 24px 28px;font-size:var(--step-small)}
 .photo{position:relative;margin:0;overflow:clip;background:#c9a79a;min-height:620px}
 .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
-.photo figcaption{position:absolute;z-index:1;left:0;bottom:0;background:var(--paper);color:var(--ink);padding:10px 16px;font-size:var(--step-small)}
 
 /* About: the sheet with plates */
 .about{background:var(--surface);padding-block:var(--gap-section)}
@@ -170,7 +169,6 @@
 @media (max-width:900px){
   .hero{grid-template-columns:1fr;padding-top:0}
   .photo{order:-1;min-height:0;height:46svh}
-  .photo figcaption{display:none}
   .card{margin-top:-24px;position:relative;z-index:1;margin-inline:12px;min-height:0}
   .subjects__head h2,.subjects__head p,.edu__stage h2,.edu__intro{grid-column:1 / -1}
   .shelf{grid-template-columns:1fr;gap:8px;margin-top:32px}
@@ -205,7 +203,7 @@
 }
 </style>
 </head>
-<body>
+<body id="top">
 
 <header class="top on-dark">
   <div class="bar">
@@ -234,7 +232,7 @@
   </ol>
 </nav>
 
-<main id="top">
+<main>
 <section class="hero on-dark" aria-labelledby="name">
   <div class="card">
     <div class="stripe" aria-hidden="true"></div>
@@ -252,7 +250,6 @@
   </div>
   <figure class="photo">
     <img src="img/elena-960.webp" srcset="img/elena-640.webp 640w, img/elena-960.webp 960w, img/elena-1400.webp 1400w" sizes="(max-width: 900px) 100vw, 50vw" width="1400" height="1990" alt="Елена Александровна Вовк в коралловом кружевном платье в учебном кабинете, у доски и плакатов по учёту" fetchpriority="high">
-    <figcaption>В учебном кабинете</figcaption>
   </figure>
 </section>
 
@@ -386,7 +383,6 @@
     <h2 id="college-h">Колледж</h2>
     <p class="lead">ГБПОО ЛНР «Ровеньковский технико-экономический колледж»</p>
     <address>ЛНР, г. Ровеньки,<br>ул. Дзержинского, д. 61</address>
-    <p class="small muted">На фото: Ровеньки, вид с моста на город.</p>
   </div>
 </section>
 </main>
@@ -405,9 +401,6 @@
         <span>ЛНР, г. Ровеньки, ул. Дзержинского, д. 61</span>
         <a class="tlink" href="#top">Наверх ↑</a>
       </div>
-    </div>
-    <div class="imprint">
-      <p>Фото Ровеньков: hren_rov, CC BY-SA 4.0; номера машин размыты.</p>
     </div>
   </div>
 </footer>

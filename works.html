@@ -46,7 +46,6 @@
 .catalog{background:var(--surface);padding-block:var(--gap-section)}
 .catalog__head{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end}
 .catalog__head h2{grid-column:1 / span 6}
-.catalog__head p{grid-column:8 / span 5}
 .filters{display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px;margin-top:48px}
 .chips{display:none;flex-wrap:wrap;gap:6px}
 .js .chips{display:flex}
@@ -116,9 +115,9 @@
 .receipt__sum{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:24px;background:var(--ink);color:var(--accent-ink);padding:16px 18px;font-size:var(--step-lead);font-weight:500}
 
 /* The open card */
-.wdlg{width:min(1080px,calc(100% - 2 * var(--m)));max-width:none;max-height:calc(100dvh - 2 * var(--m));padding:0;border:0;background:var(--paper);color:var(--ink);overflow:auto;overscroll-behavior:contain}
+.wdlg{width:min(1240px,calc(100% - 2 * var(--m)));max-width:none;max-height:calc(100dvh - 2 * var(--m));padding:0;border:0;background:var(--paper);color:var(--ink);overflow:auto;overscroll-behavior:contain}
 .wdlg::backdrop{background:rgb(53 26 43 / .78)}
-.wdlg__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.wdlg__grid{display:grid;grid-template-columns:minmax(0,9fr) minmax(0,11fr)}
 .wdlg__cover{margin:0;min-height:100%;background:var(--ink);position:relative}
 .wdlg__cover img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .wdlg__cover .wplate{position:absolute;inset:0;padding:clamp(24px,3vw,40px)}
@@ -130,7 +129,8 @@
 .ticket__row{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px}
 .ticket__name{flex:1 1 14ch;font-weight:500;overflow-wrap:anywhere}
 .ticket__size{font-size:var(--step-small);white-space:nowrap}
-.ticket__acts{display:flex;flex-wrap:wrap;gap:8px}
+.ticket__acts{display:flex;flex-wrap:nowrap;gap:8px}
+.ticket__acts .btn{flex:1 1 auto;white-space:nowrap;padding:0 22px}
 .ticket .btn--light{background:var(--paper)}
 .ticket__link{font-size:var(--step-small);align-self:flex-start}
 .ticket--none{background:none;clip-path:none;padding:20px 0 0;border-top:5px dotted var(--ink)}
@@ -163,7 +163,7 @@
   .wphoto{order:-1;min-height:0;height:42svh}
   .wphoto figcaption{display:none}
   .wcardhead{margin-top:-24px;position:relative;z-index:1;margin-inline:12px;min-height:0;padding-bottom:40px}
-  .catalog__head h2,.catalog__head p{grid-column:1 / -1}
+  .catalog__head h2{grid-column:1 / -1}
   .wcount{margin-left:0;width:100%}
   .wdlg__grid{grid-template-columns:1fr}
   .wdlg__cover{min-height:0;aspect-ratio:4 / 3}
@@ -177,6 +177,8 @@
   .wfigs b{font-size:clamp(2rem,9vw,2.6rem)}
   .filters{gap:12px;margin-top:32px}
   .grid{grid-template-columns:1fr;gap:16px}
+  .ticket__acts{flex-wrap:wrap}
+  .ticket__acts .btn{flex-basis:100%}
   .pager{margin-top:32px}
   .pager button{padding:0 12px}
   .receipt{padding:24px 16px 48px;margin-inline:calc(var(--m) * -1)}
@@ -189,7 +191,7 @@
 }
 </style>
 </head>
-<body>
+<body id="top">
 
 <header class="top on-dark">
   <div class="bar">
@@ -218,7 +220,7 @@
   </ol>
 </nav>
 
-<main id="top">
+<main>
 <section class="whero on-dark" aria-labelledby="works-h">
   <div class="wcardhead">
     <div class="stripe" aria-hidden="true"></div>
@@ -244,7 +246,6 @@
   <div class="wrap">
     <div class="catalog__head">
       <h2 id="catalog-h" data-r style="--i:0">Каталог работ</h2>
-      <p class="lead" data-r style="--i:1">Каждая карточка открывается: описание, дисциплина и файл, если он выложен.</p>
     </div>
     <div class="filters" data-r style="--i:2">
       <div class="chips" role="group" aria-label="Вид работы" id="f-type"></div>
@@ -285,7 +286,6 @@
       <p class="meta" id="wdlg-meta"></p>
       <p id="wdlg-desc"></p>
       <div class="wdlg__actions" id="wdlg-actions"></div>
-      <p class="small muted" id="wdlg-credit"></p>
     </div>
   </div>
 </dialog>
@@ -304,9 +304,6 @@
         <span>ЛНР, г. Ровеньки, ул. Дзержинского, д. 61</span>
         <a class="tlink" href="index.html">На главную</a>
       </div>
-    </div>
-    <div class="imprint">
-      <p>Фото каталога: <a class="tlink" href="https://commons.wikimedia.org/wiki/File:Schlagwortkatalog.jpg">«Schlagwortkatalog»</a>, Dr. Marcus Gossler, <a class="tlink" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, Wikimedia Commons. Источники обложек указаны в карточках работ.</p>
     </div>
   </div>
 </footer>
@@ -591,8 +588,6 @@
     $('wdlg-desc').hidden = !w.description;
     coverInto($('wdlg-cover'), w, true);
     $('wdlg-actions').replaceChildren(fileBlock(w));
-    $('wdlg-credit').textContent = w.credit || '';
-    $('wdlg-credit').hidden = !w.credit;
   };
   // The dialog opens in one piece: filled first, then shown in a single frame
   const openWork = (i) => {

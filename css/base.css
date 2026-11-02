@@ -96,8 +96,6 @@ section[id]{scroll-margin-top:72px}
 .stamp{width:96px;background:var(--paper);padding:6px;outline:4px dotted var(--muted);outline-offset:-2px;margin:0 0 20px auto;transform:rotate(3deg);transition:transform var(--t-ui) var(--ease-out)}
 .stamp:hover{transform:rotate(0)}
 .stamp img{aspect-ratio:3/4;object-fit:cover;width:100%}
-.imprint{background:var(--paper);padding:0 clamp(28px,4vw,64px) 28px;font-size:var(--step-small);color:var(--muted);text-align:center}
-.imprint p+p{margin-top:6px}
 
 /* Motion: reveals (hidden state only with script and motion allowed) */
 @media (prefers-reduced-motion:no-preference){
