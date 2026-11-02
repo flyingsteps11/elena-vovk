@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#351a2b">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Методические работы — Е. А. Вовк">
+<meta property="og:description" content="Методические разработки, конспекты уроков, статьи и презентации преподавателя Елены Александровны Вовк.">
+<meta property="og:url" content="https://flyingsteps11.github.io/elena-vovk/works.html">
+<meta property="og:image" content="https://flyingsteps11.github.io/elena-vovk/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 fill=%22%23351a2b%22/%3E%3Ctext x=%2232%22 y=%2247%22 font-family=%22Georgia,serif%22 font-size=%2244%22 text-anchor=%22middle%22 fill=%22%23edccbe%22%3EВ%3C/text%3E%3C/svg%3E">
+<title>Методические работы — Е. А. Вовк</title>
+<meta name="description" content="Методические разработки, конспекты уроков, статьи и презентации Елены Александровны Вовк, преподавателя Ровеньковского технико-экономического колледжа.">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__pageReady)document.documentElement.classList.remove('js')},2500)</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400;1,7..72,500&display=swap&subset=cyrillic" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<style>
+/* Works page only; shared rules live in css/base.css */
+
+/* Hero: the catalogue card beside the drawer */
+.whero{background:var(--field-1);padding:0 var(--m) var(--m);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;min-height:calc(88svh - 72px)}
+.wcardhead{min-width:0;background:var(--paper);display:flex;flex-direction:column;min-height:560px;position:relative}
+.wcardhead__body{flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(32px,4vw,64px) clamp(24px,4vw,64px) 72px}
+.wcardhead h1{font-size:var(--step-head);line-height:.98}
+.wcardhead h1 .line{display:block;overflow:clip;padding-bottom:.08em;margin-bottom:-.08em}
+.wcardhead h1 .line>span{display:block}
+.wcardhead__lead{margin-top:32px;max-width:40ch}
+.wcardhead .btn{margin-top:32px}
+.wfigs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,28px);width:100%;max-width:560px;margin-top:clamp(40px,5vw,56px);padding-top:28px;border-top:5px dotted var(--ink)}
+.wfigs b{display:block;font-weight:500;font-size:var(--step-head);line-height:1;letter-spacing:-0.03em}
+.wfigs .cap{display:block;margin-top:10px;font-size:clamp(0.9375rem,0.88rem + 0.2vw,1.0625rem);line-height:1.35}
+/* the hole a catalogue card is strung on */
+.hole{position:absolute;left:50%;bottom:18px;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:var(--field-1)}
+.wphoto{position:relative;margin:0;overflow:clip;background:var(--tone-3);min-height:560px}
+.wphoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:40% 50%}
+.wphoto figcaption{position:absolute;z-index:1;left:0;bottom:0;background:var(--paper);color:var(--ink);padding:10px 16px;font-size:var(--step-small);max-width:calc(100% - 24px)}
+
+/* Catalogue */
+.catalog{background:var(--surface);padding-block:var(--gap-section)}
+.catalog__head{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end}
+.catalog__head h2{grid-column:1 / span 6}
+.catalog__head p{grid-column:8 / span 5}
+.filters{display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px;margin-top:48px}
+.chips{display:none;flex-wrap:wrap;gap:6px}
+.js .chips{display:flex}
+.chips[hidden]{display:none}
+.chips button{font:inherit;font-size:var(--step-small);min-height:44px;padding:0 18px;background:var(--paper);color:var(--ink);border:0;cursor:pointer;transition:background-color var(--t-hover) ease,color var(--t-hover) ease,transform var(--t-press) var(--ease-out)}
+.chips button:hover{background:var(--tone-3)}
+.chips button:active{transform:scale(.96)}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--accent-ink)}
+.wcount{margin-left:auto;font-size:var(--step-small)}
+.wcount b{font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 24px;margin-top:32px}
+.state{margin-top:32px;background:var(--paper);padding:32px;max-width:60ch}
+.state[hidden]{display:none}
+.state .btn{margin-top:20px}
+
+/* One catalogue card */
+.wcard{position:relative;background:var(--paper);padding:10px 10px 56px;display:flex;flex-direction:column;cursor:pointer;transition:transform var(--t-ui) var(--ease-out)}
+.wcard[hidden]{display:none}
+.wcard::after{content:"";position:absolute;left:50%;bottom:20px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--surface)}
+.wcard__cover{aspect-ratio:4 / 3;overflow:clip;background:var(--tone-3)}
+.wcard__cover img{width:100%;height:100%;object-fit:cover;transition:transform 900ms var(--ease-soft)}
+.wplate{width:100%;height:100%;background:var(--ink);color:var(--accent-ink);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(18px,2vw,28px)}
+.wplate__type{font-size:var(--step-lead);line-height:1.15;font-weight:500;max-width:12ch}
+.wplate__year{font-size:var(--step-head);line-height:.9;letter-spacing:-0.03em;font-weight:500;align-self:flex-end}
+.wcard__body{padding:24px clamp(12px,1.6vw,24px) 0;display:flex;flex-direction:column;gap:14px}
+.wcard h3{font-size:var(--step-lead);line-height:1.18;text-wrap:pretty;max-width:34ch}
+.wcard__open{all:unset;cursor:pointer}
+.wcard__open:focus-visible{outline:none}
+.wcard:has(.wcard__open:focus-visible){outline:3px solid var(--ink);outline-offset:3px}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:var(--step-small)}
+.code{background:var(--ink);color:var(--accent-ink);padding:3px 9px;font-size:var(--step-small);white-space:nowrap}
+@media (hover:hover){
+  .wcard:hover{transform:translateY(-8px)}
+  .wcard:hover .wcard__cover img{transform:scale(1.04)}
+}
+
+/* Tally: the catalogue counted on a receipt */
+.tally{background:var(--field-1);color:var(--field-1-ink);padding-block:var(--gap-section)}
+.tally__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+.tally__left{grid-column:1 / span 6;display:flex;flex-direction:column;align-self:start;position:sticky;top:112px}
+.tally__left p{margin-top:24px;max-width:40ch}
+.wtotal{padding-top:56px}
+.wtotal b{display:block;font-size:var(--step-giant);font-weight:500;line-height:.8;letter-spacing:-0.05em}
+.wtotal span{display:block;margin-top:28px;font-size:var(--step-lead)}
+.receipt{grid-column:7 / span 6;background:var(--paper);color:var(--ink);padding:36px 36px 52px;clip-path:polygon(0 0,100% 0,100% 100%,96.429% calc(100% - 12px),92.857% 100%,89.286% calc(100% - 12px),85.714% 100%,82.143% calc(100% - 12px),78.571% 100%,75% calc(100% - 12px),71.429% 100%,67.857% calc(100% - 12px),64.286% 100%,60.714% calc(100% - 12px),57.143% 100%,53.571% calc(100% - 12px),50% 100%,46.429% calc(100% - 12px),42.857% 100%,39.286% calc(100% - 12px),35.714% 100%,32.143% calc(100% - 12px),28.571% 100%,25% calc(100% - 12px),21.429% 100%,17.857% calc(100% - 12px),14.286% 100%,10.714% calc(100% - 12px),7.143% 100%,3.571% calc(100% - 12px),0 100%)}
+.receipt h3{margin-bottom:12px}
+.rrow{display:grid;grid-template-columns:1fr auto;gap:4px 14px;align-items:end;width:100%;padding:12px 0;background:none;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.rrow__name{display:flex;align-items:flex-end;gap:10px;font-size:var(--step-body);line-height:1.35}
+.rrow__name span{flex:0 1 auto;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:.2em;transition:text-decoration-color var(--t-hover) ease}
+.rrow__name::after{content:"";flex:1 1 24px;min-width:24px;border-bottom:4px dotted var(--ink);margin-bottom:.35em}
+.rrow:hover .rrow__name span{text-decoration-color:currentColor}
+.rrow__val{font-size:var(--step-body);font-weight:600;white-space:nowrap}
+.rrow__who{grid-column:1 / -1;color:var(--muted);font-size:var(--step-small)}
+.receipt__sum{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:24px;background:var(--ink);color:var(--accent-ink);padding:16px 18px;font-size:var(--step-lead);font-weight:500}
+
+/* The open card */
+.wdlg{width:min(1080px,calc(100% - 2 * var(--m)));max-width:none;max-height:calc(100dvh - 2 * var(--m));padding:0;border:0;background:var(--paper);color:var(--ink);overflow:auto;overscroll-behavior:contain}
+.wdlg::backdrop{background:rgb(53 26 43 / .78)}
+.wdlg__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.wdlg__cover{margin:0;min-height:100%;background:var(--ink);position:relative}
+.wdlg__cover img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.wdlg__cover .wplate{position:absolute;inset:0;padding:clamp(24px,3vw,40px)}
+.wdlg__body{padding:clamp(28px,4vw,56px);padding-top:clamp(72px,7vw,88px);display:flex;flex-direction:column;gap:20px;min-height:min(560px,calc(100dvh - 2 * var(--m)))}
+.wdlg__body h2{font-size:clamp(1.75rem,1.2rem + 1.8vw,2.75rem);line-height:1.05}
+.wdlg__actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:12px}
+.wdlg__nofile{margin-top:auto;padding-top:20px;border-top:5px dotted var(--ink)}
+.wdlg__close{position:absolute;top:16px;right:16px;z-index:2;min-height:44px;padding:0 16px;font-size:var(--step-small)}
+
+/* Motion */
+@media (prefers-reduced-motion:no-preference){
+  .js .whero .line>span{transform:translateY(105%);animation:line-up 900ms var(--ease-expo) forwards;animation-delay:calc(120ms + var(--l) * var(--stagger-line))}
+  .js .whero [data-load]{opacity:0;transform:translateY(14px);animation:rise 600ms var(--ease-out) forwards;animation-delay:var(--d)}
+  .js .whero .wphoto{clip-path:inset(100% 0 0 0);animation:open 1100ms var(--ease-in-out) 100ms forwards}
+  .js .whero .wphoto img{transform:scale(1.14);animation:settle 1800ms var(--ease-expo) 100ms forwards}
+  .js .hole{opacity:0;transform:scale(.6);animation:rise 500ms var(--ease-out) 900ms forwards}
+  .wdlg[open]{animation:dlg-in 420ms var(--ease-expo)}
+  .wdlg[open]::backdrop{animation:fade 300ms ease}
+  .wcard.is-new{animation:card-in 520ms var(--ease-expo) backwards;animation-delay:calc(var(--i,0) * 50ms)}
+  ::view-transition-group(*){animation-duration:480ms;animation-timing-function:var(--ease-expo)}
+  ::view-transition-old(*),::view-transition-new(*){animation-duration:280ms}
+}
+@keyframes dlg-in{from{opacity:0;transform:translateY(32px) scale(.98)}}
+@keyframes fade{from{opacity:0}}
+@keyframes card-in{from{opacity:0;transform:translateY(20px)}}
+
+@media (max-width:1100px){
+  .tally__left,.receipt{grid-column:1 / -1;position:static}
+  .receipt{margin-top:48px}
+  .wtotal{padding-top:40px}
+}
+@media (max-width:900px){
+  .whero{grid-template-columns:1fr;padding-top:0}
+  .wphoto{order:-1;min-height:0;height:42svh}
+  .wphoto figcaption{display:none}
+  .wcardhead{margin-top:-24px;position:relative;z-index:1;margin-inline:12px;min-height:0;padding-bottom:40px}
+  .catalog__head h2,.catalog__head p{grid-column:1 / -1}
+  .wcount{margin-left:0;width:100%}
+  .wdlg__grid{grid-template-columns:1fr}
+  .wdlg__cover{min-height:0;aspect-ratio:4 / 3}
+  .wdlg__body{min-height:0;padding-top:clamp(28px,4vw,56px)}
+}
+@media (max-width:640px){
+  .wphoto{height:36svh}
+  .wcardhead h1{font-size:clamp(2.1rem,9.4vw,3rem)}
+  .wcardhead__lead{margin-top:20px}
+  .wfigs{gap:10px}
+  .wfigs b{font-size:clamp(2rem,9vw,2.6rem)}
+  .filters{gap:12px;margin-top:32px}
+  .grid{grid-template-columns:1fr;gap:16px}
+  .receipt{padding:24px 16px 48px;margin-inline:calc(var(--m) * -1)}
+  .rrow__name::after{display:none}
+  .wtotal b{font-size:40vw}
+  .wdlg{width:100%;max-height:100dvh;height:100dvh;margin:0;max-width:none}
+}
+@media (hover:none){
+  .chips button:not([aria-pressed="true"]):hover{background:var(--paper)}
+}
+</style>
+</head>
+<body>
+
+<header class="top on-dark">
+  <div class="bar">
+    <a class="mark" href="index.html">Е. А. Вовк</a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="index.html#about">О преподавателе</a>
+      <a href="index.html#subjects">Дисциплины</a>
+      <a href="index.html#education">Образование</a>
+      <a href="index.html#courses">Курсы</a>
+      <a href="works.html" aria-current="page">Работы</a>
+      <a href="index.html#college">Колледж</a>
+    </nav>
+    <a class="btn btn--light bar__cta" href="index.html#college">Адрес колледжа</a>
+    <button class="btn btn--light menu-btn" type="button" aria-expanded="false" aria-controls="mnav">Меню</button>
+  </div>
+</header>
+<nav class="mnav on-dark" id="mnav" aria-label="Разделы" tabindex="-1" hidden>
+  <div class="mnav__bar"><span class="mark">Е. А. Вовк</span><button class="btn btn--light mnav__close" type="button">Закрыть</button></div>
+  <ol class="mnav__list">
+    <li style="--k:0"><a href="index.html#about">О преподавателе</a></li>
+    <li style="--k:1"><a href="index.html#subjects">Дисциплины</a></li>
+    <li style="--k:2"><a href="index.html#education">Образование</a></li>
+    <li style="--k:3"><a href="index.html#courses">Курсы</a></li>
+    <li style="--k:4"><a href="works.html" aria-current="page">Работы</a></li>
+    <li style="--k:5"><a href="index.html#college">Колледж</a></li>
+  </ol>
+</nav>
+
+<main id="top">
+<section class="whero on-dark" aria-labelledby="works-h">
+  <div class="wcardhead">
+    <div class="stripe" aria-hidden="true"></div>
+    <div class="wcardhead__body">
+      <h1 id="works-h"><span class="line"><span style="--l:0">Методические</span></span> <span class="line"><span style="--l:1">работы</span></span></h1>
+      <p class="wcardhead__lead" data-load style="--d:420ms">Разработки, конспекты уроков, статьи и презентации Елены Александровны Вовк по бухгалтерскому учёту, расчётам с бюджетом и анализу отчётности.</p>
+      <a class="btn" href="#catalog" data-load style="--d:520ms">Открыть каталог <span class="arr" aria-hidden="true">↓</span></a>
+      <dl class="wfigs" data-load style="--d:600ms">
+        <div><dt class="sr-only">Работ в каталоге</dt><dd><b class="num" id="fig-works">6</b><span class="cap" id="fig-works-cap">работ в каталоге</span></dd></div>
+        <div><dt class="sr-only">Видов работ</dt><dd><b class="num" id="fig-types">4</b><span class="cap" id="fig-types-cap">вида работ</span></dd></div>
+        <div><dt class="sr-only">Последний год</dt><dd><b class="num" id="fig-year">2025</b><span class="cap">последняя работа</span></dd></div>
+      </dl>
+    </div>
+    <span class="hole" aria-hidden="true"></span>
+  </div>
+  <figure class="wphoto">
+    <img src="img/catalog-drawer.webp" width="1600" height="1353" alt="Выдвинутый ящик библиотечного каталога с плотным рядом бумажных карточек, вокруг закрытые ящики с латунными ручками" fetchpriority="high">
+    <figcaption>Ящик предметного каталога университетской библиотеки</figcaption>
+  </figure>
+</section>
+
+<section class="catalog" id="catalog" aria-labelledby="catalog-h">
+  <div class="wrap">
+    <div class="catalog__head">
+      <h2 id="catalog-h" data-r style="--i:0">Каталог работ</h2>
+      <p class="lead" data-r style="--i:1">Каждая карточка открывается: описание, дисциплина и файл, если он выложен.</p>
+    </div>
+    <div class="filters" data-r style="--i:2">
+      <div class="chips" role="group" aria-label="Вид работы" id="f-type"></div>
+      <div class="chips" role="group" aria-label="Год" id="f-year"></div>
+      <p class="wcount" aria-live="polite" id="wcount"></p>
+    </div>
+    <p class="state" id="state-loading">Загружаем каталог…</p>
+    <noscript><p class="state">Каталог собирается скриптом. Включите JavaScript в браузере, чтобы увидеть работы.</p></noscript>
+    <div class="state" id="state-empty" hidden><p>Работ с такими условиями пока нет.</p><button class="btn" type="button" id="reset">Показать все работы</button></div>
+    <p class="state" id="state-error" hidden>Не получилось загрузить список работ. Обновите страницу чуть позже.</p>
+    <ul class="grid" id="grid" aria-label="Работы"></ul>
+  </div>
+</section>
+
+<section class="tally on-dark" id="tally" aria-labelledby="tally-h">
+  <div class="wrap tally__grid">
+    <div class="tally__left">
+      <h2 id="tally-h" data-r style="--i:0">Состав каталога</h2>
+      <p data-r style="--i:1">Каталог пополняется по мере того, как готовы новые разработки. Нажмите строку, чтобы показать работы этого вида.</p>
+      <p class="wtotal" data-r style="--i:2"><b class="num" id="total-num">6</b><span id="total-cap">работ, 2024–2025</span></p>
+    </div>
+    <div class="receipt" data-r style="--i:2">
+      <h3>По видам работ</h3>
+      <div id="rows"></div>
+      <p class="receipt__sum"><span id="sum-label">Итого</span><span class="num" id="sum-val">6</span></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<dialog class="wdlg" id="wdlg" aria-labelledby="wdlg-title">
+  <button class="btn wdlg__close" type="button" id="wdlg-close">Закрыть</button>
+  <div class="wdlg__grid">
+    <figure class="wdlg__cover" id="wdlg-cover"></figure>
+    <div class="wdlg__body">
+      <h2 id="wdlg-title"></h2>
+      <p class="meta" id="wdlg-meta"></p>
+      <p id="wdlg-desc"></p>
+      <div class="wdlg__actions" id="wdlg-actions"></div>
+      <p class="small muted" id="wdlg-credit"></p>
+    </div>
+  </div>
+</dialog>
+
+<footer class="foot">
+  <div class="back">
+    <svg class="scallop" viewBox="0 0 1200 14" preserveAspectRatio="none" aria-hidden="true" style="height:30px"><defs><pattern id="sc" width="60" height="30" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="30" fill="#f6e3da"/></pattern></defs><rect width="1200" height="14" fill="url(#sc)"/></svg>
+    <div class="back__panel">
+      <div class="back__msg" data-r style="--i:0">
+        <h2>Вовк Елена Александровна</h2>
+        <p>Преподаватель Ровеньковского технико-экономического колледжа.</p>
+      </div>
+      <div class="back__addr" data-r style="--i:1">
+        <figure class="stamp"><img src="img/schoty-abacus.jpg" width="919" height="1064" alt="Деревянные конторские счёты" loading="lazy" decoding="async"></figure>
+        <span>ГБПОО ЛНР «Ровеньковский технико-экономический колледж»</span>
+        <span>ЛНР, г. Ровеньки, ул. Дзержинского, д. 61</span>
+        <a class="tlink" href="index.html">На главную</a>
+      </div>
+    </div>
+    <div class="imprint">
+      <p>Фото каталога: <a class="tlink" href="https://commons.wikimedia.org/wiki/File:Schlagwortkatalog.jpg">«Schlagwortkatalog»</a>, Dr. Marcus Gossler, <a class="tlink" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, Wikimedia Commons. Источники обложек указаны в карточках работ.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/base.js"></script>
+<script>
+(() => {
+  const { reduce, reveal, roll } = window.site;
+  const vt = !reduce && typeof document.startViewTransition === 'function';
+  // A background tab renders no frames, so a view transition may never call back:
+  // run the change once, either from the transition or from the timer, whichever comes first.
+  const transition = (change) => {
+    let ran = false;
+    const run = () => { if (!ran) { ran = true; change(); } };
+    if (!vt) { run(); return null; }
+    const t = document.startViewTransition(run);
+    setTimeout(run, 400);
+    // a skipped transition rejects these; the change itself has already run
+    [t.ready, t.updateCallbackDone, t.finished].forEach((p) => p.catch(() => {}));
+    return t;
+  };
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+
+  const plural = (n, [one, few, many]) => {
+    const a = n % 10, b = n % 100;
+    return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many;
+  };
+  const W = ['работа', 'работы', 'работ'];
+  // Absolute links stay; site paths are made relative so they work under /elena-vovk/
+  const safeUrl = (u) => {
+    u = String(u || '').trim();
+    if (!u) return '';
+    if (/^https?:\/\//i.test(u)) return u;
+    if (/^[a-z][a-z0-9+.-]*:/i.test(u) || u.startsWith('//')) return '';
+    return u.replace(/^\/+/, '');
+  };
+  const ext = (u) => (u.split('?')[0].match(/\.([a-z0-9]+)$/i) || [])[1]?.toUpperCase() || '';
+
+  const grid = $('grid'), fType = $('f-type'), fYear = $('f-year'), count = $('wcount');
+  const dlg = $('wdlg');
+  let works = [], cards = [], state = { type: 'all', year: 'all' };
+
+  const plateFor = (w) => {
+    const p = el('span', 'wplate');
+    p.setAttribute('aria-hidden', 'true');
+    p.append(el('span', 'wplate__type', w.type || 'Работа'), el('span', 'wplate__year num', w.year || ''));
+    return p;
+  };
+  const coverInto = (box, w, eager) => {
+    box.replaceChildren();
+    const src = safeUrl(w.cover);
+    if (src) {
+      const img = el('img');
+      img.src = src; img.alt = ''; img.decoding = 'async';
+      if (!eager) img.loading = 'lazy';
+      img.addEventListener('error', () => box.replaceChildren(plateFor(w)), { once: true });
+      box.append(img);
+    } else box.append(plateFor(w));
+  };
+  const metaInto = (box, w) => {
+    box.replaceChildren(el('span', null, [w.type, w.year].filter(Boolean).join(', ')));
+    if (w.discipline) box.append(el('span', 'code num', w.discipline));
+  };
+
+  // Catalogue cards
+  const renderCards = () => {
+    grid.replaceChildren();
+    cards = works.map((w, i) => {
+      const li = el('li', 'wcard');
+      li.dataset.r = '';
+      li.style.setProperty('--i', i % 2);
+      if (vt) li.style.viewTransitionName = 'w-' + i;
+      const cover = el('div', 'wcard__cover');
+      coverInto(cover, w, false);
+      const body = el('div', 'wcard__body');
+      const h = el('h3');
+      const open = el('button', 'wcard__open', w.title);
+      open.type = 'button';
+      open.setAttribute('aria-haspopup', 'dialog');
+      open.addEventListener('click', () => openWork(i));
+      h.append(open);
+      const meta = el('p', 'meta');
+      metaInto(meta, w);
+      body.append(h, meta);
+      li.append(cover, body);
+      // the whole card opens the work; the title button is its keyboard handle
+      li.addEventListener('click', (e) => { if (!e.target.closest('button, a')) openWork(i); });
+      grid.append(li);
+      return li;
+    });
+    reveal(cards);
+  };
+
+  // Filters
+  const chip = (label, value, group) => {
+    const b = el('button', null, label);
+    b.type = 'button'; b.dataset.value = value;
+    b.setAttribute('aria-pressed', String(state[group] === value));
+    b.addEventListener('click', () => setFilter({ [group]: value }));
+    return b;
+  };
+  const renderChips = () => {
+    const types = [...new Set(works.map((w) => w.type).filter(Boolean))];
+    const years = [...new Set(works.map((w) => w.year).filter(Boolean))].sort((a, b) => b - a);
+    fType.replaceChildren(chip('Все виды', 'all', 'type'), ...types.map((t) => chip(t, t, 'type')));
+    fYear.replaceChildren(chip('Все годы', 'all', 'year'), ...years.map((y) => chip(String(y), String(y), 'year')));
+    fType.hidden = types.length < 2;
+    fYear.hidden = years.length < 2;
+  };
+  const matches = (w) => (state.type === 'all' || w.type === state.type) && (state.year === 'all' || String(w.year) === state.year);
+  const apply = () => {
+    let shown = 0;
+    cards.forEach((c, i) => {
+      const on = matches(works[i]);
+      if (on && c.hidden) { c.classList.remove('is-new'); void c.offsetWidth; c.classList.add('is-new'); c.style.setProperty('--i', shown % 2); }
+      c.hidden = !on;
+      if (on) shown++;
+    });
+    [...fType.children, ...fYear.children].forEach((b) => {
+      const group = b.parentElement === fType ? 'type' : 'year';
+      b.setAttribute('aria-pressed', String(state[group] === b.dataset.value));
+    });
+    count.replaceChildren('Показано ', el('b', 'num', shown), ' из ' + works.length);
+    $('state-empty').hidden = shown > 0 || !works.length;
+  };
+  const setFilter = (next) => {
+    state = { ...state, ...next };
+    // cards still waiting for their scroll reveal would animate twice; show them now
+    cards.forEach((c) => c.classList.add('is-in'));
+    transition(apply);
+  };
+  $('reset').addEventListener('click', () => setFilter({ type: 'all', year: 'all' }));
+
+  // Figures and the receipt
+  const setFig = (id, value) => { const n = $(id); n.textContent = value; roll([n]); };
+  const renderTally = () => {
+    const types = [...new Set(works.map((w) => w.type).filter(Boolean))];
+    const years = works.map((w) => Number(w.year)).filter(Boolean);
+    const lo = Math.min(...years), hi = Math.max(...years);
+    const span = years.length ? (lo === hi ? String(hi) : lo + '–' + hi) : '';
+    setFig('fig-works', works.length); $('fig-works-cap').textContent = plural(works.length, W) + ' в каталоге';
+    setFig('fig-types', types.length); $('fig-types-cap').textContent = plural(types.length, ['вид', 'вида', 'видов']) + ' работ';
+    if (years.length) setFig('fig-year', hi);
+    $('total-num').textContent = works.length;
+    $('total-cap').textContent = plural(works.length, W) + (span ? ', ' + span : '');
+    $('rows').replaceChildren(...types.map((t) => {
+      const list = works.filter((w) => w.type === t);
+      const ys = [...new Set(list.map((w) => w.year).filter(Boolean))].sort();
+      const b = el('button', 'rrow');
+      b.type = 'button';
+      const name = el('span', 'rrow__name'); name.append(el('span', null, t));
+      b.append(name, el('span', 'rrow__val num', list.length), el('span', 'rrow__who num', ys.join(', ')));
+      b.addEventListener('click', () => {
+        setFilter({ type: t, year: 'all' });
+        $('catalog').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+      });
+      return b;
+    }));
+    $('sum-label').textContent = 'Итого, ' + works.length + ' ' + plural(works.length, W);
+    $('sum-val').textContent = works.length;
+  };
+
+  // The open card
+  let current = -1;
+  const fillDialog = (w) => {
+    $('wdlg-title').textContent = w.title;
+    metaInto($('wdlg-meta'), w);
+    $('wdlg-desc').textContent = w.description || '';
+    $('wdlg-desc').hidden = !w.description;
+    coverInto($('wdlg-cover'), w, true);
+    const acts = $('wdlg-actions');
+    acts.replaceChildren();
+    const file = safeUrl(w.file), link = safeUrl(w.link);
+    if (file) {
+      const kind = ext(file);
+      const openA = el('a', 'btn', 'Открыть ' + (kind || 'файл'));
+      openA.href = file; openA.target = '_blank'; openA.rel = 'noopener';
+      const dl = el('a', 'btn btn--light', 'Скачать');
+      dl.href = file; dl.setAttribute('download', '');
+      acts.append(openA, dl);
+    }
+    if (link) {
+      const a = el('a', file ? 'btn btn--light' : 'btn');
+      a.href = link; a.target = '_blank'; a.rel = 'noopener';
+      a.append('Перейти по ссылке ', el('span', 'arr', '→'));
+      acts.append(a);
+    }
+    if (!file && !link) acts.append(el('p', 'wdlg__nofile small', 'Файл этой работы пока не выложен.'));
+    $('wdlg-credit').textContent = w.credit || '';
+    $('wdlg-credit').hidden = !w.credit;
+  };
+  const morph = (from, to, change) => {
+    if (!vt || !from || !to) { change(); return; }
+    from.style.viewTransitionName = 'wcover';
+    const t = transition(() => { from.style.viewTransitionName = ''; change(); to.style.viewTransitionName = 'wcover'; });
+    const clear = () => { to.style.viewTransitionName = ''; };
+    t.finished.then(clear, clear);
+  };
+  const openWork = (i, fromHash) => {
+    const w = works[i];
+    if (!w) return;
+    current = i;
+    fillDialog(w);
+    const show = () => { if (!dlg.open) dlg.showModal(); document.documentElement.classList.add('menu-open'); };
+    if (fromHash) show(); else morph(cards[i].querySelector('.wcard__cover'), $('wdlg-cover'), show);
+    if (w.id) history.replaceState(null, '', '#' + encodeURIComponent(w.id));
+  };
+  const closeWork = () => {
+    if (!dlg.open) return;
+    const card = cards[current] && !cards[current].hidden ? cards[current] : null;
+    const done = () => {
+      dlg.close(); document.documentElement.classList.remove('menu-open');
+      if (card) card.querySelector('.wcard__open').focus({ preventScroll: true });
+    };
+    morph($('wdlg-cover'), card && card.querySelector('.wcard__cover'), done);
+    history.replaceState(null, '', location.pathname + location.search);
+  };
+  $('wdlg-close').addEventListener('click', closeWork);
+  dlg.addEventListener('cancel', (e) => { e.preventDefault(); closeWork(); });
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) closeWork(); });
+
+  // Load
+  fetch('data/works.json', { cache: 'no-cache' })
+    .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then((data) => {
+      const list = Array.isArray(data) ? data : (data && data.works) || [];
+      works = list
+        .filter((w) => w && w.title && w.published !== false)
+        .map((w, i) => ({ ...w, _i: i }))
+        .sort((a, b) => (Number(b.year) || 0) - (Number(a.year) || 0) || a._i - b._i);
+      $('state-loading').hidden = true;
+      if (!works.length) {
+        $('state-empty').hidden = false;
+        $('state-empty').querySelector('p').textContent = 'Работы скоро появятся в каталоге.';
+        $('reset').hidden = true;
+      }
+      renderChips(); renderCards(); renderTally(); apply();
+      if (!works.length) $('state-empty').hidden = false;
+      const id = decodeURIComponent(location.hash.slice(1));
+      const at = id ? works.findIndex((w) => w.id === id) : -1;
+      if (at > -1) openWork(at, true);
+    })
+    .catch(() => { $('state-loading').hidden = true; $('state-error').hidden = false; });
+})();
+</script>
+</body>
+</html>
