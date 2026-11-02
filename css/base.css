@@ -63,7 +63,9 @@ h3{font-weight:500;letter-spacing:-0.01em;line-height:1.12;font-size:var(--step-
 .nav{display:flex;align-items:center;gap:clamp(20px,2.6vw,40px);font-size:var(--step-small)}
 .nav__link,.dd__btn{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0;background:none;border:0;color:inherit;font:inherit;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:.3em;transition:text-decoration-color var(--t-hover) ease}
 .nav__link:hover,.nav__link[aria-current="page"],.dd__btn:hover,.dd[data-current] .dd__btn,.dd.is-open .dd__btn{text-decoration-color:currentColor}
-.dd__chev{display:inline-block;font-size:.8em;transition:transform var(--t-ui) var(--ease-out)}
+/* out of flow so the button's underline does not run under the arrow */
+.dd__btn{position:relative;padding-right:calc(.8em + 6px)}
+.dd__chev{position:absolute;right:0;top:50%;margin-top:-.6em;line-height:1.2;font-size:.8em;transition:transform var(--t-ui) var(--ease-out)}
 .dd.is-open .dd__chev{transform:rotate(180deg)}
 /* Header dropdown: a paper slip under the bar */
 .dd{position:relative}
