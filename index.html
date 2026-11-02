@@ -16,6 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 fill=%22%23351a2b%22/%3E%3Ctext x=%2232%22 y=%2247%22 font-family=%22Georgia,serif%22 font-size=%2244%22 text-anchor=%22middle%22 fill=%22%23edccbe%22%3EВ%3C/text%3E%3C/svg%3E">
 <title>Вовк Елена Александровна — преподаватель</title>
 <meta name="description" content="Вовк Елена Александровна, преподаватель ГБПОО ЛНР «Ровеньковский технико-экономический колледж»: стаж, дисциплины, образование, повышение квалификации.">
+<link rel="canonical" href="https://flyingsteps11.github.io/elena-vovk/">
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__pageReady)document.documentElement.classList.remove('js')},2500)</script>
 <link rel="preload" href="fonts/literata-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -203,34 +204,67 @@
 }
 </style>
 </head>
-<body id="top">
+<body id="top" data-page="home">
 
+<!-- @header -->
 <header class="top on-dark">
   <div class="bar">
     <a class="mark" href="#top">Е. А. Вовк</a>
     <nav class="nav" aria-label="Разделы">
-      <a href="#about">О преподавателе</a>
-      <a href="#subjects">Дисциплины</a>
-      <a href="#education">Образование</a>
-      <a href="#courses">Курсы</a>
-      <a href="works.html">Работы</a>
-      <a href="#college">Колледж</a>
+      <div class="dd" data-group="about">
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-about">О преподавателе <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-about">
+          <li><a href="#about">О преподавателе</a></li>
+          <li><a href="#subjects">Дисциплины</a></li>
+          <li><a href="#education">Образование</a></li>
+          <li><a href="#courses">Повышение квалификации</a></li>
+          <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="works.html" data-key="works">Работы</a>
+      <div class="dd" data-group="students">
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-students">Студентам <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-students">
+          <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
+          <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="news.html" data-key="news">Новости</a>
     </nav>
-    <a class="btn btn--light bar__cta" href="#college">Адрес колледжа</a>
     <button class="btn btn--light menu-btn" type="button" aria-expanded="false" aria-controls="mnav">Меню</button>
   </div>
 </header>
 <nav class="mnav on-dark" id="mnav" aria-label="Разделы" tabindex="-1" hidden>
-  <div class="mnav__bar"><span class="mark">Е. А. Вовк</span><button class="btn btn--light mnav__close" type="button">Закрыть</button></div>
-  <ol class="mnav__list">
-    <li style="--k:0"><a href="#about">О преподавателе</a></li>
-    <li style="--k:1"><a href="#subjects">Дисциплины</a></li>
-    <li style="--k:2"><a href="#education">Образование</a></li>
-    <li style="--k:3"><a href="#courses">Курсы</a></li>
-    <li style="--k:4"><a href="works.html">Работы</a></li>
-    <li style="--k:5"><a href="#college">Колледж</a></li>
-  </ol>
+  <div class="mnav__bar"><a class="mark" href="#top">Е. А. Вовк</a><button class="btn btn--light mnav__close" type="button">Закрыть</button></div>
+  <div class="mnav__groups">
+    <div class="mnav__group" style="--k:0">
+      <p class="mnav__h">О преподавателе</p>
+      <ul>
+        <li><a href="#about">О преподавателе</a></li>
+        <li><a href="#subjects">Дисциплины</a></li>
+        <li><a href="#education">Образование</a></li>
+        <li><a href="#courses">Повышение квалификации</a></li>
+        <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:1">
+      <p class="mnav__h">Работы</p>
+      <ul><li><a href="works.html" data-key="works">Методические работы</a></li></ul>
+    </div>
+    <div class="mnav__group" style="--k:2">
+      <p class="mnav__h">Студентам</p>
+      <ul>
+        <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
+        <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:3">
+      <p class="mnav__h">Новости</p>
+      <ul><li><a href="news.html" data-key="news">Новости и заметки</a></li></ul>
+    </div>
+  </div>
 </nav>
+<!-- /@header -->
 
 <main>
 <section class="hero on-dark" aria-labelledby="name">
@@ -387,6 +421,7 @@
 </section>
 </main>
 
+<!-- @footer -->
 <footer class="foot">
   <div class="back">
     <svg class="scallop" viewBox="0 0 1200 14" preserveAspectRatio="none" aria-hidden="true" style="height:30px"><defs><pattern id="sc" width="60" height="30" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="30" fill="#f6e3da"/></pattern></defs><rect width="1200" height="14" fill="url(#sc)"/></svg>
@@ -401,9 +436,37 @@
         <span>ЛНР, г. Ровеньки, ул. Дзержинского, д. 61</span>
         <a class="tlink" href="#top">Наверх ↑</a>
       </div>
+      <nav class="fmap" aria-label="Все страницы сайта" data-r style="--i:2">
+        <div>
+          <h3>О преподавателе</h3>
+          <ul>
+            <li><a href="#about">О преподавателе</a></li>
+            <li><a href="#subjects">Дисциплины</a></li>
+            <li><a href="#education">Образование</a></li>
+            <li><a href="#courses">Повышение квалификации</a></li>
+            <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Работы и студентам</h3>
+          <ul>
+            <li><a href="works.html" data-key="works">Методические работы</a></li>
+            <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
+            <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Новости и колледж</h3>
+          <ul>
+            <li><a href="news.html" data-key="news">Новости и заметки</a></li>
+            <li><a href="#college">Адрес колледжа</a></li>
+          </ul>
+        </div>
+      </nav>
     </div>
   </div>
 </footer>
+<!-- /@footer -->
 
 <script src="js/base.js"></script>
 <script>

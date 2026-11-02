@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#351a2b">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Материалы к занятиям — Е. А. Вовк">
+<meta property="og:description" content="Задания, вопросы к экзамену, методические указания и полезные ссылки по дисциплинам преподавателя Е. А. Вовк.">
+<meta property="og:url" content="https://flyingsteps11.github.io/elena-vovk/students.html">
+<meta property="og:image" content="https://flyingsteps11.github.io/elena-vovk/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 fill=%22%23351a2b%22/%3E%3Ctext x=%2232%22 y=%2247%22 font-family=%22Georgia,serif%22 font-size=%2244%22 text-anchor=%22middle%22 fill=%22%23edccbe%22%3EВ%3C/text%3E%3C/svg%3E">
+<title>Материалы к занятиям — Е. А. Вовк</title>
+<meta name="description" content="Задания, вопросы к экзамену, методические указания и полезные ссылки по дисциплинам Елены Александровны Вовк для студентов Ровеньковского технико-экономического колледжа.">
+<link rel="canonical" href="https://flyingsteps11.github.io/elena-vovk/students.html">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__pageReady)document.documentElement.classList.remove('js')},2500)</script>
+<link rel="preload" href="fonts/literata-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/hero-reading-room-800.webp" imagesrcset="img/hero-reading-room-800.webp 800w, img/hero-reading-room-1600.webp 1600w" imagesizes="(max-width: 900px) 100vw, 50vw" fetchpriority="high">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/kit.css">
+<style>
+/* Materials page: discipline folders with tabs, then the chosen folder's contents on a receipt */
+.folders{background:var(--surface);padding-block:var(--gap-section)}
+.folders__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 16px;margin-top:64px}
+.folder{display:flex;flex-direction:column;padding:0;background:none;border:0;color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:transform var(--t-ui) var(--ease-out)}
+.folder__tab{align-self:flex-start;padding:8px 22px 6px;background:var(--tone-1);font-size:var(--step-small);clip-path:polygon(0 100%,12px 0,calc(100% - 12px) 0,100% 100%);transition:background-color var(--t-hover) ease,color var(--t-hover) ease}
+.folder__body{flex:1;display:flex;flex-direction:column;gap:16px;padding:12px 12px 26px;background:var(--tone-1);transition:background-color var(--t-hover) ease,color var(--t-hover) ease}
+.folder__pic{aspect-ratio:16 / 10;overflow:clip;background:var(--paper)}
+.folder__pic img{width:100%;height:100%;object-fit:cover;transition:transform 900ms var(--ease-soft)}
+.folder__name{padding:0 10px;font-size:var(--step-body);font-weight:500;line-height:1.3;text-wrap:pretty}
+.folder__count{padding:0 10px;font-size:var(--step-small)}
+.folder[aria-pressed="true"] .folder__tab,.folder[aria-pressed="true"] .folder__body{background:var(--ink);color:var(--accent-ink)}
+.folder:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+@media (hover:hover){
+  .folder:hover{transform:translateY(-6px)}
+  .folder:hover .folder__pic img{transform:scale(1.04)}
+}
+.shelf{background:var(--field-1);color:var(--field-1-ink);padding-block:var(--gap-section)}
+.shelf__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+.shelf__left{grid-column:1 / span 5;align-self:start;position:sticky;top:112px;display:flex;flex-direction:column;gap:22px}
+.shelf__name{font-size:var(--step-lead);line-height:1.3}
+.shelf__left .meta .code{background:var(--accent-ink);color:var(--ink)}
+.shelf__about{max-width:44ch}
+.receipt .chips{margin-bottom:12px}
+.receipt .chips button{background:var(--surface)}
+.receipt .chips button:hover{background:var(--tone-3)}
+.receipt .chips button[aria-pressed="true"]{background:var(--ink)}
+.mrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 20px;align-items:center;padding:18px 0;border-bottom:4px dotted var(--ink)}
+.mrow:last-child{border-bottom:0}
+.mrow__title{font-size:var(--step-body);font-weight:500;line-height:1.35}
+.mrow__meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:8px;font-size:var(--step-small);color:var(--muted)}
+.mrow__act{display:flex;gap:6px}
+.mrow__act .btn{min-height:44px;padding:0 16px;font-size:var(--step-small)}
+.mrow__act .btn--light{background:var(--surface)}
+.mrow__soon{font-size:var(--step-small);color:var(--muted);white-space:nowrap}
+.mempty{padding:24px 0;color:var(--muted)}
+@media (max-width:1100px){
+  .shelf__left,.receipt{grid-column:1 / -1;position:static}
+  .receipt{margin-top:40px}
+}
+@media (max-width:900px){.folders__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .folders__grid{grid-template-columns:1fr;gap:20px;margin-top:40px}
+  .folder__body{flex-direction:row;align-items:center;padding:10px}
+  .folder__pic{flex:none;width:88px;aspect-ratio:1}
+  .folder__name{padding:0}
+  .folder__count{display:none}
+  .mrow{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body id="top" data-page="materials">
+
+<!-- @header -->
+<header class="top on-dark">
+  <div class="bar">
+    <a class="mark" href="index.html">Е. А. Вовк</a>
+    <nav class="nav" aria-label="Разделы">
+      <div class="dd" data-group="about">
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-about">О преподавателе <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-about">
+          <li><a href="index.html#about">О преподавателе</a></li>
+          <li><a href="index.html#subjects">Дисциплины</a></li>
+          <li><a href="index.html#education">Образование</a></li>
+          <li><a href="index.html#courses">Повышение квалификации</a></li>
+          <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="works.html" data-key="works">Работы</a>
+      <div class="dd" data-group="students" data-current>
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-students">Студентам <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-students">
+          <li><a href="students.html" data-key="materials" aria-current="page">Материалы к занятиям</a></li>
+          <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="news.html" data-key="news">Новости</a>
+    </nav>
+    <button class="btn btn--light menu-btn" type="button" aria-expanded="false" aria-controls="mnav">Меню</button>
+  </div>
+</header>
+<nav class="mnav on-dark" id="mnav" aria-label="Разделы" tabindex="-1" hidden>
+  <div class="mnav__bar"><a class="mark" href="index.html">Е. А. Вовк</a><button class="btn btn--light mnav__close" type="button">Закрыть</button></div>
+  <div class="mnav__groups">
+    <div class="mnav__group" style="--k:0">
+      <p class="mnav__h">О преподавателе</p>
+      <ul>
+        <li><a href="index.html#about">О преподавателе</a></li>
+        <li><a href="index.html#subjects">Дисциплины</a></li>
+        <li><a href="index.html#education">Образование</a></li>
+        <li><a href="index.html#courses">Повышение квалификации</a></li>
+        <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:1">
+      <p class="mnav__h">Работы</p>
+      <ul><li><a href="works.html" data-key="works">Методические работы</a></li></ul>
+    </div>
+    <div class="mnav__group" style="--k:2">
+      <p class="mnav__h">Студентам</p>
+      <ul>
+        <li><a href="students.html" data-key="materials" aria-current="page">Материалы к занятиям</a></li>
+        <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:3">
+      <p class="mnav__h">Новости</p>
+      <ul><li><a href="news.html" data-key="news">Новости и заметки</a></li></ul>
+    </div>
+  </div>
+</nav>
+<!-- /@header -->
+
+<main>
+<section class="whero on-dark" aria-labelledby="page-h">
+  <div class="wcardhead">
+    <div class="stripe" aria-hidden="true"></div>
+    <div class="wcardhead__body">
+      <h1 id="page-h"><span class="line"><span style="--l:0">Материалы</span></span> <span class="line"><span style="--l:1">к занятиям</span></span></h1>
+      <p class="wcardhead__lead" data-load style="--d:420ms">Задания, вопросы к экзамену, методические указания и полезные ссылки по дисциплинам Елены Александровны. Выберите дисциплину и скачайте нужный файл.</p>
+      <a class="btn" href="#folders" data-load style="--d:520ms">Выбрать дисциплину <span class="arr" aria-hidden="true">↓</span></a>
+      <dl class="wfigs" data-load style="--d:600ms">
+        <div><dt class="sr-only">Материалов</dt><dd><b class="num" id="fig-all">14</b><span class="cap" id="fig-all-cap">материалов</span></dd></div>
+        <div><dt class="sr-only">Дисциплин</dt><dd><b class="num" id="fig-disc">5</b><span class="cap" id="fig-disc-cap">дисциплин</span></dd></div>
+        <div><dt class="sr-only">Файлов</dt><dd><b class="num" id="fig-files">3</b><span class="cap" id="fig-files-cap">файла для скачивания</span></dd></div>
+      </dl>
+    </div>
+    <span class="hole" aria-hidden="true"></span>
+  </div>
+  <figure class="wphoto">
+    <img src="img/hero-reading-room-800.webp" srcset="img/hero-reading-room-800.webp 800w, img/hero-reading-room-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" width="1600" height="1199" alt="Студентка за столом в читальном зале склонилась над конспектами и папками с бумагами" fetchpriority="high">
+  </figure>
+</section>
+
+<section class="folders" id="folders" aria-labelledby="folders-h">
+  <div class="wrap">
+    <div class="catalog__head">
+      <h2 id="folders-h" data-r style="--i:0">Дисциплины</h2>
+    </div>
+    <p class="state" id="state-loading">Загружаем материалы…</p>
+    <noscript><p class="state">Список материалов собирается скриптом. Включите JavaScript в браузере, чтобы его увидеть.</p></noscript>
+    <p class="state" id="state-error" hidden>Не получилось загрузить материалы. Обновите страницу чуть позже.</p>
+    <div class="folders__grid" id="folders-grid" role="group" aria-label="Выберите дисциплину"></div>
+  </div>
+</section>
+
+<section class="shelf on-dark" id="shelf" aria-labelledby="shelf-h" hidden>
+  <div class="wrap shelf__grid">
+    <div class="shelf__left">
+      <h2 id="shelf-h" data-r style="--i:0">Материалы дисциплины</h2>
+      <p class="shelf__name" id="shelf-name" data-r style="--i:1"></p>
+      <p class="meta" id="shelf-meta" data-r style="--i:2"></p>
+      <p class="shelf__about" id="shelf-about" data-r style="--i:3"></p>
+    </div>
+    <div class="receipt" data-r style="--i:2">
+      <div class="chips" id="f-kind" role="group" aria-label="Вид материала"></div>
+      <div id="mlist" aria-live="polite"></div>
+      <p class="receipt__sum"><span id="m-sum-label">Материалов</span><span class="num" id="m-sum">0</span></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- @footer -->
+<footer class="foot">
+  <div class="back">
+    <svg class="scallop" viewBox="0 0 1200 14" preserveAspectRatio="none" aria-hidden="true" style="height:30px"><defs><pattern id="sc" width="60" height="30" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="30" fill="#f6e3da"/></pattern></defs><rect width="1200" height="14" fill="url(#sc)"/></svg>
+    <div class="back__panel">
+      <div class="back__msg" data-r style="--i:0">
+        <h2>Вовк Елена Александровна</h2>
+        <p>Преподаватель Ровеньковского технико-экономического колледжа.</p>
+      </div>
+      <div class="back__addr" data-r style="--i:1">
+        <figure class="stamp"><img src="img/schoty-240.webp" width="240" height="278" alt="Деревянные конторские счёты" loading="lazy" decoding="async"></figure>
+        <span>ГБПОО ЛНР «Ровеньковский технико-экономический колледж»</span>
+        <span>ЛНР, г. Ровеньки, ул. Дзержинского, д. 61</span>
+        <a class="tlink" href="#top">Наверх ↑</a>
+      </div>
+      <nav class="fmap" aria-label="Все страницы сайта" data-r style="--i:2">
+        <div>
+          <h3>О преподавателе</h3>
+          <ul>
+            <li><a href="index.html#about">О преподавателе</a></li>
+            <li><a href="index.html#subjects">Дисциплины</a></li>
+            <li><a href="index.html#education">Образование</a></li>
+            <li><a href="index.html#courses">Повышение квалификации</a></li>
+            <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Работы и студентам</h3>
+          <ul>
+            <li><a href="works.html" data-key="works">Методические работы</a></li>
+            <li><a href="students.html" data-key="materials" aria-current="page">Материалы к занятиям</a></li>
+            <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Новости и колледж</h3>
+          <ul>
+            <li><a href="news.html" data-key="news">Новости и заметки</a></li>
+            <li><a href="index.html#college">Адрес колледжа</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</footer>
+<!-- /@footer -->
+
+<script src="js/base.js"></script>
+<script src="js/kit.js"></script>
+<script>
+(() => {
+  const { $, el, plural, safeUrl, load, published, chips, query } = window.kit;
+  const { reveal, roll, reduce } = window.site;
+  const KIND_LABEL = { 'Ссылка': 'Ссылки' };
+  const M = ['материал', 'материала', 'материалов'];
+  let discs = [], mats = [], folders = [], cur = '', kind = 'all', markKind = () => {};
+
+  const setFig = (id, n, capId, forms) => { $(id).textContent = n; roll([$(id)]); $(capId).textContent = plural(n, forms); };
+
+  const row = (m) => {
+    const r = el('div', 'mrow');
+    const main = el('div');
+    const meta = el('p', 'mrow__meta');
+    meta.append(el('span', 'fmt', m.kind || 'Материал'));
+    if (m.note) meta.append(el('span', null, m.note));
+    main.append(el('p', 'mrow__title', m.title), meta);
+    const act = el('div', 'mrow__act');
+    const file = safeUrl(m.file), link = safeUrl(m.link);
+    if (file) {
+      const a = el('a', 'btn');
+      a.href = file; a.setAttribute('download', '');
+      a.setAttribute('aria-label', 'Скачать: ' + m.title);
+      a.append('Скачать ', el('span', 'arr arr--down', '↓'));
+      act.append(a);
+    }
+    if (link) {
+      const a = el('a', file ? 'btn btn--light' : 'btn');
+      a.href = link; a.target = '_blank'; a.rel = 'noopener';
+      a.setAttribute('aria-label', 'Открыть: ' + m.title);
+      a.append('Открыть ', el('span', 'arr', '→'));
+      act.append(a);
+    }
+    if (!file && !link) act.append(el('span', 'mrow__soon', 'Скоро будет'));
+    r.append(main, act);
+    return r;
+  };
+
+  const renderList = () => {
+    const list = mats.filter((m) => m.discipline === cur && (kind === 'all' || m.kind === kind));
+    $('mlist').replaceChildren(...(list.length ? list.map(row) : [el('p', 'mempty', 'Материалов этого вида пока нет.')]));
+    $('m-sum').textContent = list.length;
+    $('m-sum-label').textContent = 'Итого, ' + list.length + ' ' + plural(list.length, M);
+    markKind(kind);
+  };
+
+  const select = (id, { scroll = false } = {}) => {
+    const d = discs.find((x) => x.id === id) || discs[0];
+    cur = d.id;
+    folders.forEach((f) => f.setAttribute('aria-pressed', String(f.dataset.id === cur)));
+    $('shelf-name').textContent = d.name;
+    $('shelf-meta').replaceChildren(el('span', 'code num', d.code || ''), el('span', null, d.specialty || ''));
+    $('shelf-about').textContent = d.about || '';
+    const kinds = [...new Set(mats.filter((m) => m.discipline === cur).map((m) => m.kind).filter(Boolean))];
+    if (kind !== 'all' && !kinds.includes(kind)) kind = 'all';
+    markKind = chips($('f-kind'), [{ label: 'Все', value: 'all' }, ...kinds.map((k) => ({ label: KIND_LABEL[k] || k, value: k }))], kind, (v) => {
+      kind = v; query.set({ k: v }); renderList();
+    });
+    renderList();
+    query.set({ d: cur, k: kind });
+    if (scroll) $('shelf').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  };
+
+  load('data/materials.json').then((data) => {
+    discs = (data.disciplines || []).filter((d) => d && d.id && d.name);
+    mats = published(data.materials).filter((m) => m.title);
+    $('state-loading').hidden = true;
+    if (!discs.length) { $('state-error').textContent = 'Материалы скоро появятся.'; $('state-error').hidden = false; return; }
+    setFig('fig-all', mats.length, 'fig-all-cap', M);
+    setFig('fig-disc', discs.length, 'fig-disc-cap', ['дисциплина', 'дисциплины', 'дисциплин']);
+    const files = mats.filter((m) => safeUrl(m.file)).length;
+    $('fig-files').textContent = files; roll([$('fig-files')]);
+    $('fig-files-cap').textContent = plural(files, ['файл', 'файла', 'файлов']) + ' для скачивания';
+
+    folders = discs.map((d, i) => {
+      const b = el('button', 'folder');
+      b.type = 'button'; b.dataset.id = d.id; b.dataset.r = ''; b.style.setProperty('--i', i % 3);
+      const pic = el('span', 'folder__pic');
+      const src = safeUrl(d.image);
+      if (src) { const img = el('img'); img.src = src; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; pic.append(img); }
+      const n = mats.filter((m) => m.discipline === d.id).length;
+      const body = el('span', 'folder__body');
+      body.append(pic, el('span', 'folder__name', d.name), el('span', 'folder__count num', n + ' ' + plural(n, M)));
+      b.append(el('span', 'folder__tab num', d.code || 'Дисциплина'), body);
+      b.addEventListener('click', () => select(d.id, { scroll: true }));
+      return b;
+    });
+    $('folders-grid').replaceChildren(...folders);
+    reveal(folders);
+    $('shelf').hidden = false;
+    kind = query.get('k', 'all');
+    select(query.get('d', discs[0].id));
+  }).catch(() => { $('state-loading').hidden = true; $('state-error').hidden = false; });
+})();
+</script>
+</body>
+</html>

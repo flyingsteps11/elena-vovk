@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#351a2b">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Новости и заметки — Е. А. Вовк">
+<meta property="og:description" content="Открытые уроки, конференции, курсы и события колледжа в работе преподавателя Е. А. Вовк.">
+<meta property="og:url" content="https://flyingsteps11.github.io/elena-vovk/news.html">
+<meta property="og:image" content="https://flyingsteps11.github.io/elena-vovk/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 fill=%22%23351a2b%22/%3E%3Ctext x=%2232%22 y=%2247%22 font-family=%22Georgia,serif%22 font-size=%2244%22 text-anchor=%22middle%22 fill=%22%23edccbe%22%3EВ%3C/text%3E%3C/svg%3E">
+<title>Новости и заметки — Е. А. Вовк</title>
+<meta name="description" content="Открытые уроки, конференции, курсы повышения квалификации и события колледжа: коротко о работе преподавателя Елены Александровны Вовк.">
+<link rel="canonical" href="https://flyingsteps11.github.io/elena-vovk/news.html">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__pageReady)document.documentElement.classList.remove('js')},2500)</script>
+<link rel="preload" href="fonts/literata-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/hero-calendar-800.webp" imagesrcset="img/hero-calendar-800.webp 800w, img/hero-calendar-1600.webp 1178w" imagesizes="(max-width: 900px) 100vw, 50vw" fetchpriority="high">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/kit.css">
+<style>
+/* News: every note is a leaf torn from a desk calendar */
+.feed{background:var(--surface);padding-block:var(--gap-section)}
+.feed__list{display:flex;flex-direction:column;gap:20px;margin-top:32px}
+.leaf{display:grid;grid-template-columns:170px minmax(0,1fr) 280px;background:var(--paper)}
+.leaf[hidden]{display:none}
+.leaf--noimg{grid-template-columns:170px minmax(0,1fr)}
+.leaf__date{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0 0 22px;background:var(--tone-1);text-align:center}
+/* the punched binding at the top of a calendar leaf */
+.leaf__date::before{content:"";align-self:stretch;height:26px;background:var(--ink)}
+.leaf__date::after{content:"";position:absolute;top:9px;left:10px;right:10px;border-top:8px dotted var(--tone-1)}
+.leaf__day{margin-top:16px;font-size:clamp(3.5rem,2.6rem + 3vw,5.25rem);font-weight:500;line-height:.9;letter-spacing:-0.04em}
+.leaf__month{margin-top:10px;font-size:var(--step-body);font-weight:500}
+.leaf__dow{margin-top:2px;font-size:var(--step-small)}
+.leaf__year{margin-top:2px;font-size:var(--step-small);color:var(--muted)}
+.leaf__body{display:flex;flex-direction:column;gap:14px;padding:28px clamp(20px,3vw,44px) 30px}
+.leaf__body h3{font-size:var(--step-lead);line-height:1.22;text-wrap:pretty;max-width:34ch}
+.leaf__text{display:flex;flex-direction:column;gap:12px;max-width:62ch}
+.leaf__more{align-self:flex-start;padding:0;background:none;border:0;color:inherit;font:inherit;font-size:var(--step-small);cursor:pointer;text-decoration:underline;text-underline-offset:.2em;min-height:44px}
+.leaf__more:hover{text-decoration-color:transparent}
+.leaf__rest[hidden]{display:none}
+.leaf__pic{margin:0;overflow:clip;background:var(--tone-3)}
+.leaf__pic img{width:100%;height:100%;object-fit:cover}
+.archive{background:var(--field-1);color:var(--field-1-ink);padding-block:var(--gap-section)}
+.archive__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+.archive__left{grid-column:1 / span 6;align-self:start;display:flex;flex-direction:column}
+.archive__left p{margin-top:24px;max-width:40ch}
+@media (max-width:1100px){
+  .leaf{grid-template-columns:150px minmax(0,1fr)}
+  .leaf__pic{grid-column:2;aspect-ratio:16 / 9;margin:0 clamp(20px,3vw,44px) 30px}
+  .archive__left,.archive .receipt{grid-column:1 / -1}
+  .archive .receipt{margin-top:40px}
+}
+@media (max-width:640px){
+  .leaf,.leaf--noimg{grid-template-columns:1fr}
+  .leaf__date{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:baseline;gap:4px 12px;padding:0 16px 14px}
+  .leaf__date::before{flex-basis:calc(100% + 32px);margin:0 -16px}
+  .leaf__day{margin-top:12px;font-size:3rem}
+  .leaf__month,.leaf__dow,.leaf__year{margin-top:0}
+  .leaf__body{padding:20px 16px 22px}
+  .leaf__pic{grid-column:1;margin:0 16px 20px}
+}
+</style>
+</head>
+<body id="top" data-page="news">
+
+<!-- @header -->
+<header class="top on-dark">
+  <div class="bar">
+    <a class="mark" href="index.html">Е. А. Вовк</a>
+    <nav class="nav" aria-label="Разделы">
+      <div class="dd" data-group="about">
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-about">О преподавателе <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-about">
+          <li><a href="index.html#about">О преподавателе</a></li>
+          <li><a href="index.html#subjects">Дисциплины</a></li>
+          <li><a href="index.html#education">Образование</a></li>
+          <li><a href="index.html#courses">Повышение квалификации</a></li>
+          <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="works.html" data-key="works">Работы</a>
+      <div class="dd" data-group="students">
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-students">Студентам <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-students">
+          <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
+          <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="news.html" data-key="news" aria-current="page">Новости</a>
+    </nav>
+    <button class="btn btn--light menu-btn" type="button" aria-expanded="false" aria-controls="mnav">Меню</button>
+  </div>
+</header>
+<nav class="mnav on-dark" id="mnav" aria-label="Разделы" tabindex="-1" hidden>
+  <div class="mnav__bar"><a class="mark" href="index.html">Е. А. Вовк</a><button class="btn btn--light mnav__close" type="button">Закрыть</button></div>
+  <div class="mnav__groups">
+    <div class="mnav__group" style="--k:0">
+      <p class="mnav__h">О преподавателе</p>
+      <ul>
+        <li><a href="index.html#about">О преподавателе</a></li>
+        <li><a href="index.html#subjects">Дисциплины</a></li>
+        <li><a href="index.html#education">Образование</a></li>
+        <li><a href="index.html#courses">Повышение квалификации</a></li>
+        <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:1">
+      <p class="mnav__h">Работы</p>
+      <ul><li><a href="works.html" data-key="works">Методические работы</a></li></ul>
+    </div>
+    <div class="mnav__group" style="--k:2">
+      <p class="mnav__h">Студентам</p>
+      <ul>
+        <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
+        <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:3">
+      <p class="mnav__h">Новости</p>
+      <ul><li><a href="news.html" data-key="news" aria-current="page">Новости и заметки</a></li></ul>
+    </div>
+  </div>
+</nav>
+<!-- /@header -->
+
+<main>
+<section class="whero on-dark" aria-labelledby="page-h">
+  <div class="wcardhead">
+    <div class="stripe" aria-hidden="true"></div>
+    <div class="wcardhead__body">
+      <h1 id="page-h"><span class="line"><span style="--l:0">Новости</span></span> <span class="line"><span style="--l:1">и заметки</span></span></h1>
+      <p class="wcardhead__lead" data-load style="--d:420ms">Открытые уроки, конференции, курсы и события колледжа: коротко о том, что происходит в работе преподавателя.</p>
+      <a class="btn" href="#feed" data-load style="--d:520ms">К записям <span class="arr" aria-hidden="true">↓</span></a>
+      <dl class="wfigs" data-load style="--d:600ms">
+        <div><dt class="sr-only">Записей</dt><dd><b class="num" id="fig-all">8</b><span class="cap" id="fig-all-cap">записей</span></dd></div>
+        <div><dt class="sr-only">Записей за последний год</dt><dd><b class="num" id="fig-year">5</b><span class="cap" id="fig-year-cap">в 2025 году</span></dd></div>
+        <div><dt class="sr-only">Последняя запись</dt><dd><b class="num" id="fig-day">14</b><span class="cap" id="fig-day-cap">октября, последняя запись</span></dd></div>
+      </dl>
+    </div>
+    <span class="hole" aria-hidden="true"></span>
+  </div>
+  <figure class="wphoto">
+    <img src="img/hero-calendar-800.webp" srcset="img/hero-calendar-800.webp 800w, img/hero-calendar-1600.webp 1178w" sizes="(max-width: 900px) 100vw, 50vw" width="1178" height="1510" alt="Лист отрывного календаря с крупным числом 13 и названием месяца" fetchpriority="high">
+  </figure>
+</section>
+
+<section class="feed" id="feed" aria-labelledby="feed-h">
+  <div class="wrap">
+    <div class="catalog__head">
+      <h2 id="feed-h" data-r style="--i:0">Записи</h2>
+    </div>
+    <div class="filters" data-r style="--i:1">
+      <div class="chips" id="f-year" role="group" aria-label="Год"></div>
+      <p class="wcount" id="n-count" aria-live="polite"></p>
+    </div>
+    <p class="state" id="state-loading">Загружаем записи…</p>
+    <noscript><p class="state">Записи собираются скриптом. Включите JavaScript в браузере, чтобы их увидеть.</p></noscript>
+    <p class="state" id="state-error" hidden>Не получилось загрузить записи. Обновите страницу чуть позже.</p>
+    <div class="feed__list" id="n-list"></div>
+    <nav class="pager" id="pager" aria-label="Страницы записей" hidden></nav>
+  </div>
+</section>
+
+<section class="archive on-dark" id="archive" aria-labelledby="archive-h" hidden>
+  <div class="wrap archive__grid">
+    <div class="archive__left">
+      <h2 id="archive-h" data-r style="--i:0">Архив по годам</h2>
+      <p data-r style="--i:1">Нажмите год, чтобы показать только его записи.</p>
+      <p class="wtotal" data-r style="--i:2"><b class="num" id="total-num">8</b><span id="total-cap">записей</span></p>
+    </div>
+    <div class="receipt" data-r style="--i:2">
+      <h3>Записи</h3>
+      <div id="y-rows"></div>
+      <p class="receipt__sum"><span id="y-sum-label">Итого</span><span class="num" id="y-sum">8</span></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- @footer -->
+<footer class="foot">
+  <div class="back">
+    <svg class="scallop" viewBox="0 0 1200 14" preserveAspectRatio="none" aria-hidden="true" style="height:30px"><defs><pattern id="sc" width="60" height="30" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="30" fill="#f6e3da"/></pattern></defs><rect width="1200" height="14" fill="url(#sc)"/></svg>
+    <div class="back__panel">
+      <div class="back__msg" data-r style="--i:0">
+        <h2>Вовк Елена Александровна</h2>
+        <p>Преподаватель Ровеньковского технико-экономического колледжа.</p>
+      </div>
+      <div class="back__addr" data-r style="--i:1">
+        <figure class="stamp"><img src="img/schoty-240.webp" width="240" height="278" alt="Деревянные конторские счёты" loading="lazy" decoding="async"></figure>
+        <span>ГБПОО ЛНР «Ровеньковский технико-экономический колледж»</span>
+        <span>ЛНР, г. Ровеньки, ул. Дзержинского, д. 61</span>
+        <a class="tlink" href="#top">Наверх ↑</a>
+      </div>
+      <nav class="fmap" aria-label="Все страницы сайта" data-r style="--i:2">
+        <div>
+          <h3>О преподавателе</h3>
+          <ul>
+            <li><a href="index.html#about">О преподавателе</a></li>
+            <li><a href="index.html#subjects">Дисциплины</a></li>
+            <li><a href="index.html#education">Образование</a></li>
+            <li><a href="index.html#courses">Повышение квалификации</a></li>
+            <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Работы и студентам</h3>
+          <ul>
+            <li><a href="works.html" data-key="works">Методические работы</a></li>
+            <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
+            <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Новости и колледж</h3>
+          <ul>
+            <li><a href="news.html" data-key="news" aria-current="page">Новости и заметки</a></li>
+            <li><a href="index.html#college">Адрес колледжа</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</footer>
+<!-- /@footer -->
+
+<script src="js/base.js"></script>
+<script src="js/kit.js"></script>
+<script>
+(() => {
+  const { $, el, plural, safeUrl, load, published, chips, query } = window.kit;
+  const { reveal, roll, reduce } = window.site;
+  const PER_PAGE = 4;
+  const N = ['запись', 'записи', 'записей'];
+  const fmt = (d, o) => new Intl.DateTimeFormat('ru-RU', o).format(d);
+  const monthGen = (d) => fmt(d, { day: 'numeric', month: 'long' }).replace(/^\d+\s/, '');
+  let notes = [], leaves = [], year = 'all', page = 1, markYear = () => {};
+
+  const leaf = (n) => {
+    const d = new Date(n.date + 'T12:00:00');
+    const art = el('article', 'leaf');
+    art.dataset.r = '';
+    const date = el('div', 'leaf__date');
+    const valid = !isNaN(d);
+    const time = el('time');
+    time.dateTime = n.date;
+    date.setAttribute('aria-hidden', 'true');
+    date.append(el('span', 'leaf__day num', valid ? d.getDate() : ''), el('span', 'leaf__month', valid ? monthGen(d) : ''),
+      el('span', 'leaf__dow', valid ? fmt(d, { weekday: 'long' }) : ''), el('span', 'leaf__year num', valid ? d.getFullYear() : ''));
+    time.textContent = valid ? fmt(d, { day: 'numeric', month: 'long', year: 'numeric' }) : n.date;
+    time.className = 'sr-only';
+    const body = el('div', 'leaf__body');
+    body.append(el('h3', null, n.title), time);
+    const paras = String(n.text || '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+    const text = el('div', 'leaf__text');
+    if (paras.length) text.append(el('p', null, paras[0]));
+    if (paras.length > 1) {
+      const rest = el('div', 'leaf__text leaf__rest');
+      rest.id = 'rest-' + n.id; rest.hidden = true;
+      paras.slice(1).forEach((p) => rest.append(el('p', null, p)));
+      const more = el('button', 'leaf__more', 'Читать полностью');
+      more.type = 'button';
+      more.setAttribute('aria-expanded', 'false'); more.setAttribute('aria-controls', rest.id);
+      more.addEventListener('click', () => {
+        const open = rest.hidden;
+        rest.hidden = !open;
+        more.setAttribute('aria-expanded', String(open));
+        more.textContent = open ? 'Свернуть' : 'Читать полностью';
+      });
+      text.append(rest);
+      body.append(text, more);
+    } else body.append(text);
+    art.append(date, body);
+    const src = safeUrl(n.image);
+    if (src) {
+      const fig = el('figure', 'leaf__pic');
+      const img = el('img'); img.src = src; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
+      fig.append(img); art.append(fig);
+    } else art.classList.add('leaf--noimg');
+    return art;
+  };
+
+  const pager = $('pager');
+  const renderPager = (pages) => {
+    pager.hidden = pages < 2;
+    if (pages < 2) { pager.replaceChildren(); return; }
+    const btn = (label, p, opts = {}) => {
+      const b = el('button', opts.cls || null);
+      b.type = 'button';
+      if (opts.html) b.append(...opts.html); else b.textContent = label;
+      if (opts.aria) b.setAttribute('aria-label', opts.aria);
+      if (opts.current) b.setAttribute('aria-current', 'page');
+      b.disabled = !!opts.disabled;
+      b.addEventListener('click', () => go({ page: p }, true));
+      return b;
+    };
+    const items = [btn('', page - 1, { cls: 'pager__step', disabled: page === 1, aria: 'Предыдущая страница', html: [el('span', 'arr', '←'), ' Назад'] })];
+    for (let p = 1; p <= pages; p++) items.push(btn(String(p), p, { aria: 'Страница ' + p, current: p === page }));
+    items.push(btn('', page + 1, { cls: 'pager__step', disabled: page === pages, aria: 'Следующая страница', html: ['Вперёд ', el('span', 'arr', '→')] }));
+    pager.replaceChildren(...items);
+  };
+
+  const apply = () => {
+    const hits = notes.map((n, i) => (year === 'all' || n.date.slice(0, 4) === year ? i : -1)).filter((i) => i > -1);
+    const pages = Math.max(1, Math.ceil(hits.length / PER_PAGE));
+    page = Math.min(Math.max(1, page), pages);
+    const from = (page - 1) * PER_PAGE;
+    const shown = new Set(hits.slice(from, from + PER_PAGE));
+    leaves.forEach((l, i) => { l.hidden = !shown.has(i); if (!l.hidden) l.classList.add('is-in'); });
+    $('n-count').textContent = hits.length ? `Показано ${from + 1}–${from + shown.size} из ${hits.length}` : 'Записей нет';
+    markYear(year);
+    renderPager(pages);
+  };
+  // each step is a history entry, so Back returns to the previous page of notes
+  const go = (next, toTop) => {
+    if ('year' in next) { year = next.year; page = 1; }
+    if ('page' in next) page = next.page;
+    query.set({ year, page: page > 1 ? page : '' }, { push: true });
+    apply();
+    if (toTop) $('feed').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  };
+  addEventListener('popstate', () => { year = query.get('year', 'all'); page = Number(query.get('page', '1')) || 1; apply(); });
+
+  load('data/news.json').then((data) => {
+    notes = published(data.news).filter((n) => n.title && /^\d{4}-\d{2}-\d{2}$/.test(n.date || ''))
+      .sort((a, b) => b.date.localeCompare(a.date));
+    $('state-loading').hidden = true;
+    if (!notes.length) { $('state-error').textContent = 'Записи скоро появятся.'; $('state-error').hidden = false; return; }
+
+    const latest = new Date(notes[0].date + 'T12:00:00');
+    const latestYear = notes[0].date.slice(0, 4);
+    const inLatest = notes.filter((n) => n.date.startsWith(latestYear)).length;
+    const fig = (id, v, capId, text) => { $(id).textContent = v; roll([$(id)]); $(capId).textContent = text; };
+    fig('fig-all', notes.length, 'fig-all-cap', plural(notes.length, N));
+    fig('fig-year', inLatest, 'fig-year-cap', 'в ' + latestYear + ' году');
+    fig('fig-day', latest.getDate(), 'fig-day-cap', monthGen(latest) + ', последняя запись');
+
+    leaves = notes.map(leaf);
+    $('n-list').replaceChildren(...leaves);
+    reveal(leaves);
+    const years = [...new Set(notes.map((n) => n.date.slice(0, 4)))];
+    year = query.get('year', 'all');
+    if (year !== 'all' && !years.includes(year)) year = 'all';
+    page = Number(query.get('page', '1')) || 1;
+    markYear = chips($('f-year'), [{ label: 'Все годы', value: 'all' }, ...years.map((y) => ({ label: y, value: y }))], year, (v) => go({ year: v }));
+    apply();
+
+    $('total-num').textContent = notes.length;
+    $('total-cap').textContent = plural(notes.length, N) + ' с ' + years[years.length - 1] + ' года';
+    $('y-rows').replaceChildren(...years.map((y) => {
+      const n = notes.filter((x) => x.date.startsWith(y)).length;
+      const b = el('button', 'rrow'); b.type = 'button';
+      const name = el('span', 'rrow__name'); name.append(el('span', 'num', y + ' год'));
+      b.append(name, el('span', 'rrow__val num', n));
+      b.addEventListener('click', () => go({ year: y }, true));
+      return b;
+    }));
+    $('y-sum').textContent = notes.length;
+    $('y-sum-label').textContent = 'Итого, ' + notes.length + ' ' + plural(notes.length, N);
+    $('archive').hidden = false;
+  }).catch(() => { $('state-loading').hidden = true; $('state-error').hidden = false; });
+})();
+</script>
+</body>
+</html>

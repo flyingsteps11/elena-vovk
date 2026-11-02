@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#351a2b">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Успехи студентов — Е. А. Вовк">
+<meta property="og:description" content="Олимпиады, конкурсы и конференции, в которых студенты преподавателя Е. А. Вовк заняли призовые места.">
+<meta property="og:url" content="https://flyingsteps11.github.io/elena-vovk/student-success.html">
+<meta property="og:image" content="https://flyingsteps11.github.io/elena-vovk/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 fill=%22%23351a2b%22/%3E%3Ctext x=%2232%22 y=%2247%22 font-family=%22Georgia,serif%22 font-size=%2244%22 text-anchor=%22middle%22 fill=%22%23edccbe%22%3EВ%3C/text%3E%3C/svg%3E">
+<title>Успехи студентов — Е. А. Вовк</title>
+<meta name="description" content="Олимпиады, конкурсы и конференции, в которых студенты Елены Александровны Вовк заняли призовые места или выступили с докладами.">
+<link rel="canonical" href="https://flyingsteps11.github.io/elena-vovk/student-success.html">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__pageReady)document.documentElement.classList.remove('js')},2500)</script>
+<link rel="preload" href="fonts/literata-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/hero-class-1950-800.webp" imagesrcset="img/hero-class-1950-800.webp 800w, img/hero-class-1950-1600.webp 1600w" imagesizes="(max-width: 900px) 100vw, 50vw" fetchpriority="high">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/kit.css">
+<style>
+/* Student success: an honour board of wide strips, then the same results counted by level */
+.board{background:var(--surface);padding-block:var(--gap-section)}
+.board__list{display:flex;flex-direction:column;gap:12px;margin-top:32px}
+.honor{display:grid;grid-template-columns:150px minmax(0,1fr) 200px;align-items:stretch;background:var(--paper);transition:transform var(--t-ui) var(--ease-out)}
+.honor[hidden]{display:none}
+.honor--noimg{grid-template-columns:150px minmax(0,1fr)}
+.place{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:24px 12px;background:var(--ink);color:var(--accent-ink);text-align:center}
+.place b{font-size:var(--step-head);font-weight:500;line-height:.9;letter-spacing:-0.03em}
+.place span{font-size:var(--step-small)}
+.place--word b{font-size:var(--step-lead);line-height:1.15;letter-spacing:-0.01em}
+.place--1{background:#57304a}
+.honor__body{display:flex;flex-direction:column;justify-content:center;gap:14px;padding:26px clamp(20px,3vw,40px)}
+.honor__event{font-size:var(--step-lead);line-height:1.25;font-weight:500;text-wrap:pretty}
+.honor__who{font-size:var(--step-small)}
+.honor__pic{margin:0;overflow:clip;background:var(--tone-3)}
+.honor__pic img{width:100%;height:100%;object-fit:cover;transition:transform 900ms var(--ease-soft)}
+@media (hover:hover){
+  .honor:hover{transform:translateX(6px)}
+  .honor:hover .honor__pic img{transform:scale(1.05)}
+}
+.levels{background:var(--field-1);color:var(--field-1-ink);padding-block:var(--gap-section)}
+.levels__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+.levels__left{grid-column:1 / span 6;align-self:start;display:flex;flex-direction:column}
+.levels__left p{margin-top:24px;max-width:40ch}
+@media (max-width:1100px){
+  .levels__left,.levels .receipt{grid-column:1 / -1}
+  .levels .receipt{margin-top:40px}
+}
+@media (max-width:640px){
+  .honor,.honor--noimg{grid-template-columns:96px minmax(0,1fr)}
+  .honor__pic{grid-column:1 / -1;aspect-ratio:16 / 9}
+  .place{padding:18px 8px}
+  .place b{font-size:2.25rem}
+  .place--word b{font-size:var(--step-body)}
+  .honor__body{padding:18px 16px}
+}
+</style>
+</head>
+<body id="top" data-page="success">
+
+<!-- @header -->
+<header class="top on-dark">
+  <div class="bar">
+    <a class="mark" href="index.html">Е. А. Вовк</a>
+    <nav class="nav" aria-label="Разделы">
+      <div class="dd" data-group="about">
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-about">О преподавателе <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-about">
+          <li><a href="index.html#about">О преподавателе</a></li>
+          <li><a href="index.html#subjects">Дисциплины</a></li>
+          <li><a href="index.html#education">Образование</a></li>
+          <li><a href="index.html#courses">Повышение квалификации</a></li>
+          <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="works.html" data-key="works">Работы</a>
+      <div class="dd" data-group="students" data-current>
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-students">Студентам <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-students">
+          <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
+          <li><a href="student-success.html" data-key="success" aria-current="page">Успехи студентов</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="news.html" data-key="news">Новости</a>
+    </nav>
+    <button class="btn btn--light menu-btn" type="button" aria-expanded="false" aria-controls="mnav">Меню</button>
+  </div>
+</header>
+<nav class="mnav on-dark" id="mnav" aria-label="Разделы" tabindex="-1" hidden>
+  <div class="mnav__bar"><a class="mark" href="index.html">Е. А. Вовк</a><button class="btn btn--light mnav__close" type="button">Закрыть</button></div>
+  <div class="mnav__groups">
+    <div class="mnav__group" style="--k:0">
+      <p class="mnav__h">О преподавателе</p>
+      <ul>
+        <li><a href="index.html#about">О преподавателе</a></li>
+        <li><a href="index.html#subjects">Дисциплины</a></li>
+        <li><a href="index.html#education">Образование</a></li>
+        <li><a href="index.html#courses">Повышение квалификации</a></li>
+        <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:1">
+      <p class="mnav__h">Работы</p>
+      <ul><li><a href="works.html" data-key="works">Методические работы</a></li></ul>
+    </div>
+    <div class="mnav__group" style="--k:2">
+      <p class="mnav__h">Студентам</p>
+      <ul>
+        <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
+        <li><a href="student-success.html" data-key="success" aria-current="page">Успехи студентов</a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:3">
+      <p class="mnav__h">Новости</p>
+      <ul><li><a href="news.html" data-key="news">Новости и заметки</a></li></ul>
+    </div>
+  </div>
+</nav>
+<!-- /@header -->
+
+<main>
+<section class="whero on-dark" aria-labelledby="page-h">
+  <div class="wcardhead">
+    <div class="stripe" aria-hidden="true"></div>
+    <div class="wcardhead__body">
+      <h1 id="page-h"><span class="line"><span style="--l:0">Успехи</span></span> <span class="line"><span style="--l:1">студентов</span></span></h1>
+      <p class="wcardhead__lead" data-load style="--d:420ms">Олимпиады, конкурсы и конференции, в которых студенты Елены Александровны заняли призовые места или выступили с докладами.</p>
+      <a class="btn" href="#board" data-load style="--d:520ms">Доска почёта <span class="arr" aria-hidden="true">↓</span></a>
+      <dl class="wfigs" data-load style="--d:600ms">
+        <div><dt class="sr-only">Призовых мест</dt><dd><b class="num" id="fig-prize">5</b><span class="cap" id="fig-prize-cap">призовых мест</span></dd></div>
+        <div><dt class="sr-only">Первых мест</dt><dd><b class="num" id="fig-first">2</b><span class="cap" id="fig-first-cap">первых места</span></dd></div>
+        <div><dt class="sr-only">Мероприятий</dt><dd><b class="num" id="fig-all">7</b><span class="cap" id="fig-all-cap">мероприятий</span></dd></div>
+      </dl>
+    </div>
+    <span class="hole" aria-hidden="true"></span>
+  </div>
+  <figure class="wphoto">
+    <img src="img/hero-class-1950-800.webp" srcset="img/hero-class-1950-800.webp 800w, img/hero-class-1950-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" width="1600" height="1280" alt="Студенты технического института за лабораторными столами в светлой аудитории с большими окнами" fetchpriority="high">
+  </figure>
+</section>
+
+<section class="board" id="board" aria-labelledby="board-h">
+  <div class="wrap">
+    <div class="catalog__head">
+      <h2 id="board-h" data-r style="--i:0">Доска почёта</h2>
+    </div>
+    <div class="filters" data-r style="--i:1">
+      <div class="chips" id="f-level" role="group" aria-label="Уровень"></div>
+      <div class="chips" id="f-year" role="group" aria-label="Год"></div>
+      <p class="wcount" id="s-count" aria-live="polite"></p>
+    </div>
+    <p class="state" id="state-loading">Загружаем результаты…</p>
+    <noscript><p class="state">Доска почёта собирается скриптом. Включите JavaScript в браузере, чтобы её увидеть.</p></noscript>
+    <p class="state" id="state-error" hidden>Не получилось загрузить результаты. Обновите страницу чуть позже.</p>
+    <div class="state" id="state-empty" hidden><p>Результатов с такими условиями нет.</p><button class="btn" type="button" id="reset">Показать все</button></div>
+    <ol class="board__list" id="s-list" aria-label="Результаты студентов"></ol>
+  </div>
+</section>
+
+<section class="levels on-dark" id="levels" aria-labelledby="levels-h" hidden>
+  <div class="wrap levels__grid">
+    <div class="levels__left">
+      <h2 id="levels-h" data-r style="--i:0">По уровням</h2>
+      <p data-r style="--i:1">От олимпиад внутри колледжа до всероссийских конкурсов. Нажмите строку, чтобы показать результаты этого уровня.</p>
+      <p class="wtotal" data-r style="--i:2"><b class="num" id="total-num">5</b><span id="total-cap">призовых мест</span></p>
+    </div>
+    <div class="receipt" data-r style="--i:2">
+      <h3>Мероприятия</h3>
+      <div id="l-rows"></div>
+      <p class="receipt__sum"><span id="l-sum-label">Итого</span><span class="num" id="l-sum">7</span></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- @footer -->
+<footer class="foot">
+  <div class="back">
+    <svg class="scallop" viewBox="0 0 1200 14" preserveAspectRatio="none" aria-hidden="true" style="height:30px"><defs><pattern id="sc" width="60" height="30" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="30" fill="#f6e3da"/></pattern></defs><rect width="1200" height="14" fill="url(#sc)"/></svg>
+    <div class="back__panel">
+      <div class="back__msg" data-r style="--i:0">
+        <h2>Вовк Елена Александровна</h2>
+        <p>Преподаватель Ровеньковского технико-экономического колледжа.</p>
+      </div>
+      <div class="back__addr" data-r style="--i:1">
+        <figure class="stamp"><img src="img/schoty-240.webp" width="240" height="278" alt="Деревянные конторские счёты" loading="lazy" decoding="async"></figure>
+        <span>ГБПОО ЛНР «Ровеньковский технико-экономический колледж»</span>
+        <span>ЛНР, г. Ровеньки, ул. Дзержинского, д. 61</span>
+        <a class="tlink" href="#top">Наверх ↑</a>
+      </div>
+      <nav class="fmap" aria-label="Все страницы сайта" data-r style="--i:2">
+        <div>
+          <h3>О преподавателе</h3>
+          <ul>
+            <li><a href="index.html#about">О преподавателе</a></li>
+            <li><a href="index.html#subjects">Дисциплины</a></li>
+            <li><a href="index.html#education">Образование</a></li>
+            <li><a href="index.html#courses">Повышение квалификации</a></li>
+            <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Работы и студентам</h3>
+          <ul>
+            <li><a href="works.html" data-key="works">Методические работы</a></li>
+            <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
+            <li><a href="student-success.html" data-key="success" aria-current="page">Успехи студентов</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Новости и колледж</h3>
+          <ul>
+            <li><a href="news.html" data-key="news">Новости и заметки</a></li>
+            <li><a href="index.html#college">Адрес колледжа</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</footer>
+<!-- /@footer -->
+
+<script src="js/base.js"></script>
+<script src="js/kit.js"></script>
+<script>
+(() => {
+  const { $, el, plural, safeUrl, load, published, chips, query } = window.kit;
+  const { reveal, roll, reduce } = window.site;
+  const LEVELS = ['Всероссийский', 'Региональный', 'Колледж'];
+  const E = ['мероприятие', 'мероприятия', 'мероприятий'];
+  let items = [], rows = [], level = query.get('level', 'all'), year = query.get('year', 'all');
+  let markLevel = () => {}, markYear = () => {};
+  const placeOf = (r) => (String(r || '').match(/^(\d)\s*мест/) || [])[1];
+
+  const strip = (s, i) => {
+    const li = el('li', 'honor');
+    li.dataset.r = ''; li.style.setProperty('--i', i % 4);
+    const n = placeOf(s.result);
+    const place = el('div', n ? 'place place--' + n : 'place place--word');
+    if (n) place.append(el('b', 'num', n), el('span', null, 'место'));
+    else place.append(el('b', null, s.result || 'Участие'));
+    const body = el('div', 'honor__body');
+    const meta = el('p', 'meta');
+    if (s.level) meta.append(el('span', 'fmt', s.level));
+    if (s.discipline) meta.append(el('span', 'code num', s.discipline));
+    if (s.year) meta.append(el('span', 'num', String(s.year)));
+    body.append(el('p', 'honor__event', s.event), meta);
+    if (s.group) body.append(el('p', 'honor__who', s.group));
+    li.append(place, body);
+    const src = safeUrl(s.image);
+    if (src) {
+      const fig = el('figure', 'honor__pic');
+      const img = el('img'); img.src = src; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
+      fig.append(img); li.append(fig);
+    } else li.classList.add('honor--noimg');
+    return li;
+  };
+
+  const apply = () => {
+    let n = 0;
+    rows.forEach((r, i) => {
+      const s = items[i];
+      const on = (level === 'all' || s.level === level) && (year === 'all' || String(s.year) === year);
+      r.hidden = !on; if (on) n++;
+    });
+    $('s-count').textContent = 'Показано ' + n + ' ' + plural(n, E);
+    $('state-empty').hidden = n > 0;
+    markLevel(level); markYear(year);
+    query.set({ level, year });
+  };
+
+  load('data/student-success.json').then((data) => {
+    items = published(data.items).filter((s) => s.event)
+      .sort((a, b) => (Number(b.year) || 0) - (Number(a.year) || 0) || (placeOf(a.result) || 9) - (placeOf(b.result) || 9));
+    $('state-loading').hidden = true;
+    if (!items.length) { $('state-error').textContent = 'Результаты скоро появятся.'; $('state-error').hidden = false; return; }
+
+    const prizes = items.filter((s) => placeOf(s.result)).length;
+    const firsts = items.filter((s) => placeOf(s.result) === '1').length;
+    const fig = (id, v, capId, text) => { $(id).textContent = v; roll([$(id)]); $(capId).textContent = text; };
+    fig('fig-prize', prizes, 'fig-prize-cap', plural(prizes, ['призовое место', 'призовых места', 'призовых мест']));
+    fig('fig-first', firsts, 'fig-first-cap', plural(firsts, ['первое место', 'первых места', 'первых мест']));
+    fig('fig-all', items.length, 'fig-all-cap', plural(items.length, E));
+
+    rows = items.map(strip);
+    $('s-list').replaceChildren(...rows);
+    reveal(rows);
+
+    const levels = LEVELS.filter((l) => items.some((s) => s.level === l))
+      .concat([...new Set(items.map((s) => s.level).filter((l) => l && !LEVELS.includes(l)))]);
+    const years = [...new Set(items.map((s) => s.year).filter(Boolean))].sort((a, b) => b - a).map(String);
+    if (level !== 'all' && !levels.includes(level)) level = 'all';
+    if (year !== 'all' && !years.includes(year)) year = 'all';
+    markLevel = chips($('f-level'), [{ label: 'Все уровни', value: 'all' }, ...levels.map((l) => ({ label: l, value: l }))], level, (v) => { level = v; apply(); });
+    markYear = chips($('f-year'), [{ label: 'Все годы', value: 'all' }, ...years.map((y) => ({ label: y, value: y }))], year, (v) => { year = v; apply(); });
+    $('reset').addEventListener('click', () => { level = 'all'; year = 'all'; apply(); });
+    apply();
+
+    $('total-num').textContent = prizes;
+    $('total-cap').textContent = plural(prizes, ['призовое место', 'призовых места', 'призовых мест']) + ' у студентов';
+    $('l-rows').replaceChildren(...levels.map((l) => {
+      const list = items.filter((s) => s.level === l);
+      const ys = [...new Set(list.map((s) => s.year).filter(Boolean))].sort();
+      const b = el('button', 'rrow'); b.type = 'button';
+      const name = el('span', 'rrow__name'); name.append(el('span', null, l === 'Колледж' ? 'Внутри колледжа' : l + ' уровень'));
+      b.append(name, el('span', 'rrow__val num', list.length), el('span', 'rrow__who num', ys.join(', ')));
+      b.addEventListener('click', () => { level = l; year = 'all'; apply(); $('board').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); });
+      return b;
+    }));
+    $('l-sum').textContent = items.length;
+    $('l-sum-label').textContent = 'Итого, ' + items.length + ' ' + plural(items.length, E);
+    $('levels').hidden = false;
+  }).catch(() => { $('state-loading').hidden = true; $('state-error').hidden = false; });
+})();
+</script>
+</body>
+</html>

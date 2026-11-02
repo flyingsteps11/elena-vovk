@@ -1,0 +1,57 @@
+<header class="top on-dark">
+  <div class="bar">
+    <a class="mark" href="{{root}}index.html">Е. А. Вовк</a>
+    <nav class="nav" aria-label="Разделы">
+      <div class="dd" data-group="about">
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-about">О преподавателе <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-about">
+          <li><a href="{{root}}index.html#about">О преподавателе</a></li>
+          <li><a href="{{root}}index.html#subjects">Дисциплины</a></li>
+          <li><a href="{{root}}index.html#education">Образование</a></li>
+          <li><a href="{{root}}index.html#courses">Повышение квалификации</a></li>
+          <li><a href="{{root}}achievements.html" data-key="achievements">Достижения и документы</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="{{root}}works.html" data-key="works">Работы</a>
+      <div class="dd" data-group="students">
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-students">Студентам <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-students">
+          <li><a href="{{root}}students.html" data-key="materials">Материалы к занятиям</a></li>
+          <li><a href="{{root}}student-success.html" data-key="success">Успехи студентов</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="{{root}}news.html" data-key="news">Новости</a>
+    </nav>
+    <button class="btn btn--light menu-btn" type="button" aria-expanded="false" aria-controls="mnav">Меню</button>
+  </div>
+</header>
+<nav class="mnav on-dark" id="mnav" aria-label="Разделы" tabindex="-1" hidden>
+  <div class="mnav__bar"><a class="mark" href="{{root}}index.html">Е. А. Вовк</a><button class="btn btn--light mnav__close" type="button">Закрыть</button></div>
+  <div class="mnav__groups">
+    <div class="mnav__group" style="--k:0">
+      <p class="mnav__h">О преподавателе</p>
+      <ul>
+        <li><a href="{{root}}index.html#about">О преподавателе</a></li>
+        <li><a href="{{root}}index.html#subjects">Дисциплины</a></li>
+        <li><a href="{{root}}index.html#education">Образование</a></li>
+        <li><a href="{{root}}index.html#courses">Повышение квалификации</a></li>
+        <li><a href="{{root}}achievements.html" data-key="achievements">Достижения и документы</a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:1">
+      <p class="mnav__h">Работы</p>
+      <ul><li><a href="{{root}}works.html" data-key="works">Методические работы</a></li></ul>
+    </div>
+    <div class="mnav__group" style="--k:2">
+      <p class="mnav__h">Студентам</p>
+      <ul>
+        <li><a href="{{root}}students.html" data-key="materials">Материалы к занятиям</a></li>
+        <li><a href="{{root}}student-success.html" data-key="success">Успехи студентов</a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:3">
+      <p class="mnav__h">Новости</p>
+      <ul><li><a href="{{root}}news.html" data-key="news">Новости и заметки</a></li></ul>
+    </div>
+  </div>
+</nav>

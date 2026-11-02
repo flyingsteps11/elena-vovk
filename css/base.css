@@ -59,9 +59,22 @@ h3{font-weight:500;letter-spacing:-0.01em;line-height:1.12;font-size:var(--step-
 .top{background:var(--field-1);color:var(--field-1-ink)}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:72px;padding-inline:var(--m)}
 .mark{font-weight:600;font-size:var(--step-body);text-decoration:none;letter-spacing:-0.01em;white-space:nowrap}
-.nav{display:flex;gap:clamp(16px,2vw,32px);font-size:var(--step-small)}
-.nav a{text-decoration:underline;text-decoration-color:transparent;padding:6px 0;transition:text-decoration-color var(--t-hover) ease}
-.nav a:hover,.nav a[aria-current="page"]{text-decoration-color:currentColor}
+.nav{display:flex;align-items:center;gap:clamp(20px,2.6vw,40px);font-size:var(--step-small)}
+.nav__link,.dd__btn{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0;background:none;border:0;color:inherit;font:inherit;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:.3em;transition:text-decoration-color var(--t-hover) ease}
+.nav__link:hover,.nav__link[aria-current="page"],.dd__btn:hover,.dd[data-current] .dd__btn,.dd.is-open .dd__btn{text-decoration-color:currentColor}
+.dd__chev{display:inline-block;font-size:.8em;transition:transform var(--t-ui) var(--ease-out)}
+.dd.is-open .dd__chev{transform:rotate(180deg)}
+/* Header dropdown: a paper slip under the bar */
+.dd{position:relative}
+.dd__list{display:none;position:absolute;top:calc(100% + 12px);left:-20px;z-index:50;min-width:270px;margin:0;padding:8px 0;background:var(--paper);color:var(--ink)}
+.dd:last-of-type .dd__list{left:auto;right:-20px}
+.dd__list::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
+.dd.is-open .dd__list{display:block;opacity:1;transform:none;transition:opacity 160ms var(--ease-out),transform 160ms var(--ease-out)}
+@starting-style{.dd.is-open .dd__list{opacity:0;transform:translateY(-6px)}}
+.dd__list a{display:block;padding:11px 20px;text-decoration:none;transition:background-color var(--t-hover) ease}
+.dd__list a:hover{background:var(--tone-3)}
+.dd__list a[aria-current="page"]{background:var(--ink);color:var(--accent-ink)}
+.on-dark .dd__list :focus-visible{outline-color:var(--ink);outline-offset:-3px}
 .bar .btn{min-height:44px;padding:0 18px;font-size:var(--step-small)}
 .top{position:sticky;top:0;z-index:40}
 section[id]{scroll-margin-top:72px}
@@ -73,12 +86,15 @@ section[id]{scroll-margin-top:72px}
 .mnav.is-open{opacity:1;visibility:visible;transition:opacity 240ms var(--ease-out)}
 .mnav__bar{display:flex;align-items:center;justify-content:space-between;min-height:60px;padding-top:env(safe-area-inset-top)}
 .mnav__bar .btn{min-height:44px;padding:0 14px;font-size:var(--step-small)}
-.mnav__list{margin-top:auto;display:flex;flex-direction:column;gap:4px}
-.mnav__list a{display:block;padding:10px 0;font-size:clamp(2rem,9vw,2.75rem);line-height:1.1;letter-spacing:-0.02em;text-decoration:none;border-bottom:2px dotted color-mix(in srgb,var(--field-1-ink) 40%,transparent)}
-.mnav__list li{transform:translateY(16px);opacity:0;transition:transform 400ms var(--ease-out),opacity 300ms ease}
-.mnav.is-open .mnav__list li{transform:none;opacity:1;transition-delay:calc(60ms + var(--k) * 40ms)}
+.mnav{overflow-y:auto;overscroll-behavior:contain}
+.mnav__groups{margin-top:auto;padding-top:24px;display:flex;flex-direction:column;gap:22px}
+.mnav__h{font-size:var(--step-small);color:color-mix(in srgb,var(--field-1-ink) 75%,transparent);margin-bottom:2px}
+.mnav__group a{display:block;padding:7px 0;font-size:clamp(1.5rem,6.6vw,2rem);line-height:1.15;letter-spacing:-0.02em;text-decoration:none;border-bottom:2px dotted color-mix(in srgb,var(--field-1-ink) 40%,transparent)}
+.mnav__group a[aria-current="page"]{text-decoration:underline;text-underline-offset:.2em}
+.mnav__group{transform:translateY(16px);opacity:0;transition:transform 400ms var(--ease-out),opacity 300ms ease}
+.mnav.is-open .mnav__group{transform:none;opacity:1;transition-delay:calc(60ms + var(--k) * 50ms)}
 .menu-open,.menu-open body{overflow:hidden}
-@media (prefers-reduced-motion:reduce){.mnav,.mnav.is-open,.mnav__list li{transition:none}.mnav__list li{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.mnav,.mnav.is-open,.mnav__group,.dd__list,.dd__chev{transition:none}.mnav__group{transform:none;opacity:1}}
 
 /* Striped band on top of a paper card */
 .stripe{display:flex;width:100%;min-width:0;height:56px;flex:none;overflow:clip}
@@ -96,6 +112,12 @@ section[id]{scroll-margin-top:72px}
 .stamp{width:96px;background:var(--paper);padding:6px;outline:4px dotted var(--muted);outline-offset:-2px;margin:0 0 20px auto;transform:rotate(3deg);transition:transform var(--t-ui) var(--ease-out)}
 .stamp:hover{transform:rotate(0)}
 .stamp img{aspect-ratio:3/4;object-fit:cover;width:100%}
+/* Every page of the site, on the back of the card */
+.fmap{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 48px;padding-top:36px;border-top:5px dotted var(--ink)}
+.fmap h3{font-size:var(--step-body);font-weight:600;margin-bottom:12px}
+.fmap ul{display:flex;flex-direction:column;gap:6px;font-size:var(--step-small)}
+.fmap a{display:inline-block;padding:4px 0;text-decoration:underline;text-decoration-color:transparent;transition:text-decoration-color var(--t-hover) ease}
+.fmap a:hover,.fmap a[aria-current="page"]{text-decoration-color:currentColor}
 
 /* Motion: reveals (hidden state only with script and motion allowed) */
 @media (prefers-reduced-motion:no-preference){
@@ -120,16 +142,18 @@ section[id]{scroll-margin-top:72px}
 .roll__strip::before{content:"0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9";white-space:pre;line-height:1;display:block}
 
 @media (max-width:900px){
-  .nav,.bar__cta{display:none}
+  .nav{display:none}
   .menu-btn{display:inline-flex}
   section[id]{scroll-margin-top:60px}
   .back__panel{grid-template-columns:1fr}
   .back__addr{border-left:0;padding-left:0;border-top:5px dotted var(--ink);padding-top:28px}
+  .fmap{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:640px){
   .bar{min-height:60px}
   .bar .btn{padding:0 14px}
   .stripe{height:40px}
+  .fmap{grid-template-columns:1fr}
 }
 /* Touch: no sticky hover, no tap flash, instant taps */
 html{-webkit-tap-highlight-color:transparent}

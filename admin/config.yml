@@ -106,3 +106,130 @@ collections:
                 label: Показывать на сайте
                 widget: boolean
                 default: true
+
+  - name: students
+    label: Студентам
+    files:
+      - name: materials
+        label: Материалы к занятиям
+        file: data/materials.json
+        format: json
+        media_folder: /uploads/materials
+        public_folder: /uploads/materials
+        fields:
+          - name: disciplines
+            label: Дисциплины
+            label_singular: дисциплину
+            widget: list
+            summary: "{{fields.code}} · {{fields.name}}"
+            fields:
+              - { name: id, label: Код для связи, hint: "Латиницей, например budget. Его выбирают у материалов.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
+              - { name: code, label: Код МДК, widget: string }
+              - { name: name, label: Название дисциплины, widget: string }
+              - { name: specialty, label: Специальность, widget: string, required: false }
+              - { name: about, label: Коротко о дисциплине, widget: text, required: false }
+              - { name: image, label: Картинка папки, widget: image, required: false }
+          - name: materials
+            label: Материалы
+            label_singular: материал
+            widget: list
+            add_to_top: true
+            summary: "{{fields.discipline}} · {{fields.kind}} · {{fields.title}}"
+            fields:
+              - { name: title, label: Название, widget: string }
+              - name: discipline
+                label: Дисциплина
+                hint: Код для связи из списка дисциплин выше.
+                widget: select
+                options:
+                  - { label: "Расчёты с бюджетами (budget)", value: budget }
+                  - { label: "Анализ бухгалтерской отчётности (analysis)", value: analysis }
+                  - { label: "Инвентаризация (inventory)", value: inventory }
+                  - { label: "Документация по эксплуатации оборудования (electro-docs)", value: electro-docs }
+                  - { label: "Планирование работы подразделения (planning)", value: planning }
+              - { name: kind, label: Вид, widget: select, options: [Задания, Вопросы к экзамену, Методические указания, Ссылка] }
+              - { name: note, label: Пояснение, widget: string, required: false }
+              - { name: file, label: Файл, hint: "PDF, DOCX или PPTX, до 20 МБ.", widget: file, required: false }
+              - { name: link, label: Ссылка, hint: "Если материал на другом сайте.", widget: string, required: false }
+              - { name: id, label: Код записи, widget: string, required: false }
+              - { name: published, label: Показывать на сайте, widget: boolean, default: true }
+      - name: success
+        label: Успехи студентов
+        file: data/student-success.json
+        format: json
+        media_folder: /uploads/success
+        public_folder: /uploads/success
+        fields:
+          - name: items
+            label: Результаты
+            label_singular: результат
+            widget: list
+            add_to_top: true
+            summary: "{{fields.year}} · {{fields.result}} · {{fields.event}}"
+            fields:
+              - { name: event, label: Мероприятие, widget: string }
+              - { name: result, label: Результат, hint: "Например: 1 место, 2 место, Лауреат, Диплом участника.", widget: string }
+              - { name: level, label: Уровень, widget: select, options: [Всероссийский, Региональный, Колледж] }
+              - { name: group, label: Кто, hint: "Без фамилий без согласия студентов: «Студенты группы ЭБУ-22».", widget: string, required: false }
+              - { name: discipline, label: Код дисциплины, widget: string, required: false }
+              - { name: year, label: Год, widget: number, value_type: int, min: 1990, max: 2100 }
+              - { name: image, label: Фото, widget: image, required: false }
+              - { name: id, label: Код записи, widget: string, required: false }
+              - { name: published, label: Показывать на сайте, widget: boolean, default: true }
+
+  - name: about
+    label: О преподавателе
+    files:
+      - name: achievements
+        label: Достижения и документы
+        file: data/achievements.json
+        format: json
+        media_folder: /uploads/achievements
+        public_folder: /uploads/achievements
+        fields:
+          - name: category
+            label: Квалификационная категория
+            widget: object
+            fields:
+              - { name: title, label: Категория, hint: "Например: Высшая квалификационная категория. Первое слово попадает в печать.", widget: string }
+              - { name: year, label: Год присвоения, widget: number, value_type: int, required: false }
+              - { name: note, label: Пояснение, widget: text, required: false }
+          - name: awards
+            label: Грамоты и сертификаты
+            label_singular: документ
+            widget: list
+            add_to_top: true
+            summary: "{{fields.year}} · {{fields.kind}} · {{fields.title}}"
+            fields:
+              - { name: title, label: Название, widget: string }
+              - { name: kind, label: Вид, widget: select, options: [Грамота, Благодарность, Диплом, Сертификат, Удостоверение] }
+              - { name: issuer, label: Кем выдан, widget: string, required: false }
+              - { name: year, label: Год, widget: number, value_type: int, min: 1990, max: 2100 }
+              - { name: image, label: Скан или фото, widget: image, required: false }
+              - { name: file, label: Файл (PDF), widget: file, required: false }
+              - { name: id, label: Код записи, widget: string, required: false }
+              - { name: published, label: Показывать на сайте, widget: boolean, default: true }
+
+  - name: news
+    label: Новости
+    files:
+      - name: news
+        label: Новости и заметки
+        file: data/news.json
+        format: json
+        media_folder: /uploads/news
+        public_folder: /uploads/news
+        fields:
+          - name: news
+            label: Записи
+            label_singular: запись
+            widget: list
+            add_to_top: true
+            summary: "{{fields.date}} · {{fields.title}}"
+            fields:
+              - { name: date, label: Дата, widget: datetime, time_format: false, date_format: "YYYY-MM-DD", format: "YYYY-MM-DD" }
+              - { name: title, label: Заголовок, hint: "Коротко, до 60 знаков.", widget: string }
+              - { name: text, label: Текст, hint: "Абзацы разделяйте пустой строкой. Первый абзац виден сразу.", widget: text }
+              - { name: image, label: Фото, widget: image, required: false }
+              - { name: id, label: Код записи, widget: string, required: false }
+              - { name: published, label: Показывать на сайте, widget: boolean, default: true }

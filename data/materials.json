@@ -1,0 +1,60 @@
+{
+  "disciplines": [
+    {
+      "id": "budget",
+      "code": "МДК 01.02 · МДК 03.01",
+      "name": "Организация расчётов с бюджетами бюджетной системы РФ",
+      "specialty": "38.02.01 Экономика и бухгалтерский учёт",
+      "about": "Налоги и сборы, порядок расчётов с бюджетом и внебюджетными фондами, отражение расчётов на счетах бухгалтерского учёта.",
+      "image": "img/invoice-1772-640.webp"
+    },
+    {
+      "id": "analysis",
+      "code": "МДК 04.02 · 02.03",
+      "name": "Основы анализа бухгалтерской отчётности",
+      "specialty": "38.02.01 Экономика и бухгалтерский учёт",
+      "about": "Чтение баланса и отчёта о финансовых результатах, горизонтальный и вертикальный анализ, коэффициенты ликвидности и устойчивости.",
+      "image": "img/pacioli-480.webp"
+    },
+    {
+      "id": "inventory",
+      "code": "МДК 02.02",
+      "name": "Бухгалтерская технология проведения и оформления инвентаризации",
+      "specialty": "38.02.01 Экономика и бухгалтерский учёт",
+      "about": "Подготовка и проведение инвентаризации, инвентаризационные описи, сличительные ведомости, отражение результатов в учёте.",
+      "image": "img/ledger-1833-480.webp"
+    },
+    {
+      "id": "electro-docs",
+      "code": "МДК 02.02",
+      "name": "Разработка документации по эксплуатации электрического и электромеханического оборудования",
+      "specialty": "13.02.13 Эксплуатация и обслуживание электрического и электромеханического оборудования",
+      "about": "Паспорта и журналы оборудования, графики планово-предупредительного ремонта, техническая документация участка.",
+      "image": "img/class-1950-640.webp"
+    },
+    {
+      "id": "planning",
+      "code": "МДК 03.01",
+      "name": "Планирование и организация работы структурного подразделения",
+      "specialty": "13.02.13 Эксплуатация и обслуживание электрического и электромеханического оборудования",
+      "about": "Планирование работ участка, расстановка персонала, расчёт затрат и показателей работы подразделения.",
+      "image": "img/adding-machine-640.webp"
+    }
+  ],
+  "materials": [
+    { "id": "nds-zadachi", "discipline": "budget", "kind": "Задания", "title": "Задачи по НДС: расчёт к уплате и книга продаж", "note": "К практическим занятиям 5–7", "file": "/uploads/materials/zadachi-nds.pdf", "link": "", "published": true },
+    { "id": "budget-ekzamen", "discipline": "budget", "kind": "Вопросы к экзамену", "title": "Вопросы к экзамену по МДК 01.02", "note": "", "file": "", "link": "", "published": true },
+    { "id": "nk-rf-2", "discipline": "budget", "kind": "Ссылка", "title": "Налоговый кодекс РФ, часть вторая", "note": "КонсультантПлюс", "file": "", "link": "https://www.consultant.ru/document/cons_doc_LAW_28165/", "published": true },
+    { "id": "fns", "discipline": "budget", "kind": "Ссылка", "title": "Сайт Федеральной налоговой службы", "note": "Формы деклараций и разъяснения", "file": "", "link": "https://www.nalog.gov.ru/", "published": true },
+    { "id": "balans-zadaniya", "discipline": "analysis", "kind": "Задания", "title": "Задания по анализу бухгалтерского баланса", "note": "С ответами для самопроверки", "file": "/uploads/materials/zadaniya-analiz-balansa.pdf", "link": "", "published": true },
+    { "id": "analysis-mu", "discipline": "analysis", "kind": "Методические указания", "title": "Методические указания к практическим работам", "note": "", "file": "", "link": "", "published": true },
+    { "id": "analysis-zachet", "discipline": "analysis", "kind": "Вопросы к экзамену", "title": "Вопросы к дифференцированному зачёту", "note": "", "file": "", "link": "", "published": true },
+    { "id": "66n", "discipline": "analysis", "kind": "Ссылка", "title": "Формы бухгалтерской отчётности (приказ Минфина № 66н)", "note": "КонсультантПлюс", "file": "", "link": "https://www.consultant.ru/document/cons_doc_LAW_103394/", "published": true },
+    { "id": "inv-mu", "discipline": "inventory", "kind": "Методические указания", "title": "Методические указания: проведение инвентаризации", "note": "От приказа до сличительной ведомости", "file": "/uploads/materials/metodichka-inventarizaciya.pdf", "link": "", "published": true },
+    { "id": "inv-zadaniya", "discipline": "inventory", "kind": "Задания", "title": "Задания: сличительная ведомость и выявление расхождений", "note": "", "file": "", "link": "", "published": true },
+    { "id": "electro-pasport", "discipline": "electro-docs", "kind": "Задания", "title": "Задания: паспорт и журнал учёта оборудования", "note": "", "file": "", "link": "", "published": true },
+    { "id": "electro-ekzamen", "discipline": "electro-docs", "kind": "Вопросы к экзамену", "title": "Вопросы к экзамену по МДК 02.02", "note": "", "file": "", "link": "", "published": true },
+    { "id": "plan-igra", "discipline": "planning", "kind": "Задания", "title": "Задания к деловой игре «Планирование работы участка»", "note": "", "file": "", "link": "", "published": true },
+    { "id": "plan-zachet", "discipline": "planning", "kind": "Вопросы к экзамену", "title": "Вопросы к зачёту по МДК 03.01", "note": "", "file": "", "link": "", "published": true }
+  ]
+}

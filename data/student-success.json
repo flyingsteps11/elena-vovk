@@ -1,0 +1,11 @@
+{
+  "items": [
+    { "id": "olimp-buh-2025", "event": "Региональная олимпиада по бухгалтерскому учёту", "result": "2 место", "level": "Региональный", "group": "Студенты группы ЭБУ-22", "discipline": "МДК 02.02", "year": 2025, "image": "/uploads/success/sample-medal.webp", "published": true },
+    { "id": "fingramotnost-2025", "event": "Всероссийский конкурс студенческих работ «Финансовая грамотность»", "result": "Лауреат", "level": "Всероссийский", "group": "Студентка группы ЭБУ-23", "discipline": "МДК 01.02", "year": 2025, "image": "/uploads/success/sample-cups.webp", "published": true },
+    { "id": "olimp-nalogi-2025", "event": "Олимпиада колледжа по налогам и налогообложению", "result": "1 место", "level": "Колледж", "group": "Студент группы ЭБУ-22", "discipline": "МДК 01.02", "year": 2025, "image": "", "published": true },
+    { "id": "konf-ekonomika-2024", "event": "Студенческая научно-практическая конференция «Экономика региона»", "result": "Диплом участника", "level": "Региональный", "group": "Студенты группы ЭБУ-21", "discipline": "МДК 04.02", "year": 2024, "image": "/uploads/success/sample-medal-bronze.webp", "published": true },
+    { "id": "masterstvo-2024", "event": "Конкурс профессионального мастерства, компетенция «Бухгалтерский учёт»", "result": "3 место", "level": "Региональный", "group": "Студентка группы ЭБУ-21", "discipline": "МДК 02.02", "year": 2024, "image": "", "published": true },
+    { "id": "olimp-analiz-2024", "event": "Олимпиада колледжа по анализу бухгалтерской отчётности", "result": "1 место", "level": "Колледж", "group": "Студентка группы ЭБУ-21", "discipline": "МДК 04.02", "year": 2024, "image": "", "published": true },
+    { "id": "kursovye-2023", "event": "Конкурс курсовых работ по экономическим дисциплинам", "result": "2 место", "level": "Колледж", "group": "Студент группы ЭМО-20", "discipline": "МДК 03.01", "year": 2023, "image": "", "published": true }
+  ]
+}
