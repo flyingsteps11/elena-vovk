@@ -17,9 +17,9 @@
 <title>Методические работы — Е. А. Вовк</title>
 <meta name="description" content="Методические разработки, конспекты уроков, статьи и презентации Елены Александровны Вовк, преподавателя Ровеньковского технико-экономического колледжа.">
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__pageReady)document.documentElement.classList.remove('js')},2500)</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400;1,7..72,500&display=swap&subset=cyrillic" rel="stylesheet">
+<link rel="preload" href="fonts/literata-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/catalog-drawer-800.webp" imagesrcset="img/catalog-drawer-800.webp 800w, img/catalog-drawer.webp 1600w" imagesizes="(max-width: 900px) 100vw, 50vw" fetchpriority="high">
 <link rel="stylesheet" href="css/base.css">
 <style>
 /* Works page only; shared rules live in css/base.css */
@@ -78,6 +78,19 @@
 .wcard:has(.wcard__open:focus-visible){outline:3px solid var(--ink);outline-offset:3px}
 .meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:var(--step-small)}
 .code{background:var(--ink);color:var(--accent-ink);padding:3px 9px;font-size:var(--step-small);white-space:nowrap}
+.fmt{background:var(--tone-3);color:var(--ink);padding:3px 9px;font-size:var(--step-small);font-weight:600;white-space:nowrap}
+.pager{display:none;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;margin-top:48px}
+.js .pager{display:flex}
+.pager[hidden]{display:none}
+.pager button{font:inherit;font-size:var(--step-small);min-width:48px;min-height:48px;padding:0 16px;background:var(--paper);color:var(--ink);border:0;cursor:pointer;font-variant-numeric:tabular-nums;transition:background-color var(--t-hover) ease,color var(--t-hover) ease,transform var(--t-press) var(--ease-out)}
+.pager button:hover:not(:disabled){background:var(--tone-3)}
+.pager button:active:not(:disabled){transform:scale(.96)}
+.pager button[aria-current="page"]{background:var(--ink);color:var(--accent-ink)}
+.pager button:disabled{opacity:.45;cursor:default}
+.pager__step .arr{display:inline-block;transition:transform var(--t-ui) var(--ease-out)}
+.pager__step:first-child:hover:not(:disabled) .arr{transform:translateX(-4px)}
+.pager__step:last-child:hover:not(:disabled) .arr{transform:translateX(4px)}
+.pager__gap{min-width:24px;text-align:center}
 @media (hover:hover){
   .wcard:hover{transform:translateY(-8px)}
   .wcard:hover .wcard__cover img{transform:scale(1.04)}
@@ -111,8 +124,17 @@
 .wdlg__cover .wplate{position:absolute;inset:0;padding:clamp(24px,3vw,40px)}
 .wdlg__body{padding:clamp(28px,4vw,56px);padding-top:clamp(72px,7vw,88px);display:flex;flex-direction:column;gap:20px;min-height:min(560px,calc(100dvh - 2 * var(--m)))}
 .wdlg__body h2{font-size:clamp(1.75rem,1.2rem + 1.8vw,2.75rem);line-height:1.05}
-.wdlg__actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:12px}
-.wdlg__nofile{margin-top:auto;padding-top:20px;border-top:5px dotted var(--ink)}
+.wdlg__actions{margin-top:auto;padding-top:12px}
+/* The file, issued like a ticket from the receipt book */
+.ticket{background:var(--surface);padding:22px 22px 36px;display:flex;flex-direction:column;gap:18px;clip-path:polygon(0 0,100% 0,100% 100%,96.429% calc(100% - 10px),92.857% 100%,89.286% calc(100% - 10px),85.714% 100%,82.143% calc(100% - 10px),78.571% 100%,75% calc(100% - 10px),71.429% 100%,67.857% calc(100% - 10px),64.286% 100%,60.714% calc(100% - 10px),57.143% 100%,53.571% calc(100% - 10px),50% 100%,46.429% calc(100% - 10px),42.857% 100%,39.286% calc(100% - 10px),35.714% 100%,32.143% calc(100% - 10px),28.571% 100%,25% calc(100% - 10px),21.429% 100%,17.857% calc(100% - 10px),14.286% 100%,10.714% calc(100% - 10px),7.143% 100%,3.571% calc(100% - 10px),0 100%)}
+.ticket__row{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px}
+.ticket__name{flex:1 1 14ch;font-weight:500;overflow-wrap:anywhere}
+.ticket__size{font-size:var(--step-small);white-space:nowrap}
+.ticket__acts{display:flex;flex-wrap:wrap;gap:8px}
+.ticket .btn--light{background:var(--paper)}
+.ticket__link{font-size:var(--step-small);align-self:flex-start}
+.ticket--none{background:none;clip-path:none;padding:20px 0 0;border-top:5px dotted var(--ink)}
+.btn:hover .arr--down{transform:translateY(3px)}
 .wdlg__close{position:absolute;top:16px;right:16px;z-index:2;min-height:44px;padding:0 16px;font-size:var(--step-small)}
 
 /* Motion */
@@ -122,13 +144,12 @@
   .js .whero .wphoto{clip-path:inset(100% 0 0 0);animation:open 1100ms var(--ease-in-out) 100ms forwards}
   .js .whero .wphoto img{transform:scale(1.14);animation:settle 1800ms var(--ease-expo) 100ms forwards}
   .js .hole{opacity:0;transform:scale(.6);animation:rise 500ms var(--ease-out) 900ms forwards}
-  .wdlg[open]{animation:dlg-in 420ms var(--ease-expo)}
+  .wdlg[open]{animation:fade 160ms ease-out}
   .wdlg[open]::backdrop{animation:fade 300ms ease}
   .wcard.is-new{animation:card-in 520ms var(--ease-expo) backwards;animation-delay:calc(var(--i,0) * 50ms)}
   ::view-transition-group(*){animation-duration:480ms;animation-timing-function:var(--ease-expo)}
   ::view-transition-old(*),::view-transition-new(*){animation-duration:280ms}
 }
-@keyframes dlg-in{from{opacity:0;transform:translateY(32px) scale(.98)}}
 @keyframes fade{from{opacity:0}}
 @keyframes card-in{from{opacity:0;transform:translateY(20px)}}
 
@@ -156,6 +177,8 @@
   .wfigs b{font-size:clamp(2rem,9vw,2.6rem)}
   .filters{gap:12px;margin-top:32px}
   .grid{grid-template-columns:1fr;gap:16px}
+  .pager{margin-top:32px}
+  .pager button{padding:0 12px}
   .receipt{padding:24px 16px 48px;margin-inline:calc(var(--m) * -1)}
   .rrow__name::after{display:none}
   .wtotal b{font-size:40vw}
@@ -212,7 +235,7 @@
     <span class="hole" aria-hidden="true"></span>
   </div>
   <figure class="wphoto">
-    <img src="img/catalog-drawer.webp" width="1600" height="1353" alt="Выдвинутый ящик библиотечного каталога с плотным рядом бумажных карточек, вокруг закрытые ящики с латунными ручками" fetchpriority="high">
+    <img src="img/catalog-drawer.webp" srcset="img/catalog-drawer-800.webp 800w, img/catalog-drawer.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" width="1600" height="1353" alt="Выдвинутый ящик библиотечного каталога с плотным рядом бумажных карточек, вокруг закрытые ящики с латунными ручками" fetchpriority="high">
     <figcaption>Ящик предметного каталога университетской библиотеки</figcaption>
   </figure>
 </section>
@@ -233,6 +256,7 @@
     <div class="state" id="state-empty" hidden><p>Работ с такими условиями пока нет.</p><button class="btn" type="button" id="reset">Показать все работы</button></div>
     <p class="state" id="state-error" hidden>Не получилось загрузить список работ. Обновите страницу чуть позже.</p>
     <ul class="grid" id="grid" aria-label="Работы"></ul>
+    <nav class="pager" id="pager" aria-label="Страницы каталога" hidden></nav>
   </div>
 </section>
 
@@ -275,7 +299,7 @@
         <p>Преподаватель Ровеньковского технико-экономического колледжа.</p>
       </div>
       <div class="back__addr" data-r style="--i:1">
-        <figure class="stamp"><img src="img/schoty-abacus.jpg" width="919" height="1064" alt="Деревянные конторские счёты" loading="lazy" decoding="async"></figure>
+        <figure class="stamp"><img src="img/schoty-240.webp" width="240" height="278" alt="Деревянные конторские счёты" loading="lazy" decoding="async"></figure>
         <span>ГБПОО ЛНР «Ровеньковский технико-экономический колледж»</span>
         <span>ЛНР, г. Ровеньки, ул. Дзержинского, д. 61</span>
         <a class="tlink" href="index.html">На главную</a>
@@ -292,17 +316,17 @@
 (() => {
   const { reduce, reveal, roll } = window.site;
   const vt = !reduce && typeof document.startViewTransition === 'function';
+  const PER_PAGE = 6;
   // A background tab renders no frames, so a view transition may never call back:
   // run the change once, either from the transition or from the timer, whichever comes first.
   const transition = (change) => {
     let ran = false;
     const run = () => { if (!ran) { ran = true; change(); } };
-    if (!vt) { run(); return null; }
+    if (!vt) { run(); return; }
     const t = document.startViewTransition(run);
     setTimeout(run, 400);
     // a skipped transition rejects these; the change itself has already run
     [t.ready, t.updateCallbackDone, t.finished].forEach((p) => p.catch(() => {}));
-    return t;
   };
   const $ = (id) => document.getElementById(id);
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
@@ -321,10 +345,32 @@
     return u.replace(/^\/+/, '');
   };
   const ext = (u) => (u.split('?')[0].match(/\.([a-z0-9]+)$/i) || [])[1]?.toUpperCase() || '';
+  const fileName = (u) => { try { return decodeURIComponent(u.split('?')[0].split('/').pop()); } catch { return u.split('/').pop(); } };
+  const sizeText = (n) => n >= 1048576 ? (n / 1048576).toFixed(1).replace('.', ',') + ' МБ' : Math.max(1, Math.round(n / 1024)) + ' КБ';
 
-  const grid = $('grid'), fType = $('f-type'), fYear = $('f-year'), count = $('wcount');
+  const grid = $('grid'), fType = $('f-type'), fYear = $('f-year'), count = $('wcount'), pager = $('pager');
   const dlg = $('wdlg');
-  let works = [], cards = [], state = { type: 'all', year: 'all' };
+  let works = [], cards = [];
+  let state = { type: 'all', year: 'all', page: 1 };
+
+  // State lives in the address, so Back, a reload or a shared link land on the same page of the catalogue
+  history.scrollRestoration = 'manual';
+  const readUrl = () => {
+    const q = new URLSearchParams(location.search);
+    return { type: q.get('type') || 'all', year: q.get('year') || 'all', page: Math.max(1, parseInt(q.get('page'), 10) || 1) };
+  };
+  const urlFor = (s, hash = '') => {
+    const q = new URLSearchParams();
+    if (s.type !== 'all') q.set('type', s.type);
+    if (s.year !== 'all') q.set('year', s.year);
+    if (s.page > 1) q.set('page', s.page);
+    const qs = q.toString();
+    return location.pathname + (qs ? '?' + qs : '') + hash;
+  };
+  const remember = () => history.replaceState({ ...(history.state || {}), y: scrollY }, '', location.href);
+  let saveTick = 0;
+  addEventListener('scroll', () => { clearTimeout(saveTick); saveTick = setTimeout(remember, 150); }, { passive: true });
+  addEventListener('pagehide', remember);
 
   const plateFor = (w) => {
     const p = el('span', 'wplate');
@@ -337,24 +383,30 @@
     const src = safeUrl(w.cover);
     if (src) {
       const img = el('img');
-      img.src = src; img.alt = ''; img.decoding = 'async';
-      if (!eager) img.loading = 'lazy';
+      img.alt = ''; img.decoding = eager ? 'sync' : 'async';
+      img.loading = eager ? 'eager' : 'lazy';
+      img.src = src;
       img.addEventListener('error', () => box.replaceChildren(plateFor(w)), { once: true });
       box.append(img);
     } else box.append(plateFor(w));
   };
-  const metaInto = (box, w) => {
+  const metaInto = (box, w, withFormat) => {
     box.replaceChildren(el('span', null, [w.type, w.year].filter(Boolean).join(', ')));
     if (w.discipline) box.append(el('span', 'code num', w.discipline));
+    const file = safeUrl(w.file);
+    if (withFormat && file) {
+      const f = el('span', 'fmt', ext(file) || 'Файл');
+      f.title = 'Можно скачать';
+      box.append(f);
+    }
   };
 
-  // Catalogue cards
+  // Catalogue cards: built once, shown page by page
   const renderCards = () => {
     grid.replaceChildren();
     cards = works.map((w, i) => {
       const li = el('li', 'wcard');
       li.dataset.r = '';
-      li.style.setProperty('--i', i % 2);
       if (vt) li.style.viewTransitionName = 'w-' + i;
       const cover = el('div', 'wcard__cover');
       coverInto(cover, w, false);
@@ -366,7 +418,7 @@
       open.addEventListener('click', () => openWork(i));
       h.append(open);
       const meta = el('p', 'meta');
-      metaInto(meta, w);
+      metaInto(meta, w, true);
       body.append(h, meta);
       li.append(cover, body);
       // the whole card opens the work; the title button is its keyboard handle
@@ -380,9 +432,8 @@
   // Filters
   const chip = (label, value, group) => {
     const b = el('button', null, label);
-    b.type = 'button'; b.dataset.value = value;
-    b.setAttribute('aria-pressed', String(state[group] === value));
-    b.addEventListener('click', () => setFilter({ [group]: value }));
+    b.type = 'button'; b.dataset.value = value; b.dataset.group = group;
+    b.addEventListener('click', () => go({ ...state, [group]: value, page: 1 }));
     return b;
   };
   const renderChips = () => {
@@ -394,28 +445,77 @@
     fYear.hidden = years.length < 2;
   };
   const matches = (w) => (state.type === 'all' || w.type === state.type) && (state.year === 'all' || String(w.year) === state.year);
-  const apply = () => {
-    let shown = 0;
-    cards.forEach((c, i) => {
-      const on = matches(works[i]);
-      if (on && c.hidden) { c.classList.remove('is-new'); void c.offsetWidth; c.classList.add('is-new'); c.style.setProperty('--i', shown % 2); }
-      c.hidden = !on;
-      if (on) shown++;
-    });
-    [...fType.children, ...fYear.children].forEach((b) => {
-      const group = b.parentElement === fType ? 'type' : 'year';
-      b.setAttribute('aria-pressed', String(state[group] === b.dataset.value));
-    });
-    count.replaceChildren('Показано ', el('b', 'num', shown), ' из ' + works.length);
-    $('state-empty').hidden = shown > 0 || !works.length;
+
+  // Pages
+  const pageList = (cur, last) => {
+    if (last <= 7) return Array.from({ length: last }, (_, i) => i + 1);
+    const set = new Set([1, last, cur - 1, cur, cur + 1].filter((n) => n >= 1 && n <= last));
+    const out = [];
+    [...set].sort((a, b) => a - b).forEach((n, i, arr) => { if (i && n - arr[i - 1] > 1) out.push('…'); out.push(n); });
+    return out;
   };
-  const setFilter = (next) => {
-    state = { ...state, ...next };
+  const pageBtn = (label, page, opts = {}) => {
+    const b = el('button', opts.cls || null);
+    b.type = 'button';
+    if (opts.html) b.append(...opts.html); else b.textContent = label;
+    if (opts.aria) b.setAttribute('aria-label', opts.aria);
+    if (opts.current) b.setAttribute('aria-current', 'page');
+    b.disabled = !!opts.disabled;
+    b.addEventListener('click', () => { if (page !== state.page) go({ ...state, page }, { toTop: true }); });
+    return b;
+  };
+  const renderPager = (pages) => {
+    pager.hidden = pages < 2;
+    if (pages < 2) { pager.replaceChildren(); return; }
+    const p = state.page;
+    const items = [pageBtn('', p - 1, { cls: 'pager__step', disabled: p === 1, aria: 'Предыдущая страница', html: [el('span', 'arr', '←'), ' Назад'] })];
+    pageList(p, pages).forEach((n) => {
+      if (n === '…') { const s = el('span', 'pager__gap', '…'); s.setAttribute('aria-hidden', 'true'); items.push(s); }
+      else items.push(pageBtn(String(n), n, { aria: 'Страница ' + n, current: n === p }));
+    });
+    items.push(pageBtn('', p + 1, { cls: 'pager__step', disabled: p === pages, aria: 'Следующая страница', html: ['Вперёд ', el('span', 'arr', '→')] }));
+    pager.replaceChildren(...items);
+  };
+
+  const apply = () => {
+    const hits = cards.map((c, i) => (matches(works[i]) ? i : -1)).filter((i) => i > -1);
+    const pages = Math.max(1, Math.ceil(hits.length / PER_PAGE));
+    state.page = Math.min(state.page, pages);
+    const from = (state.page - 1) * PER_PAGE;
+    const shown = new Set(hits.slice(from, from + PER_PAGE));
+    let k = 0;
+    cards.forEach((c, i) => {
+      const on = shown.has(i);
+      if (on && c.hidden) { c.classList.remove('is-new'); void c.offsetWidth; c.classList.add('is-new'); c.style.setProperty('--i', k % 2); }
+      if (on) k++;
+      c.hidden = !on;
+    });
+    [...fType.children, ...fYear.children].forEach((b) => b.setAttribute('aria-pressed', String(state[b.dataset.group] === b.dataset.value)));
+    count.replaceChildren(hits.length
+      ? `Показано ${from + 1}–${from + shown.size} из ${hits.length}`
+      : 'Ничего не найдено');
+    $('state-empty').hidden = hits.length > 0 || !works.length;
+    renderPager(pages);
+  };
+
+  // One navigation step inside the catalogue: a new history entry, so Back returns here
+  const go = (next, { toTop = false } = {}) => {
+    remember();
     // cards still waiting for their scroll reveal would animate twice; show them now
     cards.forEach((c) => c.classList.add('is-in'));
+    state = { ...next };
+    history.pushState({ y: null }, '', urlFor(state));
     transition(apply);
+    if (toTop) $('catalog').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
   };
-  $('reset').addEventListener('click', () => setFilter({ type: 'all', year: 'all' }));
+  addEventListener('popstate', (e) => {
+    state = readUrl();
+    cards.forEach((c) => c.classList.add('is-in'));
+    apply();
+    syncDialogToHash();
+    const y = e.state && e.state.y;
+    if (typeof y === 'number') requestAnimationFrame(() => scrollTo(0, y));
+  });
 
   // Figures and the receipt
   const setFig = (id, value) => { const n = $(id); n.textContent = value; roll([n]); };
@@ -436,10 +536,7 @@
       b.type = 'button';
       const name = el('span', 'rrow__name'); name.append(el('span', null, t));
       b.append(name, el('span', 'rrow__val num', list.length), el('span', 'rrow__who num', ys.join(', ')));
-      b.addEventListener('click', () => {
-        setFilter({ type: t, year: 'all' });
-        $('catalog').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
-      });
+      b.addEventListener('click', () => go({ type: t, year: 'all', page: 1 }, { toTop: true }));
       return b;
     }));
     $('sum-label').textContent = 'Итого, ' + works.length + ' ' + plural(works.length, W);
@@ -447,63 +544,84 @@
   };
 
   // The open card
+  const sizes = new Map();
+  const fileSize = (url) => {
+    if (!sizes.has(url)) {
+      // only our own files: a request to another site would need its permission
+      const same = !/^https?:/i.test(url) || url.startsWith(location.origin);
+      sizes.set(url, same
+        ? fetch(url, { method: 'HEAD' }).then((r) => Number(r.headers.get('content-length')) || 0).catch(() => 0)
+        : Promise.resolve(0));
+    }
+    return sizes.get(url);
+  };
+  const fileBlock = (w) => {
+    const file = safeUrl(w.file), link = safeUrl(w.link);
+    const box = el('div', file ? 'ticket' : 'ticket ticket--none');
+    if (file) {
+      const row = el('p', 'ticket__row');
+      const size = el('span', 'ticket__size num', '');
+      row.append(el('span', 'code', ext(file) || 'ФАЙЛ'), el('span', 'ticket__name', fileName(file)), size);
+      fileSize(file).then((n) => { if (n) size.textContent = sizeText(n); });
+      const acts = el('div', 'ticket__acts');
+      const dl = el('a', 'btn');
+      dl.href = file; dl.setAttribute('download', fileName(file));
+      dl.append('Скачать ', el('span', 'arr arr--down', '↓'));
+      dl.setAttribute('aria-label', 'Скачать файл ' + fileName(file));
+      const view = el('a', 'btn btn--light', 'Открыть в браузере');
+      view.href = file; view.target = '_blank'; view.rel = 'noopener';
+      acts.append(dl, view);
+      box.append(row, acts);
+    } else {
+      box.append(el('p', 'small', 'Файл этой работы пока не выложен.'));
+    }
+    if (link) {
+      const a = el('a', 'tlink ticket__link');
+      a.href = link; a.target = '_blank'; a.rel = 'noopener';
+      a.append('Работа на другом сайте ', el('span', null, '→'));
+      box.append(a);
+    }
+    return box;
+  };
   let current = -1;
   const fillDialog = (w) => {
     $('wdlg-title').textContent = w.title;
-    metaInto($('wdlg-meta'), w);
+    metaInto($('wdlg-meta'), w, false);
     $('wdlg-desc').textContent = w.description || '';
     $('wdlg-desc').hidden = !w.description;
     coverInto($('wdlg-cover'), w, true);
-    const acts = $('wdlg-actions');
-    acts.replaceChildren();
-    const file = safeUrl(w.file), link = safeUrl(w.link);
-    if (file) {
-      const kind = ext(file);
-      const openA = el('a', 'btn', 'Открыть ' + (kind || 'файл'));
-      openA.href = file; openA.target = '_blank'; openA.rel = 'noopener';
-      const dl = el('a', 'btn btn--light', 'Скачать');
-      dl.href = file; dl.setAttribute('download', '');
-      acts.append(openA, dl);
-    }
-    if (link) {
-      const a = el('a', file ? 'btn btn--light' : 'btn');
-      a.href = link; a.target = '_blank'; a.rel = 'noopener';
-      a.append('Перейти по ссылке ', el('span', 'arr', '→'));
-      acts.append(a);
-    }
-    if (!file && !link) acts.append(el('p', 'wdlg__nofile small', 'Файл этой работы пока не выложен.'));
+    $('wdlg-actions').replaceChildren(fileBlock(w));
     $('wdlg-credit').textContent = w.credit || '';
     $('wdlg-credit').hidden = !w.credit;
   };
-  const morph = (from, to, change) => {
-    if (!vt || !from || !to) { change(); return; }
-    from.style.viewTransitionName = 'wcover';
-    const t = transition(() => { from.style.viewTransitionName = ''; change(); to.style.viewTransitionName = 'wcover'; });
-    const clear = () => { to.style.viewTransitionName = ''; };
-    t.finished.then(clear, clear);
-  };
-  const openWork = (i, fromHash) => {
+  // The dialog opens in one piece: filled first, then shown in a single frame
+  const openWork = (i) => {
     const w = works[i];
     if (!w) return;
     current = i;
     fillDialog(w);
-    const show = () => { if (!dlg.open) dlg.showModal(); document.documentElement.classList.add('menu-open'); };
-    if (fromHash) show(); else morph(cards[i].querySelector('.wcard__cover'), $('wdlg-cover'), show);
-    if (w.id) history.replaceState(null, '', '#' + encodeURIComponent(w.id));
+    if (!dlg.open) dlg.showModal();
+    document.documentElement.classList.add('menu-open');
+    dlg.scrollTop = 0;
+    if (w.id) history.replaceState(history.state, '', urlFor(state, '#' + encodeURIComponent(w.id)));
   };
   const closeWork = () => {
     if (!dlg.open) return;
-    const card = cards[current] && !cards[current].hidden ? cards[current] : null;
-    const done = () => {
-      dlg.close(); document.documentElement.classList.remove('menu-open');
-      if (card) card.querySelector('.wcard__open').focus({ preventScroll: true });
-    };
-    morph($('wdlg-cover'), card && card.querySelector('.wcard__cover'), done);
-    history.replaceState(null, '', location.pathname + location.search);
+    dlg.close();
+    document.documentElement.classList.remove('menu-open');
+    const card = cards[current];
+    if (card && !card.hidden) card.querySelector('.wcard__open').focus({ preventScroll: true });
+    history.replaceState(history.state, '', urlFor(state));
+  };
+  const syncDialogToHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const at = id ? works.findIndex((w) => w.id === id) : -1;
+    if (at > -1) openWork(at); else closeWork();
   };
   $('wdlg-close').addEventListener('click', closeWork);
   dlg.addEventListener('cancel', (e) => { e.preventDefault(); closeWork(); });
   dlg.addEventListener('click', (e) => { if (e.target === dlg) closeWork(); });
+  $('reset').addEventListener('click', () => go({ type: 'all', year: 'all', page: 1 }));
 
   // Load
   fetch('data/works.json', { cache: 'no-cache' })
@@ -515,16 +633,17 @@
         .map((w, i) => ({ ...w, _i: i }))
         .sort((a, b) => (Number(b.year) || 0) - (Number(a.year) || 0) || a._i - b._i);
       $('state-loading').hidden = true;
+      state = readUrl();
+      renderChips(); renderCards(); renderTally(); apply();
       if (!works.length) {
-        $('state-empty').hidden = false;
-        $('state-empty').querySelector('p').textContent = 'Работы скоро появятся в каталоге.';
+        const empty = $('state-empty');
+        empty.hidden = false;
+        empty.querySelector('p').textContent = 'Работы скоро появятся в каталоге.';
         $('reset').hidden = true;
       }
-      renderChips(); renderCards(); renderTally(); apply();
-      if (!works.length) $('state-empty').hidden = false;
-      const id = decodeURIComponent(location.hash.slice(1));
-      const at = id ? works.findIndex((w) => w.id === id) : -1;
-      if (at > -1) openWork(at, true);
+      if (location.hash) syncDialogToHash();
+      const y = history.state && history.state.y;
+      if (typeof y === 'number') requestAnimationFrame(() => scrollTo(0, y));
     })
     .catch(() => { $('state-loading').hidden = true; $('state-error').hidden = false; });
 })();

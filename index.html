@@ -17,9 +17,9 @@
 <title>Вовк Елена Александровна — преподаватель</title>
 <meta name="description" content="Вовк Елена Александровна, преподаватель ГБПОО ЛНР «Ровеньковский технико-экономический колледж»: стаж, дисциплины, образование, повышение квалификации.">
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__pageReady)document.documentElement.classList.remove('js')},2500)</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400;1,7..72,500&display=swap&subset=cyrillic" rel="stylesheet">
+<link rel="preload" href="fonts/literata-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/elena-960.webp" imagesrcset="img/elena-640.webp 640w, img/elena-960.webp 960w, img/elena-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 50vw" fetchpriority="high">
 <link rel="stylesheet" href="css/base.css">
 <style>
 /* Main page only; shared rules live in css/base.css */
@@ -44,7 +44,7 @@
 /* About: the sheet with plates */
 .about{background:var(--surface);padding-block:var(--gap-section)}
 .about__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
-.sheet{grid-column:1 / span 7;background:var(--paper);padding:clamp(28px,4.2vw,64px) clamp(24px,4.2vw,64px) 0;position:relative}
+.sheet{grid-column:1 / span 7;background:var(--paper);padding:clamp(28px,4.2vw,64px) clamp(24px,4.2vw,64px);position:relative}
 .sheet h2{margin-bottom:36px}
 .sheet p+p{margin-top:1em}
 .sheet__body{max-width:60ch}
@@ -251,7 +251,7 @@
     <p class="card__links"><a class="tlink" href="#about">О преподавателе</a><a class="tlink" href="#education">Образование</a><a class="tlink" href="#college">Адрес колледжа</a></p>
   </div>
   <figure class="photo">
-    <img src="img/elena.webp" width="1400" height="1980" alt="Елена Александровна Вовк в коралловом кружевном платье в учебном кабинете, у доски и плакатов по учёту" fetchpriority="high">
+    <img src="img/elena-960.webp" srcset="img/elena-640.webp 640w, img/elena-960.webp 960w, img/elena-1400.webp 1400w" sizes="(max-width: 900px) 100vw, 50vw" width="1400" height="1990" alt="Елена Александровна Вовк в коралловом кружевном платье в учебном кабинете, у доски и плакатов по учёту" fetchpriority="high">
     <figcaption>В учебном кабинете</figcaption>
   </figure>
 </section>
@@ -272,11 +272,11 @@
     </article>
     <div class="plates">
       <figure class="plate" data-r="pic" style="--i:1">
-        <div class="imgbox"><img src="img/portrait-of-luca-pacioli-1445-1517-with.jpg" width="1500" height="1250" alt="Картина: Лука Пачоли у стола с книгой и геометрическими телами, рядом ученик" loading="lazy" decoding="async"></div>
+        <div class="imgbox"><img src="img/pacioli-960.webp" srcset="img/pacioli-480.webp 480w, img/pacioli-960.webp 960w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 32vw" width="960" height="800" alt="Картина: Лука Пачоли у стола с книгой и геометрическими телами, рядом ученик" loading="lazy" decoding="async"></div>
         <figcaption>Лука Пачоли, автор первого печатного изложения двойной записи. Портрет 1495 года, приписывается Якопо де Барбари.</figcaption>
       </figure>
       <figure class="plate plate--ledger" data-r="pic" style="--i:2">
-        <div class="imgbox"><img src="img/pittsboro-merchant-business-ledger.jpg" width="1920" height="2881" alt="Рукописная страница торговой книги 1833 года с колонками сумм" loading="lazy" decoding="async"></div>
+        <div class="imgbox"><img src="img/ledger-1833-960.webp" srcset="img/ledger-1833-480.webp 480w, img/ledger-1833-960.webp 960w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 32vw" width="960" height="1440" alt="Рукописная страница торговой книги 1833 года с колонками сумм" loading="lazy" decoding="async"></div>
         <figcaption>Страница торговой книги, 1833 год: дебет, суммы и итог внизу листа.</figcaption>
       </figure>
     </div>
@@ -379,8 +379,8 @@
 </section>
 
 <section class="college" id="college" aria-labelledby="college-h">
-  <figure class="college__pic" style="background:#6b6a68 url(img/commons-121782022.jpg) 50% 60%/cover no-repeat">
-    <img src="img/commons-121782022.jpg" width="1920" height="1280" alt="Ровеньки: улица с фонарями спускается от моста к центру города, на горизонте терриконы" decoding="async">
+  <figure class="college__pic" style="background:#6b6a68">
+    <img src="img/rovenki-1600.webp" srcset="img/rovenki-800.webp 800w, img/rovenki-1600.webp 1600w" sizes="100vw" width="1600" height="1067" alt="Ровеньки: улица с фонарями спускается от моста к центру города, на горизонте терриконы" loading="lazy" decoding="async">
   </figure>
   <div class="vcard" data-r style="--i:0">
     <h2 id="college-h">Колледж</h2>
@@ -400,7 +400,7 @@
         <p>Преподаватель Ровеньковского технико-экономического колледжа.</p>
       </div>
       <div class="back__addr" data-r style="--i:1">
-        <figure class="stamp"><img src="img/schoty-abacus.jpg" width="919" height="1064" alt="Деревянные конторские счёты" loading="lazy" decoding="async"></figure>
+        <figure class="stamp"><img src="img/schoty-240.webp" width="240" height="278" alt="Деревянные конторские счёты" loading="lazy" decoding="async"></figure>
         <span>ГБПОО ЛНР «Ровеньковский технико-экономический колледж»</span>
         <span>ЛНР, г. Ровеньки, ул. Дзержинского, д. 61</span>
         <a class="tlink" href="#top">Наверх ↑</a>
