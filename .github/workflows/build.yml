@@ -1,5 +1,5 @@
 # Rebuilds the generated parts of the site (data/*.json from content/, header and footer in every
-# page, works/<id>.html, sitemap.xml) whenever the content or the partials change, for example after saving in /admin/.
+# page, works/<id>.html, news/<id>.html, sitemap.xml) whenever the content or the partials change, for example after saving in /admin/.
 name: Build site
 
 on:
@@ -31,12 +31,12 @@ jobs:
       - run: node tools/build.mjs
       - name: Commit generated files
         run: |
-          git add -A works sitemap.xml data *.html
+          git add -A works news sitemap.xml data *.html
           if git diff --cached --quiet; then
             echo "Nothing to commit"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Сборка: данные, страницы работ и карта сайта"
+          git commit -m "Сборка: данные, страницы работ и новостей, карта сайта"
           git push

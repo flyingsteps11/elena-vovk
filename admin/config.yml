@@ -237,6 +237,7 @@ collections:
     slug: *stamp
     identifier_field: title
     summary: "{{date}} · {{title}}"
+    preview_path: "news/{{slug}}.html"
     media_folder: /uploads/news
     public_folder: /uploads/news
     thumbnail: image

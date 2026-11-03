@@ -49,6 +49,15 @@
 .receipt .chips button{background:var(--surface)}
 .receipt .chips button:hover{background:var(--tone-3)}
 .receipt .chips button[aria-pressed="true"]{background:var(--ink)}
+/* search by title across every discipline */
+.msearch{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.msearch label{font-size:var(--step-small);color:var(--muted)}
+.msearch input{width:100%;min-height:52px;padding:0 16px;border:0;border-bottom:4px dotted var(--ink);background:var(--surface);color:var(--ink);font:inherit;font-size:var(--step-body);border-radius:0;-webkit-appearance:none;appearance:none}
+.msearch input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.msearch input::placeholder{color:var(--muted);opacity:1}
+.msearch input:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.mrow mark{background:var(--tone-3);color:inherit;padding:0 2px}
+.mempty .tlink{margin-left:8px;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer}
 .mrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 20px;align-items:center;padding:18px 0;border-bottom:4px dotted var(--ink)}
 .mrow:last-child{border-bottom:0}
 .mrow__title{font-size:var(--step-body);font-weight:500;line-height:1.35}
@@ -179,6 +188,10 @@
       <p class="shelf__about" id="shelf-about" data-r style="--i:3"></p>
     </div>
     <div class="receipt" data-r style="--i:2">
+      <div class="msearch">
+        <label for="m-q">Найти по названию во всех дисциплинах</label>
+        <input id="m-q" type="search" autocomplete="off" spellcheck="false" placeholder="Например, инвентаризация">
+      </div>
       <div class="chips" id="f-kind" role="group" aria-label="Вид материала"></div>
       <div id="mlist" aria-live="polite"></div>
       <p class="receipt__sum"><span id="m-sum-label">Материалов</span><span class="num" id="m-sum">0</span></p>
@@ -242,7 +255,16 @@
   const { reveal, roll, reduce } = window.site;
   const KIND_LABEL = { 'Ссылка': 'Ссылки' };
   const M = ['материал', 'материала', 'материалов'];
-  let discs = [], mats = [], folders = [], cur = '', kind = 'all', markKind = () => {};
+  let discs = [], mats = [], folders = [], cur = '', kind = 'all', q = '', markKind = () => {};
+  // case and е/ё do not matter in the search
+  const norm = (t) => String(t || '').toLowerCase().replace(/ё/g, 'е').trim();
+  // the title with the found part marked
+  const marked = (title) => {
+    const i = norm(title).indexOf(norm(q));
+    if (!q || i < 0) return [title];
+    const m = el('mark', null, title.slice(i, i + q.trim().length));
+    return [title.slice(0, i), m, title.slice(i + q.trim().length)];
+  };
 
   const setFig = (id, n, capId, forms) => { $(id).textContent = n; roll([$(id)]); $(capId).textContent = plural(n, forms); };
 
@@ -251,8 +273,12 @@
     const main = el('div');
     const meta = el('p', 'mrow__meta');
     meta.append(el('span', 'fmt', m.kind || 'Материал'));
+    // in search results every row says which discipline it belongs to
+    if (q) { const d = discs.find((x) => x.id === m.discipline); if (d) meta.append(el('span', null, d.name)); }
     if (m.note) meta.append(el('span', null, m.note));
-    main.append(el('p', 'mrow__title', m.title), meta);
+    const title = el('p', 'mrow__title');
+    title.append(...marked(m.title));
+    main.append(title, meta);
     const act = el('div', 'mrow__act');
     const file = safeUrl(m.file), link = safeUrl(m.link);
     if (file) {
@@ -275,11 +301,34 @@
   };
 
   const renderList = () => {
-    const list = mats.filter((m) => m.discipline === cur && (kind === 'all' || m.kind === kind));
-    $('mlist').replaceChildren(...(list.length ? list.map(row) : [el('p', 'mempty', 'Материалов этого вида пока нет.')]));
+    const searching = !!norm(q);
+    const list = searching
+      ? mats.filter((m) => norm(m.title).includes(norm(q)))
+      : mats.filter((m) => m.discipline === cur && (kind === 'all' || m.kind === kind));
+    $('f-kind').hidden = searching;
+    // while searching the left column describes the search, not the chosen discipline
+    if (searching) {
+      $('shelf-name').textContent = 'Поиск по всем дисциплинам';
+      $('shelf-meta').replaceChildren();
+      $('shelf-about').textContent = 'Показаны материалы, в названии которых есть «' + q.trim() + '». Чтобы вернуться к папке, очистите поле или выберите дисциплину выше.';
+    }
+    let empty;
+    if (searching) {
+      empty = el('p', 'mempty', 'Ничего не нашлось.');
+      const reset = el('button', 'tlink', 'Сбросить поиск');
+      reset.type = 'button';
+      reset.addEventListener('click', () => { $('m-q').value = ''; setQ(''); $('m-q').focus(); });
+      empty.append(reset);
+    } else empty = el('p', 'mempty', 'Материалов этого вида пока нет.');
+    $('mlist').replaceChildren(...(list.length ? list.map(row) : [empty]));
     $('m-sum').textContent = list.length;
-    $('m-sum-label').textContent = 'Итого, ' + list.length + ' ' + plural(list.length, M);
+    $('m-sum-label').textContent = (searching ? 'Найдено, ' : 'Итого, ') + list.length + ' ' + plural(list.length, M);
     markKind(kind);
+  };
+  const setQ = (v) => {
+    const was = !!norm(q);
+    q = v; query.set({ q: norm(v) ? v : null });
+    if (was && !norm(v)) select(cur); else renderList();
   };
 
   const select = (id, { scroll = false } = {}) => {
@@ -320,13 +369,17 @@
       const body = el('span', 'folder__body');
       body.append(pic, el('span', 'folder__name', d.name), el('span', 'folder__count num', n + ' ' + plural(n, M)));
       b.append(el('span', 'folder__tab num', d.code || 'Дисциплина'), body);
-      b.addEventListener('click', () => select(d.id, { scroll: true }));
+      // picking a folder leaves the search
+      b.addEventListener('click', () => { if (q) { q = ''; $('m-q').value = ''; query.set({ q: null }); } select(d.id, { scroll: true }); });
       return b;
     });
     $('folders-grid').replaceChildren(...folders);
     reveal(folders);
     $('shelf').hidden = false;
     kind = query.get('k', 'all');
+    q = query.get('q', '');
+    $('m-q').value = q;
+    $('m-q').addEventListener('input', (e) => setQ(e.target.value));
     select(query.get('d', discs[0].id));
   }).catch(() => { $('state-loading').hidden = true; $('state-error').hidden = false; });
 })();
