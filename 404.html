@@ -25,10 +25,10 @@
 /* phones: the whole drawing stays in view above the card instead of being cropped like a photo */
 @media (max-width:900px){.lost .reader{height:auto;padding:20px 24px 44px}.reader svg{width:min(100%,340px)}}
 .reader text{font-family:"Literata Digits","Vollkorn",Georgia,serif}
-.r-head,.r-chest,.r-eyes,.r-flip,.r-scrap{transform-box:view-box}
+.r-head,.r-chest,.r-flip,.r-scrap{transform-box:view-box}
 .r-head{transform-origin:200px 200px}
 .r-chest{transform-origin:200px 300px}
-.r-eyes{transform-origin:200px 168px}
+.r-eyes{transform-box:fill-box;transform-origin:center}
 .r-flip{transform-origin:200px 260px;opacity:0}
 .r-scrap{transform-origin:0 0;opacity:0}
 @media (prefers-reduced-motion:no-preference){
@@ -164,26 +164,30 @@
       <g class="r-chest">
         <path d="M150 214 Q200 198 250 214 L262 300 Q200 312 138 300 Z" fill="#6c4857"/>
         <path d="M178 206 Q200 222 222 206" fill="none" stroke="#f6e3da" stroke-width="3" stroke-dasharray="0 6" stroke-linecap="round"/>
-        <rect x="190" y="186" width="20" height="24" fill="#d99f87"/>
+        <path d="M192 170 L208 170 L208 196 Q200 202 192 196 Z" fill="#dfa48c"/><rect x="190" y="190" width="20" height="20" fill="#dfa48c"/>
       </g>
       <!-- head, tilting slowly while reading -->
-      <g class="r-head">
-        <circle cx="200" cy="110" r="18" fill="#351a2b"/>
-        <path d="M164 170 Q160 116 200 114 Q240 116 236 170 Q240 196 228 204 L172 204 Q160 196 164 170 Z" fill="#351a2b"/>
-        <ellipse cx="200" cy="160" rx="29" ry="33" fill="#eab9a2"/>
-        <path d="M171 152 Q176 124 200 124 Q224 124 229 150 Q214 136 196 140 Q182 144 171 152 Z" fill="#351a2b"/>
-        <circle cx="185" cy="179" r="5" fill="#e39b8a" opacity=".55"/>
-        <circle cx="215" cy="179" r="5" fill="#e39b8a" opacity=".55"/>
+      <g class="r-head"><g transform="translate(-150 -6)">
+        <!-- the same teacher as on the other pages: a neat bun, thin round glasses, pearl earrings -->
+        <circle cx="350" cy="124" r="14" fill="#2a1421"/>
+        <path d="M320 166 Q316 126 350 124 Q384 126 380 166 Q380 186 372 194 L328 194 Q320 186 320 166 Z" fill="#2a1421"/>
+        <path d="M323 164 Q323 134 350 133 Q377 134 377 164 Q377 192 350 206 Q323 192 323 164 Z" fill="#f2c7b1"/>
+        <path d="M320 170 Q316 126 352 126 Q382 128 380 160 Q372 140 354 140 Q338 148 326 160 Q322 164 320 170 Z" fill="#2a1421"/>
+        <circle cx="323" cy="178" r="2.6" fill="#fbf1ea"/><circle cx="377" cy="178" r="2.6" fill="#fbf1ea"/>
+        <ellipse cx="335" cy="180" rx="5.5" ry="3.2" fill="#e9978a" opacity=".5"/><ellipse cx="365" cy="180" rx="5.5" ry="3.2" fill="#e9978a" opacity=".5"/>
+        <!-- eyes lowered to the page -->
         <g class="r-eyes">
-          <path d="M181 167 Q187 171 193 167" fill="none" stroke="#351a2b" stroke-width="2.6" stroke-linecap="round"/>
-          <path d="M207 167 Q213 171 219 167" fill="none" stroke="#351a2b" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M333 169 Q339 172 345 169" fill="none" stroke="#2a1421" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M355 169 Q361 172 367 169" fill="none" stroke="#2a1421" stroke-width="2.2" stroke-linecap="round"/>
         </g>
+        <path d="M331 155 Q338 151 345 154" fill="none" stroke="#2a1421" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M355 154 Q362 151 369 155" fill="none" stroke="#2a1421" stroke-width="1.8" stroke-linecap="round"/>
         <!-- glasses -->
-        <circle cx="187" cy="166" r="10" fill="none" stroke="#351a2b" stroke-width="2"/>
-        <circle cx="213" cy="166" r="10" fill="none" stroke="#351a2b" stroke-width="2"/>
-        <path d="M197 165 Q200 162 203 165" fill="none" stroke="#351a2b" stroke-width="2"/>
-        <path d="M194 184 Q200 188 206 184" fill="none" stroke="#a5566a" stroke-width="2.4" stroke-linecap="round"/>
-      </g>
+        <circle cx="339" cy="166" r="9" fill="none" stroke="#2a1421" stroke-width="1.5"/><circle cx="361" cy="166" r="9" fill="none" stroke="#2a1421" stroke-width="1.5"/>
+        <path d="M348 165 Q350 163 352 165" fill="none" stroke="#2a1421" stroke-width="1.5"/>
+        <path d="M351 172 Q354 179 350 181" fill="none" stroke="#d48f78" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M345 188 Q350 186 355 188 Q350 191 345 188 Z" fill="#c0566e"/>
+      </g></g>
       <!-- sleeves -->
       <path d="M156 222 Q132 240 128 262" fill="none" stroke="#6c4857" stroke-width="22" stroke-linecap="round"/>
       <path d="M244 222 Q268 240 272 262" fill="none" stroke="#6c4857" stroke-width="22" stroke-linecap="round"/>
