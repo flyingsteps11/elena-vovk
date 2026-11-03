@@ -4,7 +4,8 @@
 //     <!-- @header --> … <!-- /@header --> and <!-- @footer --> … <!-- /@footer -->,
 //     marking the current section from <body data-page="…">;
 //  2. writes works/<id>.html for every published work, news/<id>.html for every published note,
-//     games/<id>.html for every published crossword, quiz and «Найди пару», and the list of games in games.html;
+//     games/<id>.html for every published game (crossword, quiz, «Найди пару», «Расставь по порядку»)
+//     and the list of games in games.html;
 //  3. writes sitemap.xml.
 // Run it after changing a partial or anything in content/; the GitHub Action runs it on every push.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync, existsSync, statSync } from 'node:fs';
@@ -47,6 +48,7 @@ if (existsSync(join(ROOT, 'content'))) {
     crosswords: entries('content/crosswords').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
     quizzes: entries('content/quizzes').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
     matches: entries('content/matches').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
+    orders: entries('content/orders').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
   });
 }
 
@@ -427,6 +429,28 @@ function matchPage(m) {
   });
 }
 
+// «Расставь по порядку»: the steps of a procedure, shuffled, to be put back in order
+const stepsText = (n) => `${n} ${plural(n, 'шаг', 'шага', 'шагов')}`;
+const orders = (existsSync(join(ROOT, 'data/games.json')) ? (JSON.parse(read('data/games.json')).orders || []) : [])
+  .filter((o) => o && o.title && o.id && /^[a-z0-9-]+$/.test(o.id) && o.published !== false
+    && ![...crosswords, ...quizzes, ...matches].some((g) => g.id === o.id))
+  .map((o) => ({ ...o, steps: (o.steps || []).map((s) => String((s && s.text) || '').trim()).filter(Boolean) }))
+  .filter((o) => o.steps.length >= 3);
+
+// a numbered list with one row lifted out of place, for the catalog card
+const orderSvg = '<svg viewBox="0 0 120 90" aria-hidden="true" focusable="false"><g fill="#f6e3da"><rect x="22" y="10" width="80" height="12"/><rect x="22" y="28" width="80" height="12"/><rect x="22" y="64" width="80" height="12"/></g><rect x="28" y="44" width="80" height="13" fill="#e3b9a7" transform="rotate(-3 68 50)"/><g fill="#d9a441"><rect x="10" y="10" width="12" height="12"/><rect x="10" y="28" width="12" height="12"/></g><rect x="10" y="64" width="12" height="12" fill="#a5566a"/></svg>';
+
+function orderPage(o) {
+  const n = o.steps.length;
+  const desc = o.description || `Расставь по порядку «${o.title}»: ${stepsText(n)} по бухгалтерскому учёту.`;
+  const data = { id: o.id, s: enc(JSON.stringify(o.steps)), why: o.explain || '' };
+  return gameShell(o, {
+    kind: 'Расставь по порядку', desc, size: stepsText(n), data, script: 'order.js', body: `
+      ${o.description ? `<p class="cw__desc">${esc(o.description)}</p>` : ''}
+      <div class="od"><p class="od__task">${esc(o.task || 'Расположите шаги в правильной последовательности.')}</p><noscript><p>Для игры нужен включённый JavaScript.</p></noscript></div>`,
+  });
+}
+
 // the page around a game: the same head, header, back link and footer for every kind
 function gameShell(g, { kind, desc, size, data, script, body }) {
   const d = discOf(g.discipline);
@@ -489,12 +513,14 @@ if (existsSync(join(ROOT, 'games'))) rmSync(join(ROOT, 'games'), { recursive: tr
 for (const c of crosswords) write(`games/${c.id}.html`, fillPage(gamePage(c), '../'));
 for (const q of quizzes) write(`games/${q.id}.html`, fillPage(quizPage(q), '../'));
 for (const m of matches) write(`games/${m.id}.html`, fillPage(matchPage(m), '../'));
-console.log('game pages', crosswords.length + quizzes.length + matches.length);
+for (const o of orders) write(`games/${o.id}.html`, fillPage(orderPage(o), '../'));
+console.log('game pages', crosswords.length + quizzes.length + matches.length + orders.length);
 if (existsSync(join(ROOT, 'games.html'))) {
   const games = [
     ...crosswords.map((c) => ({ g: c, kind: 'Кроссворд', pic: gridSvg(c.grid), size: wordsText(c.grid.words.length) })),
     ...quizzes.map((q) => ({ g: q, kind: 'Викторина', pic: ticketSvg, size: questionsText(q.questions.length) })),
     ...matches.map((m) => ({ g: m, kind: 'Найди пару', pic: pairsSvg, size: pairsText(m.pairs.length) })),
+    ...orders.map((o) => ({ g: o, kind: 'Расставь по порядку', pic: orderSvg, size: stepsText(o.steps.length) })),
   ].sort((a, b) => String(a.g.title).localeCompare(String(b.g.title), 'ru'));
   const cards = games.length
     ? `<ul class="gcat__list">\n${games.map(({ g, kind, pic, size }, i) => {
@@ -516,6 +542,7 @@ const urls = [
   ...crosswords.map((c) => `${SITE}games/${c.id}.html`),
   ...quizzes.map((q) => `${SITE}games/${q.id}.html`),
   ...matches.map((m) => `${SITE}games/${m.id}.html`),
+  ...orders.map((o) => `${SITE}games/${o.id}.html`),
 ];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

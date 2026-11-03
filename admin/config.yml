@@ -341,3 +341,43 @@ collections:
           - { name: definition, label: Определение, widget: string }
       - { name: id, label: Адрес страницы, hint: "Латиницей через дефис, например terminy-ucheta. Не должен совпадать с адресом другой игры.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
       - *published
+
+  - name: orders
+    label: Расставь по порядку
+    label_singular: игру «Расставь по порядку»
+    description: "Шаги процедуры, которые студент расставляет по порядку. Введите шаги в правильной последовательности — игра перемешает их сама. Лучше 4–10 шагов."
+    folder: content/orders
+    format: json
+    create: true
+    slug: "{{fields.id}}"
+    identifier_field: title
+    summary: "{{title}}"
+    preview_path: "games/{{fields.id}}.html"
+    sortable_fields: [title]
+    view_filters:
+      - { label: Скрытые с сайта, field: published, pattern: false }
+    fields:
+      - { name: title, label: Тема, hint: "Например: Этапы инвентаризации.", widget: string }
+      - name: discipline
+        label: Дисциплина
+        required: false
+        widget: relation
+        collection: disciplines
+        value_field: id
+        search_fields: [name, code]
+        display_fields: [name, code]
+      - { name: description, label: Описание, widget: text, required: false }
+      - { name: task, label: Задание, hint: "Например: Расположите этапы инвентаризации в правильной последовательности.", widget: string, required: false }
+      - name: steps
+        label: Шаги в правильном порядке
+        label_singular: шаг
+        hint: "Первый в списке — первый шаг. Порядок шагов можно менять перетаскиванием."
+        widget: list
+        summary: "{{text}}"
+        min: 3
+        max: 12
+        fields:
+          - { name: text, label: Шаг, widget: string }
+      - { name: explain, label: Пояснение, hint: "Показывается, когда порядок собран верно: почему именно так.", widget: text, required: false }
+      - { name: id, label: Адрес страницы, hint: "Латиницей через дефис, например etapy-inventarizacii. Не должен совпадать с адресом другой игры.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
+      - *published
