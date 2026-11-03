@@ -123,7 +123,19 @@ section[id]{scroll-margin-top:72px}
 .back__addr{position:relative;padding-left:clamp(0px,3vw,48px);border-left:5px dotted var(--ink);display:flex;flex-direction:column;gap:12px;font-size:var(--step-body)}
 .stamp{width:96px;background:var(--paper);padding:6px;outline:4px dotted var(--muted);outline-offset:-2px;margin:0 0 20px auto;transform:rotate(3deg);transition:transform var(--t-ui) var(--ease-out)}
 .stamp:hover{transform:rotate(0)}
-.stamp img{aspect-ratio:3/4;object-fit:cover;width:100%}
+.stamp svg{display:block;width:100%;height:auto}
+/* the abacus in the footer counts row by row, bottom first, then the sum is swept back */
+.sc-b{transform-box:view-box}
+@media (prefers-reduced-motion:no-preference){.sc-b{animation:12s ease-in-out infinite}.sc-r0{animation-name:sc-r0}.sc-r1{animation-name:sc-r1}.sc-r2{animation-name:sc-r2}.sc-r3{animation-name:sc-r3}.sc-r4{animation-name:sc-r4}.sc-r6{animation-name:sc-r6}.sc-r7{animation-name:sc-r7}.sc-r8{animation-name:sc-r8}.sc-r9{animation-name:sc-r9}}
+@keyframes sc-r0{0%,72.4%{transform:none}74.9%,88%{transform:translateX(24px)}93%,100%{transform:none}}
+@keyframes sc-r1{0%,64.8%{transform:none}67.3%,88%{transform:translateX(24px)}93%,100%{transform:none}}
+@keyframes sc-r2{0%,57.2%{transform:none}59.7%,88%{transform:translateX(24px)}93%,100%{transform:none}}
+@keyframes sc-r3{0%,49.6%{transform:none}52.1%,88%{transform:translateX(24px)}93%,100%{transform:none}}
+@keyframes sc-r4{0%,42.0%{transform:none}44.5%,88%{transform:translateX(24px)}93%,100%{transform:none}}
+@keyframes sc-r6{0%,26.8%{transform:none}29.3%,88%{transform:translateX(24px)}93%,100%{transform:none}}
+@keyframes sc-r7{0%,19.2%{transform:none}21.7%,88%{transform:translateX(24px)}93%,100%{transform:none}}
+@keyframes sc-r8{0%,11.6%{transform:none}14.1%,88%{transform:translateX(24px)}93%,100%{transform:none}}
+@keyframes sc-r9{0%,4.0%{transform:none}6.5%,88%{transform:translateX(24px)}93%,100%{transform:none}}
 /* Every page of the site, on the back of the card */
 .fmap{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 48px;padding-top:36px;border-top:5px dotted var(--ink)}
 .fmap h3{font-size:var(--step-body);font-weight:600;margin-bottom:12px}
