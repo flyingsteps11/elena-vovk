@@ -21,9 +21,46 @@
 <link rel="preload" href="fonts/vollkorn-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/vollkorn-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/literata-digits.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="img/catalog-drawer-800.webp" imagesrcset="img/catalog-drawer-800.webp 800w, img/catalog-drawer.webp 1600w" imagesizes="(max-width: 900px) 100vw, 50vw" fetchpriority="high">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/kit.css">
+<style>
+/* hero drawing: the teacher types a new work; the finished page goes into the binder */
+.typing{display:grid;place-items:center;padding:clamp(20px,4vw,56px)}
+.typing svg{width:min(100%,600px);height:auto;overflow:visible}
+@media (max-width:900px){.whero .typing{height:auto;padding:20px 20px 44px}.typing svg{width:min(100%,360px)}}
+.w-head,.w-car,.w-paper,.w-fly,.w-hl,.w-hr,.w-hand,.w-stack{transform-box:view-box}
+.w-head{transform-origin:210px 196px}
+.w-fly{opacity:0;transform-origin:210px 226px}
+.w-hand{transform-origin:90px 92px}
+.w-ln{stroke-dasharray:64;stroke-dashoffset:0}
+@media (prefers-reduced-motion:no-preference){
+  .w-head{animation:w-nod 1.4s ease-in-out infinite}
+  .w-car{animation:w-car 10s linear infinite}
+  .w-paper{animation:w-paper 10s ease-in-out infinite}
+  .w-fly{animation:w-fly 10s cubic-bezier(.4,.1,.3,1) infinite}
+  .w-l1{animation:w-l1 10s linear infinite}
+  .w-l2{animation:w-l2 10s linear infinite}
+  .w-l3{animation:w-l3 10s linear infinite}
+  .w-l4{animation:w-l4 10s linear infinite}
+  .w-hl{animation:w-tap .42s ease-in-out infinite}
+  .w-hr{animation:w-tap .42s ease-in-out .21s infinite}
+  .w-hand{animation:w-clock 12s linear infinite}
+  .w-stack{animation:w-stack 10s ease-out infinite}
+}
+@keyframes w-nod{0%,100%{transform:rotate(0)}50%{transform:rotate(1.6deg)}}
+@keyframes w-tap{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes w-clock{to{transform:rotate(360deg)}}
+/* four lines are typed; the carriage travels left with each and returns */
+@keyframes w-car{0%{transform:translateX(0)}14%{transform:translateX(-26px)}15%{transform:translateX(0)}29%{transform:translateX(-26px)}30%{transform:translateX(0)}44%{transform:translateX(-26px)}45%{transform:translateX(0)}59%{transform:translateX(-26px)}61%,100%{transform:translateX(0)}}
+@keyframes w-l1{0%{stroke-dashoffset:64}14%,89%{stroke-dashoffset:0}90%,100%{stroke-dashoffset:64}}
+@keyframes w-l2{0%,15%{stroke-dashoffset:64}29%,89%{stroke-dashoffset:0}90%,100%{stroke-dashoffset:64}}
+@keyframes w-l3{0%,30%{stroke-dashoffset:64}44%,89%{stroke-dashoffset:0}90%,100%{stroke-dashoffset:64}}
+@keyframes w-l4{0%,45%{stroke-dashoffset:64}59%,89%{stroke-dashoffset:0}90%,100%{stroke-dashoffset:64}}
+/* the finished page is pulled out, flies into the binder, and a clean sheet takes its place */
+@keyframes w-paper{0%,60%{transform:translateY(0);opacity:1}70%{transform:translateY(-26px);opacity:1}72%,90%{transform:translateY(-26px);opacity:0}91%{transform:translateY(0);opacity:0}100%{transform:translateY(0);opacity:1}}
+@keyframes w-fly{0%,70%{opacity:0;transform:translate(0,-26px)}72%{opacity:1;transform:translate(0,-26px)}86%{opacity:1;transform:translate(134px,44px) rotate(10deg) scale(.78)}88%,100%{opacity:0;transform:translate(134px,44px) rotate(10deg) scale(.78)}}
+@keyframes w-stack{0%,86%{transform:translateY(0)}89%{transform:translateY(-4px)}93%,100%{transform:translateY(0)}}
+</style>
 </head>
 <body id="top" data-page="works">
 
@@ -105,9 +142,79 @@
       </dl>
     </div>
   </div>
-  <figure class="wphoto">
-    <img src="img/catalog-drawer.webp" srcset="img/catalog-drawer-800.webp 800w, img/catalog-drawer.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" width="1600" height="1353" alt="Выдвинутый ящик библиотечного каталога с плотным рядом бумажных карточек, вокруг закрытые ящики с латунными ручками" fetchpriority="high">
-  </figure>
+  <div class="wphoto typing" aria-hidden="true">
+    <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" focusable="false">
+      <!-- wall clock -->
+      <circle cx="90" cy="92" r="30" fill="#fbf1ea" stroke="#351a2b" stroke-width="4"/>
+      <g stroke="#351a2b" stroke-width="2" stroke-linecap="round"><line x1="90" y1="68" x2="90" y2="72"/><line x1="114" y1="92" x2="110" y2="92"/><line x1="90" y1="116" x2="90" y2="112"/><line x1="66" y1="92" x2="70" y2="92"/></g>
+      <line x1="90" y1="92" x2="90" y2="78" stroke="#351a2b" stroke-width="3" stroke-linecap="round"/>
+      <line class="w-hand" x1="90" y1="92" x2="104" y2="100" stroke="#a5566a" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="90" cy="92" r="3" fill="#351a2b"/>
+      <!-- framed diploma on the wall -->
+      <rect x="306" y="62" width="76" height="56" fill="#351a2b"/><rect x="312" y="68" width="64" height="44" fill="#fbf1ea"/>
+      <line x1="322" y1="82" x2="366" y2="82" stroke="#6c4857" stroke-width="3" stroke-linecap="round"/><line x1="320" y1="92" x2="368" y2="92" stroke="#b88a99" stroke-width="1.6"/><circle cx="364" cy="102" r="5" fill="#a5566a"/>
+      <!-- the teacher -->
+      <g transform="translate(-140 -10)">
+        <path d="M314 210 Q320 200 338 198 L362 198 Q380 200 386 210 L392 300 L308 300 Z" fill="#6c4857"/>
+        <path d="M340 198 L350 222 L360 198 Z" fill="#fbf1ea"/>
+        <path d="M340 198 L346 212 L350 206 Z M360 198 L354 212 L350 206 Z" fill="#f6e3da"/>
+        <path d="M342 176 L358 176 L358 202 Q350 208 342 202 Z" fill="#dfa48c"/>
+      </g>
+      <g class="w-head"><g transform="translate(-140 -10)">
+        <circle cx="350" cy="124" r="14" fill="#2a1421"/>
+        <path d="M320 166 Q316 126 350 124 Q384 126 380 166 Q380 186 372 194 L328 194 Q320 186 320 166 Z" fill="#2a1421"/>
+        <path d="M323 164 Q323 134 350 133 Q377 134 377 164 Q377 192 350 206 Q323 192 323 164 Z" fill="#f2c7b1"/>
+        <path d="M320 170 Q316 126 352 126 Q382 128 380 160 Q372 140 354 140 Q338 148 326 160 Q322 164 320 170 Z" fill="#2a1421"/>
+        <circle cx="323" cy="178" r="2.6" fill="#fbf1ea"/><circle cx="377" cy="178" r="2.6" fill="#fbf1ea"/>
+        <ellipse cx="335" cy="180" rx="5.5" ry="3.2" fill="#e9978a" opacity=".5"/><ellipse cx="365" cy="180" rx="5.5" ry="3.2" fill="#e9978a" opacity=".5"/>
+        <path d="M333 169 Q339 172 345 169" fill="none" stroke="#2a1421" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M355 169 Q361 172 367 169" fill="none" stroke="#2a1421" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M331 155 Q338 151 345 154" fill="none" stroke="#2a1421" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M355 154 Q362 151 369 155" fill="none" stroke="#2a1421" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="339" cy="166" r="9" fill="none" stroke="#2a1421" stroke-width="1.5"/><circle cx="361" cy="166" r="9" fill="none" stroke="#2a1421" stroke-width="1.5"/>
+        <path d="M348 165 Q350 163 352 165" fill="none" stroke="#2a1421" stroke-width="1.5"/>
+        <path d="M351 172 Q354 179 350 181" fill="none" stroke="#d48f78" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M345 188 Q350 186 355 188 Q350 191 345 188 Z" fill="#c0566e"/>
+      </g></g>
+      <!-- arms reaching for the keys -->
+      <path d="M176 206 Q160 250 184 280" fill="none" stroke="#6c4857" stroke-width="15" stroke-linecap="round"/>
+      <path d="M244 206 Q260 250 236 280" fill="none" stroke="#6c4857" stroke-width="15" stroke-linecap="round"/>
+      <!-- desk -->
+      <rect x="10" y="300" width="400" height="26" fill="#a96f5c"/>
+      <rect x="28" y="326" width="364" height="76" fill="#c48a76"/>
+      <line x1="40" y1="364" x2="380" y2="364" stroke="#a96f5c" stroke-width="4" stroke-dasharray="0 10" stroke-linecap="round"/>
+      <!-- books and a plant on the left -->
+      <rect x="34" y="282" width="78" height="18" fill="#351a2b"/><rect x="40" y="266" width="70" height="16" fill="#e3b9a7"/><rect x="36" y="252" width="74" height="14" fill="#6c4857"/>
+      <rect x="120" y="276" width="20" height="24" fill="#c48a76"/>
+      <path d="M130 276 Q120 252 126 240 M130 276 Q136 254 146 246 M130 276 Q130 258 130 236" fill="none" stroke="#6c4857" stroke-width="4" stroke-linecap="round"/>
+      <!-- the typewriter: carriage with the page, then the body and keys -->
+      <g class="w-car">
+        <g class="w-paper">
+          <rect x="168" y="200" width="84" height="56" fill="#fbf1ea"/>
+          <line class="w-ln w-l1" x1="178" y1="212" x2="242" y2="212" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/><line class="w-ln w-l2" x1="178" y1="220" x2="236" y2="220" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/><line class="w-ln w-l3" x1="178" y1="228" x2="242" y2="228" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/><line class="w-ln w-l4" x1="178" y1="236" x2="218" y2="236" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/>
+        </g>
+        <rect x="150" y="250" width="120" height="14" rx="5" fill="#4a2a3d"/>
+        <circle cx="146" cy="257" r="7" fill="#351a2b"/><circle cx="274" cy="257" r="7" fill="#351a2b"/>
+      </g>
+      <path d="M140 300 L148 266 L272 266 L280 300 Z" fill="#351a2b"/>
+      <g fill="#f6e3da">
+        <circle cx="162" cy="280" r="3.6"/><circle cx="176" cy="280" r="3.6"/><circle cx="190" cy="280" r="3.6"/><circle cx="204" cy="280" r="3.6"/><circle cx="218" cy="280" r="3.6"/><circle cx="232" cy="280" r="3.6"/><circle cx="246" cy="280" r="3.6"/><circle cx="260" cy="280" r="3.6"/>
+        <circle cx="169" cy="291" r="3.6"/><circle cx="183" cy="291" r="3.6"/><circle cx="197" cy="291" r="3.6"/><circle cx="211" cy="291" r="3.6"/><circle cx="225" cy="291" r="3.6"/><circle cx="239" cy="291" r="3.6"/><circle cx="253" cy="291" r="3.6"/>
+      </g>
+      <circle class="w-hl" cx="186" cy="284" r="8" fill="#f2c7b1"/>
+      <circle class="w-hr" cx="234" cy="284" r="8" fill="#f2c7b1"/>
+      <!-- the finished page flying to the binder -->
+      <g class="w-fly">
+        <rect x="168" y="200" width="84" height="56" fill="#fbf1ea" stroke="#d9b3a4"/>
+        <line x1="178" y1="212" x2="242" y2="212" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/><line x1="178" y1="220" x2="236" y2="220" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/><line x1="178" y1="228" x2="242" y2="228" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/><line x1="178" y1="236" x2="218" y2="236" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/>
+      </g>
+      <!-- binder with finished pages -->
+      <rect x="300" y="250" width="86" height="50" fill="#6c4857"/>
+      <rect x="306" y="254" width="74" height="42" fill="#f6e3da"/>
+      <g class="w-stack"><rect x="308" y="250" width="70" height="44" fill="#fbf1ea"/><line x1="316" y1="260" x2="380" y2="260" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/><line x1="316" y1="268" x2="374" y2="268" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/><line x1="316" y1="276" x2="380" y2="276" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/><line x1="316" y1="284" x2="356" y2="284" stroke="#6c4857" stroke-width="2" stroke-linecap="round"/></g>
+      <circle cx="334" cy="254" r="3" fill="#351a2b"/><circle cx="352" cy="254" r="3" fill="#351a2b"/>
+    </svg>
+  </div>
 </section>
 
 <section class="catalog" id="catalog" aria-labelledby="catalog-h">
