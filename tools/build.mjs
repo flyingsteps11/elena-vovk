@@ -518,7 +518,7 @@ function gameShell(g, { kind, desc, size, data, script, body, dir = 'games', bac
 <main>
 <div class="cwp">
   <div class="wrap">
-    <p class="wpage__back"><a class="tlink" href="../${back[0]}">← ${back[1]}</a></p>
+    <p class="wpage__back"><a class="tlink" href="../${back[0]}">← ${back[1]}</a><a class="tlink wpage__help" href="../help.html#${dir}">Как это работает?</a></p>
     <article class="${cls || `cw${kind === 'Кроссворд' ? '' : ' cw--quiz'}`}" aria-labelledby="cw-h">
       <header class="cw__head">
         <h1 id="cw-h">${kind} · ${esc(g.title)}</h1>

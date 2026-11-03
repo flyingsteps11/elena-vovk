@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#351a2b">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Как пользоваться сайтом — Е. А. Вовк">
+<meta property="og:description" content="Как пользоваться сайтом: материалы к занятиям, учебные игры и тесты по дисциплинам, где хранятся результаты.">
+<meta property="og:url" content="https://elena-vovk.netlify.app/help.html">
+<meta property="og:image" content="https://elena-vovk.netlify.app/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 fill=%22%23351a2b%22/%3E%3Ctext x=%2232%22 y=%2247%22 font-family=%22Georgia,serif%22 font-size=%2244%22 text-anchor=%22middle%22 fill=%22%23edccbe%22%3EВ%3C/text%3E%3C/svg%3E">
+<title>Как пользоваться сайтом — Е. А. Вовк</title>
+<meta name="description" content="Как пользоваться сайтом: материалы к занятиям, учебные игры и тесты по дисциплинам, где хранятся результаты.">
+<link rel="canonical" href="https://elena-vovk.netlify.app/help.html">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__pageReady)document.documentElement.classList.remove('js')},2500)</script>
+<link rel="preload" href="fonts/vollkorn-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/vollkorn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/literata-digits.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/kit.css">
+<link rel="stylesheet" href="css/games.css">
+<style>
+/* Help page: chapters on the paper card, the site's marks shown inline as they look in the games */
+.help{padding:0 clamp(24px,4vw,64px) clamp(32px,4vw,64px);display:flex;flex-direction:column;gap:clamp(32px,4vw,56px)}
+.help .help__nav{padding:0}
+.help__sec{max-width:76ch;font-size:var(--step-body);line-height:1.55;scroll-margin-top:84px}
+.help__sec h2{font-size:clamp(1.6rem,1.3rem + 1vw,2.25rem);line-height:1.15;margin-bottom:14px;padding-top:18px;border-top:3px dotted var(--ink)}
+.help__sec h3{font-size:var(--step-lead);line-height:1.25;margin:26px 0 8px}
+.help__sec p,.help__sec ul,.help__sec ol{margin:0 0 12px}
+.help__sec ul,.help__sec ol{padding-left:1.4em}
+.help__sec ul{list-style:disc}
+.help__sec ol{list-style:decimal}
+.help__sec li::marker{color:#a5566a;font-weight:600}
+.help__sec li{margin-bottom:6px}
+.help__sec b{font-weight:600}
+.help__ui{display:inline-block;padding:0 8px;background:var(--ink);color:var(--accent-ink);font-size:.9em;line-height:1.55}
+.help__ok{background:#d9a441;padding:0 6px}
+.help__no{background:#f0d4c7;color:#a5566a;padding:0 6px}
+.help__sq{display:inline-grid;place-items:center;width:26px;height:26px;font-size:var(--step-small);vertical-align:-.25em;background:#f6e3da}
+.help__sq--done{background:var(--ink);color:var(--accent-ink)}
+.help__sq--skip{background:#f0d4c7;color:#a5566a}
+.help__sq--cur{box-shadow:inset 0 0 0 3px #d9a441}
+.help__faq{margin:0;border-top:2px dotted #c48a76}
+.help__faq dt{font-weight:600;padding-top:12px}
+.help__faq dd{margin:4px 0 0;padding-bottom:12px;border-bottom:2px dotted #c48a76}
+</style>
+</head>
+<body id="top" data-page="help">
+<!-- @header -->
+<header class="top on-dark">
+  <div class="bar">
+    <a class="mark" href="index.html">Е. А. Вовк</a>
+    <nav class="nav" aria-label="Разделы">
+      <div class="dd" data-group="about">
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-about">О преподавателе <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-about">
+          <li><a href="index.html#about">О преподавателе</a></li>
+          <li><a href="index.html#subjects">Дисциплины</a></li>
+          <li><a href="index.html#education">Образование</a></li>
+          <li><a href="index.html#courses">Повышение квалификации</a></li>
+          <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="works.html" data-key="works">Работы</a>
+      <div class="dd" data-group="students">
+        <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-students">Студентам <span class="dd__chev" aria-hidden="true">▾</span></button>
+        <ul class="dd__list" id="dd-students">
+          <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
+          <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+          <li><a href="tests.html" data-key="tests">Тесты по дисциплинам</a></li>
+          <li><a href="games.html" data-key="games">Игры и кроссворды</a></li>
+        </ul>
+      </div>
+      <a class="nav__link" href="news.html" data-key="news">Новости</a>
+    </nav>
+    <button class="btn btn--light menu-btn" type="button" aria-expanded="false" aria-controls="mnav">Меню</button>
+  </div>
+</header>
+<nav class="mnav" id="mnav" aria-label="Разделы" tabindex="-1" hidden>
+  <div class="mnav__shade" aria-hidden="true"></div>
+  <div class="mnav__sheet">
+  <div class="mnav__bar"><a class="mark" href="index.html">Е. А. Вовк</a><button class="btn mnav__close" type="button">Закрыть</button></div>
+  <div class="mnav__groups">
+    <div class="mnav__group" style="--k:0">
+      <p class="mnav__h">О преподавателе</p>
+      <ul>
+        <li><a href="index.html#about"><span>О преподавателе</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="index.html#subjects"><span>Дисциплины</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="index.html#education"><span>Образование</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="index.html#courses"><span>Повышение квалификации</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="achievements.html" data-key="achievements"><span>Достижения и документы</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:1">
+      <p class="mnav__h">Работы</p>
+      <ul><li><a href="works.html" data-key="works"><span>Методические работы</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li></ul>
+    </div>
+    <div class="mnav__group" style="--k:2">
+      <p class="mnav__h">Студентам</p>
+      <ul>
+        <li><a href="students.html" data-key="materials"><span>Материалы к занятиям</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="student-success.html" data-key="success"><span>Успехи студентов</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="tests.html" data-key="tests"><span>Тесты по дисциплинам</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="games.html" data-key="games"><span>Игры и кроссворды</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+      </ul>
+    </div>
+    <div class="mnav__group" style="--k:3">
+      <p class="mnav__h">Новости</p>
+      <ul><li><a href="news.html" data-key="news"><span>Новости и заметки</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li></ul>
+    </div>
+  </div>
+  </div>
+</nav>
+<!-- /@header -->
+
+<main>
+<section class="gcat" aria-labelledby="page-h">
+  <div class="wrap">
+    <div class="gcat__card">
+      <div class="stripe" aria-hidden="true"></div>
+      <div class="gcat__head">
+        <h1 id="page-h" data-r style="--i:0">Как пользоваться сайтом</h1>
+        <p class="gcat__lead" data-r style="--i:1">Где найти материалы к занятиям, как играть в учебные игры и проходить тесты, и что сайт запоминает о ваших результатах.</p>
+      </div>
+      <div class="help">
+        <nav class="tnav help__nav" aria-label="Разделы справки">
+          <a href="#materials">Материалы</a><a href="#games">Игры</a><a href="#tests">Тесты</a><a href="#saved">Где хранятся результаты</a><a href="#faq">Вопросы и ответы</a>
+        </nav>
+
+        <section class="help__sec" id="materials" aria-labelledby="h-materials">
+          <h2 id="h-materials">Материалы к занятиям</h2>
+          <p>Меню «Студентам → <a class="tlink" href="students.html">Материалы к занятиям</a>».</p>
+          <ul>
+            <li><b>Папки</b> — это дисциплины. Нажмите на папку, ниже откроется её содержимое.</li>
+            <li><b>Фильтры</b> над списком (Задания, Вопросы к экзамену, Ссылки…) оставляют только материалы одного вида.</li>
+            <li><b>Поиск</b> ищет по названию сразу во всех дисциплинах. Чтобы вернуться к папке, очистите поле поиска или выберите дисциплину.</li>
+            <li><span class="help__ui">Скачать</span> — файл (PDF, Word, PowerPoint); <span class="help__ui">Открыть</span> — материал на другом сайте; «Скоро будет» — материал готовится.</li>
+            <li>Если по дисциплине есть тесты, под её описанием будет ссылка на них.</li>
+          </ul>
+          <p>Адрес страницы запоминает выбранную папку и фильтр — такой ссылкой удобно поделиться с одногруппниками.</p>
+        </section>
+
+        <section class="help__sec" id="games" aria-labelledby="h-games">
+          <h2 id="h-games">Игры</h2>
+          <p>Меню «Студентам → <a class="tlink" href="games.html">Игры и кроссворды</a>». Игры — для разминки и повторения, оценок за них нет. Везде одинаковые цвета: <span class="help__ok">золотой</span> — верно, <span class="help__no">розовый</span> — ошибка.</p>
+
+          <h3>Кроссворд</h3>
+          <ul>
+            <li>Нажмите на клетку или на подсказку в списке — выделится слово. Печатайте буквы, курсор переходит сам. Повторный щелчок по клетке на пересечении слов переключает на другое слово через неё.</li>
+            <li>С клавиатуры: стрелки двигают по сетке, Enter — следующее слово, Backspace стирает.</li>
+            <li>Ё можно писать как Е.</li>
+            <li><span class="help__ui">Проверить</span> отмечает неверные буквы; <span class="help__ui">Открыть букву</span> подсказывает одну букву в текущем слове; <span class="help__ui">Начать заново</span> стирает всё (сайт переспросит).</li>
+            <li>Буквы сохраняются в браузере: можно закрыть страницу и вернуться позже.</li>
+          </ul>
+
+          <h3>Викторина</h3>
+          <ul>
+            <li>Вопросы по одному. Выберите ответ — сразу увидите, верно или нет, и пояснение.</li>
+            <li>Если верных ответов несколько, отметьте все верные и нажмите «Ответить».</li>
+            <li>В конце — сколько верных ответов. Лучший результат запоминается.</li>
+          </ul>
+
+          <h3>Найди пару</h3>
+          <ul>
+            <li>Нажмите на термин слева, потом на его определение справа. Верная пара соединяется нитью.</li>
+            <li>На телефоне термины — кнопки сверху, определения — списком ниже.</li>
+            <li>Чем меньше ошибок, тем лучше результат.</li>
+          </ul>
+
+          <h3>Расставь по порядку</h3>
+          <ul>
+            <li>Шаги перемешаны. Перетащите строку за значок ⋮⋮ мышью или двигайте её стрелками ↑ ↓ (на телефоне — только стрелками).</li>
+            <li>«Проверить» отметит строки, которые уже на своём месте, золотым, остальные — розовым. Поправьте и проверьте снова.</li>
+          </ul>
+
+          <h3>Разложи по корзинам</h3>
+          <ul>
+            <li>Карточки лежат стопкой над корзинами. Перетащите карточку мышью в корзину — или нажмите на карточку, а потом на корзину (так удобнее на телефоне).</li>
+            <li>Разложенную карточку можно переложить: нажмите на неё и выберите другую корзину или стопку.</li>
+            <li>«Проверить» работает, когда стопка пуста.</li>
+          </ul>
+        </section>
+
+        <section class="help__sec" id="tests" aria-labelledby="h-tests">
+          <h2 id="h-tests">Тесты по дисциплинам</h2>
+          <p>Меню «Студентам → <a class="tlink" href="tests.html">Тесты по дисциплинам</a>». Тест — это проверка с оценкой, похожая на компьютерное тестирование в колледже.</p>
+          <ol>
+            <li><b>Перед началом</b> на первом экране видно: сколько вопросов, сколько времени и сколько процентов нужно на «5», «4» и «3». Впишите фамилию, имя и группу — они нужны только для бланка результата.</li>
+            <li><b>Вопросы идут по одному.</b> Вверху — навигатор из клеток с номерами: <span class="help__sq help__sq--done">1</span> есть ответ, <span class="help__sq help__sq--skip">2</span> пропущен, <span class="help__sq help__sq--cur">3</span> текущий. Нажмите на номер, чтобы перейти к любому вопросу.</li>
+            <li><b>Ответ сохраняется сразу</b>, как только вы выбрали вариант или ввели текст. «Далее» ведёт к следующему вопросу без ответа; «Пропустить» — оставить вопрос на потом.</li>
+            <li><b>Типы вопросов:</b> кружки А, Б, В — один верный ответ; квадратики — несколько верных, отметьте все; поле ввода — напечатайте ответ. Регистр, пробелы, буква ё и знак % не важны: «5 200» и «5200» засчитаются одинаково.</li>
+            <li><b>Таймер</b> справа вверху. В последнюю минуту он краснеет. Когда время выходит, тест сдаётся сам — по тем ответам, что вы успели дать.</li>
+            <li><b>«Завершить тест»</b> — сдать досрочно. Если остались вопросы без ответа, тест предупредит: они будут засчитаны как неверные.</li>
+            <li><b>Результат:</b> оценка, процент верных, бланк с вашими данными, датой и временем, и разбор каждого вопроса — ваш ответ, верный ответ и пояснение.</li>
+          </ol>
+          <h3>Как сдать результат преподавателю</h3>
+          <p>Нажмите <span class="help__ui">Распечатать или сохранить PDF</span>. Откроется окно печати: выберите принтер — или «Сохранить как PDF», если нужно отправить файл. На телефоне то же самое через меню браузера: «Поделиться → Печать» или «Сохранить как PDF».</p>
+          <h3>Если страница закрылась</h3>
+          <p>Ничего не потеряно: откройте тест снова и нажмите «Продолжить начатый тест» — ответы на месте. Таймер не останавливается, пока страница закрыта: время идёт. Если оно за это время истекло, тест будет сразу оценён.</p>
+          <p>Каждая попытка — свой набор вопросов, поэтому пересдача не повторяет прошлую.</p>
+        </section>
+
+        <section class="help__sec" id="saved" aria-labelledby="h-saved">
+          <h2 id="h-saved">Где хранятся результаты</h2>
+          <p><b>Только в вашем браузере, на вашем устройстве.</b> Сайт ничего никуда не отправляет: ни ответы, ни оценки, ни имя. Преподаватель видит результат, только если вы покажете или пришлёте бланк.</p>
+          <p>Браузер помнит: буквы в кроссвордах, лучшие результаты игр и тестов, начатый тест, имя и группу для бланка. Всё это пропадёт, если:</p>
+          <ul>
+            <li>открыть сайт в другом браузере или на другом устройстве;</li>
+            <li>пользоваться режимом «инкогнито» — после закрытия окна;</li>
+            <li>очистить в настройках браузера историю и данные сайтов.</li>
+          </ul>
+        </section>
+
+        <section class="help__sec" id="faq" aria-labelledby="h-faq">
+          <h2 id="h-faq">Вопросы и ответы</h2>
+          <dl class="help__faq">
+            <dt>Мой лучший результат пропал.</dt>
+            <dd>Скорее всего, вы открыли сайт в другом браузере или очистили его данные — см. «<a class="tlink" href="#saved">Где хранятся результаты</a>».</dd>
+            <dt>Как начать игру заново?</dt>
+            <dd>В кроссворде и «Найди пару» — кнопка «Начать заново», в викторине — «Пройти ещё раз», в остальных играх после победы — «Сыграть ещё раз». Можно и просто обновить страницу (кроссворд при этом сохранит буквы).</dd>
+            <dt>Тест завершился сам.</dt>
+            <dd>Вышло время. Тест оценён по ответам, которые были даны до этого момента.</dd>
+            <dt>Хочу пересдать тест.</dt>
+            <dd>На экране результата — «Пройти заново». Вопросы будут другие. Лучший результат сайт запоминает отдельно.</dd>
+            <dt>Ответ верный, а тест его не принял.</dt>
+            <dd>Проверьте опечатки и единицы: если просят число, пишите число («13», а не «тринадцать»). Если уверены, что ответ верный, покажите разбор преподавателю — возможно, этот вариант нужно добавить в допустимые.</dd>
+            <dt>Не открывается файл.</dt>
+            <dd>Обновите страницу и попробуйте снова. Файлы Word и PowerPoint на телефоне открываются, только если установлено подходящее приложение. Если файл не открывается совсем — сообщите преподавателю.</dd>
+          </dl>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- @footer -->
+<footer class="foot">
+  <div class="back">
+    <svg class="scallop" viewBox="0 0 1200 14" preserveAspectRatio="none" aria-hidden="true" style="height:30px"><defs><pattern id="sc" width="60" height="30" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="30" fill="#f6e3da"/></pattern></defs><rect width="1200" height="14" fill="url(#sc)"/></svg>
+    <div class="back__panel">
+      <div class="back__msg" data-r style="--i:0">
+        <h2>Вовк Елена Александровна</h2>
+        <p>Преподаватель Ровеньковского технико-экономического колледжа.</p>
+      </div>
+      <div class="back__addr" data-r style="--i:1">
+        <figure class="stamp"><svg viewBox="0 0 90 120" role="img" aria-label="Деревянные конторские счёты" focusable="false"><rect x="1" y="1" width="88" height="118" rx="3" fill="#a96f5c"/><rect x="6" y="12" width="78" height="103" fill="#fbf1ea"/><rect x="1" y="1" width="88" height="7" fill="#c48a76"/><line x1="6" y1="20" x2="84" y2="20" stroke="#6c4857" stroke-width=".8"/><ellipse cx="11" cy="20" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="10.2" cy="18.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="16" cy="20" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="15.2" cy="18.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="21" cy="20" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="20.2" cy="18.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="26" cy="20" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="25.2" cy="18.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="31" cy="20" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="30.2" cy="18.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="36" cy="20" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="35.2" cy="18.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="41" cy="20" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="40.2" cy="18.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><g class="sc-b sc-r0" style="animation-delay:0.14s"><ellipse cx="46" cy="20" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="45.2" cy="18.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r0" style="animation-delay:0.07s"><ellipse cx="51" cy="20" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="50.2" cy="18.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r0"><ellipse cx="56" cy="20" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="55.2" cy="18.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><line x1="6" y1="30" x2="84" y2="30" stroke="#6c4857" stroke-width=".8"/><ellipse cx="11" cy="30" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="10.2" cy="28.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="16" cy="30" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="15.2" cy="28.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="21" cy="30" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="20.2" cy="28.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><g class="sc-b sc-r1" style="animation-delay:0.42s"><ellipse cx="26" cy="30" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="25.2" cy="28.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r1" style="animation-delay:0.35s"><ellipse cx="31" cy="30" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="30.2" cy="28.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r1" style="animation-delay:0.28s"><ellipse cx="36" cy="30" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="35.2" cy="28.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r1" style="animation-delay:0.21s"><ellipse cx="41" cy="30" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="40.2" cy="28.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r1" style="animation-delay:0.14s"><ellipse cx="46" cy="30" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="45.2" cy="28.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r1" style="animation-delay:0.07s"><ellipse cx="51" cy="30" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="50.2" cy="28.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r1"><ellipse cx="56" cy="30" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="55.2" cy="28.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><line x1="6" y1="40" x2="84" y2="40" stroke="#6c4857" stroke-width=".8"/><ellipse cx="11" cy="40" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="10.2" cy="38.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="16" cy="40" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="15.2" cy="38.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="21" cy="40" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="20.2" cy="38.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="26" cy="40" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="25.2" cy="38.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="31" cy="40" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="30.2" cy="38.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="36" cy="40" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="35.2" cy="38.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="41" cy="40" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="40.2" cy="38.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="46" cy="40" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="45.2" cy="38.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><g class="sc-b sc-r2" style="animation-delay:0.07s"><ellipse cx="51" cy="40" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="50.2" cy="38.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r2"><ellipse cx="56" cy="40" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="55.2" cy="38.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><line x1="6" y1="50" x2="84" y2="50" stroke="#6c4857" stroke-width=".8"/><ellipse cx="11" cy="50" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="10.2" cy="48.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><g class="sc-b sc-r3" style="animation-delay:0.56s"><ellipse cx="16" cy="50" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="15.2" cy="48.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r3" style="animation-delay:0.49s"><ellipse cx="21" cy="50" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="20.2" cy="48.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r3" style="animation-delay:0.42s"><ellipse cx="26" cy="50" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="25.2" cy="48.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r3" style="animation-delay:0.35s"><ellipse cx="31" cy="50" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="30.2" cy="48.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r3" style="animation-delay:0.28s"><ellipse cx="36" cy="50" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="35.2" cy="48.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r3" style="animation-delay:0.21s"><ellipse cx="41" cy="50" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="40.2" cy="48.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r3" style="animation-delay:0.14s"><ellipse cx="46" cy="50" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="45.2" cy="48.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r3" style="animation-delay:0.07s"><ellipse cx="51" cy="50" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="50.2" cy="48.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r3"><ellipse cx="56" cy="50" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="55.2" cy="48.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><line x1="6" y1="60" x2="84" y2="60" stroke="#6c4857" stroke-width=".8"/><ellipse cx="11" cy="60" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="10.2" cy="58.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="16" cy="60" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="15.2" cy="58.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="21" cy="60" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="20.2" cy="58.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="26" cy="60" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="25.2" cy="58.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="31" cy="60" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="30.2" cy="58.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><g class="sc-b sc-r4" style="animation-delay:0.28s"><ellipse cx="36" cy="60" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="35.2" cy="58.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r4" style="animation-delay:0.21s"><ellipse cx="41" cy="60" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="40.2" cy="58.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r4" style="animation-delay:0.14s"><ellipse cx="46" cy="60" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="45.2" cy="58.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r4" style="animation-delay:0.07s"><ellipse cx="51" cy="60" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="50.2" cy="58.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r4"><ellipse cx="56" cy="60" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="55.2" cy="58.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><line x1="6" y1="70" x2="84" y2="70" stroke="#6c4857" stroke-width=".8"/><ellipse cx="11" cy="70" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="10.2" cy="68.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="16" cy="70" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="15.2" cy="68.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="21" cy="70" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="20.2" cy="68.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="26" cy="70" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="25.2" cy="68.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="31" cy="70" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="30.2" cy="68.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="36" cy="70" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="35.2" cy="68.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="41" cy="70" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="40.2" cy="68.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="46" cy="70" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="45.2" cy="68.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="51" cy="70" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="50.2" cy="68.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="56" cy="70" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="55.2" cy="68.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><line x1="6" y1="80" x2="84" y2="80" stroke="#6c4857" stroke-width=".8"/><ellipse cx="11" cy="80" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="10.2" cy="78.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="16" cy="80" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="15.2" cy="78.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><g class="sc-b sc-r6" style="animation-delay:0.07s"><ellipse cx="21" cy="80" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="20.2" cy="78.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r6"><ellipse cx="26" cy="80" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="25.2" cy="78.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><line x1="6" y1="90" x2="84" y2="90" stroke="#6c4857" stroke-width=".8"/><ellipse cx="11" cy="90" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="10.2" cy="88.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="16" cy="90" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="15.2" cy="88.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="21" cy="90" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="20.2" cy="88.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="26" cy="90" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="25.2" cy="88.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><g class="sc-b sc-r7" style="animation-delay:0.35s"><ellipse cx="31" cy="90" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="30.2" cy="88.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r7" style="animation-delay:0.28s"><ellipse cx="36" cy="90" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="35.2" cy="88.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r7" style="animation-delay:0.21s"><ellipse cx="41" cy="90" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="40.2" cy="88.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r7" style="animation-delay:0.14s"><ellipse cx="46" cy="90" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="45.2" cy="88.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r7" style="animation-delay:0.07s"><ellipse cx="51" cy="90" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="50.2" cy="88.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r7"><ellipse cx="56" cy="90" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="55.2" cy="88.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><line x1="6" y1="100" x2="84" y2="100" stroke="#6c4857" stroke-width=".8"/><ellipse cx="11" cy="100" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="10.2" cy="98.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="16" cy="100" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="15.2" cy="98.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="21" cy="100" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="20.2" cy="98.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="26" cy="100" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="25.2" cy="98.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="31" cy="100" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="30.2" cy="98.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="36" cy="100" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="35.2" cy="98.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><g class="sc-b sc-r8" style="animation-delay:0.21s"><ellipse cx="41" cy="100" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="40.2" cy="98.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r8" style="animation-delay:0.14s"><ellipse cx="46" cy="100" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="45.2" cy="98.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r8" style="animation-delay:0.07s"><ellipse cx="51" cy="100" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="50.2" cy="98.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r8"><ellipse cx="56" cy="100" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="55.2" cy="98.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><line x1="6" y1="110" x2="84" y2="110" stroke="#6c4857" stroke-width=".8"/><ellipse cx="11" cy="110" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="10.2" cy="108.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><ellipse cx="16" cy="110" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="15.2" cy="108.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/><g class="sc-b sc-r9" style="animation-delay:0.49s"><ellipse cx="21" cy="110" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="20.2" cy="108.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r9" style="animation-delay:0.42s"><ellipse cx="26" cy="110" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="25.2" cy="108.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r9" style="animation-delay:0.35s"><ellipse cx="31" cy="110" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="30.2" cy="108.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r9" style="animation-delay:0.28s"><ellipse cx="36" cy="110" rx="2.6" ry="3.7" fill="#351a2b"/><ellipse cx="35.2" cy="108.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r9" style="animation-delay:0.21s"><ellipse cx="41" cy="110" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="40.2" cy="108.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r9" style="animation-delay:0.14s"><ellipse cx="46" cy="110" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="45.2" cy="108.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r9" style="animation-delay:0.07s"><ellipse cx="51" cy="110" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="50.2" cy="108.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g><g class="sc-b sc-r9"><ellipse cx="56" cy="110" rx="2.6" ry="3.7" fill="#c48a76"/><ellipse cx="55.2" cy="108.6" rx=".9" ry=".7" fill="#fbf1ea" opacity=".55"/></g></svg></figure>
+        <span>ГБПОО ЛНР «Ровеньковский технико-экономический колледж»</span>
+        <span>ЛНР, г. Ровеньки, ул. Дзержинского, д. 61</span>
+        <a class="tlink" href="#top">Наверх ↑</a>
+      </div>
+      <nav class="fmap" aria-label="Все страницы сайта" data-r style="--i:2">
+        <div>
+          <h3>О преподавателе</h3>
+          <ul>
+            <li><a href="index.html#about">О преподавателе</a></li>
+            <li><a href="index.html#subjects">Дисциплины</a></li>
+            <li><a href="index.html#education">Образование</a></li>
+            <li><a href="index.html#courses">Повышение квалификации</a></li>
+            <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Работы и студентам</h3>
+          <ul>
+            <li><a href="works.html" data-key="works">Методические работы</a></li>
+            <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
+            <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+            <li><a href="help.html" data-key="help" aria-current="page">Как пользоваться сайтом</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Новости и колледж</h3>
+          <ul>
+            <li><a href="news.html" data-key="news">Новости и заметки</a></li>
+            <li><a href="index.html#college">Адрес колледжа</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</footer>
+<!-- /@footer -->
+
+<script src="js/base.js"></script>
+</body>
+</html>

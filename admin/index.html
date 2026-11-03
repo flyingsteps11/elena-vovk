@@ -28,6 +28,13 @@
     .pv__file{border-top:2px dotted var(--muted);margin-top:20px;padding-top:14px}
     .pv__hidden{background:var(--ink);color:var(--accent-ink);display:inline-block;padding:4px 10px;margin-bottom:14px}`, { raw: true });
 
+  // «Справка» in the bottom left corner opens the editor's guide (admin/help.html) in a new tab;
+  // Decap has no place for own links in its top bar, so the button lives outside it
+  const help = document.createElement('a');
+  help.href = 'help.html'; help.target = '_blank'; help.rel = 'noopener'; help.textContent = '? Справка';
+  help.style.cssText = 'position:fixed;left:16px;bottom:16px;z-index:1000;padding:9px 16px;border-radius:20px;background:#351a2b;color:#edccbe;font:600 14px/1.2 system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.2)';
+  document.body.appendChild(help);
+
   // works and news are previewed as they look on the site
   const h = window.h;
   const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
