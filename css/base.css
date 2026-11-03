@@ -83,21 +83,29 @@ h3{font-weight:500;letter-spacing:-0.01em;line-height:1.12;font-size:var(--step-
 section[id]{scroll-margin-top:72px}
 .menu-btn{display:none}
 /* Phone menu */
+/* Phone menu: a receipt that slides up from the bottom over the dimmed page */
 .mnav[hidden]{display:none}
 .mnav:focus{outline:none}
-.mnav{position:fixed;inset:0;z-index:60;background:var(--field-1);color:var(--field-1-ink);display:flex;flex-direction:column;padding:0 var(--m) calc(var(--m) + env(safe-area-inset-bottom));opacity:0;visibility:hidden;transition:opacity 200ms var(--ease-out),visibility 0s linear 200ms}
-.mnav.is-open{opacity:1;visibility:visible;transition:opacity 240ms var(--ease-out)}
-.mnav__bar{display:flex;align-items:center;justify-content:space-between;min-height:60px;padding-top:env(safe-area-inset-top)}
-.mnav__bar .btn{min-height:44px;padding:0 14px;font-size:var(--step-small)}
-.mnav{overflow-y:auto;overscroll-behavior:contain}
-.mnav__groups{margin-top:auto;padding-top:24px;display:flex;flex-direction:column;gap:22px}
-.mnav__h{font-size:var(--step-small);color:color-mix(in srgb,var(--field-1-ink) 75%,transparent);margin-bottom:2px}
-.mnav__group a{display:block;padding:7px 0;font-size:clamp(1.5rem,6.6vw,2rem);line-height:1.15;letter-spacing:-0.02em;text-decoration:none;border-bottom:2px dotted color-mix(in srgb,var(--field-1-ink) 40%,transparent)}
-.mnav__group a[aria-current="page"]{text-decoration:underline;text-underline-offset:.2em}
-.mnav__group{transform:translateY(16px);opacity:0;transition:transform 400ms var(--ease-out),opacity 300ms ease}
-.mnav.is-open .mnav__group{transform:none;opacity:1;transition-delay:calc(60ms + var(--k) * 50ms)}
+.mnav{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;justify-content:flex-end;visibility:hidden;transition:visibility 0s linear 300ms}
+.mnav.is-open{visibility:visible;transition:none}
+.mnav__shade{position:absolute;inset:0;background:rgb(30 14 24 / .6);opacity:0;transition:opacity 300ms ease}
+.mnav.is-open .mnav__shade{opacity:1}
+.mnav__sheet{position:relative;max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;background:var(--paper);color:var(--ink);padding:30px max(var(--m),env(safe-area-inset-right)) calc(18px + env(safe-area-inset-bottom)) max(var(--m),env(safe-area-inset-left));clip-path:polygon(0% 12px,3.571% 0,7.143% 12px,10.714% 0,14.286% 12px,17.857% 0,21.429% 12px,25% 0,28.571% 12px,32.143% 0,35.714% 12px,39.286% 0,42.857% 12px,46.429% 0,50% 12px,53.571% 0,57.143% 12px,60.714% 0,64.286% 12px,67.857% 0,71.429% 12px,75% 0,78.571% 12px,82.143% 0,85.714% 12px,89.286% 0,92.857% 12px,96.429% 0,100% 12px,100% 100%,0 100%);transform:translateY(100%);transition:transform 320ms var(--ease-out)}
+.mnav.is-open .mnav__sheet{transform:none}
+.mnav__bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:4px}
+.mnav__bar .btn{min-height:44px;padding:0 16px;font-size:var(--step-small)}
+.mnav__groups{display:flex;flex-direction:column;gap:14px}
+.mnav__h{font-size:var(--step-small);color:var(--muted);margin:10px 0 0}
+.mnav__group ul{margin:0;padding:0;list-style:none}
+.mnav__group a{display:flex;align-items:baseline;gap:8px;min-height:44px;padding:9px 0;font-size:clamp(1.125rem,5vw,1.3125rem);line-height:1.25;text-decoration:none;color:inherit}
+.mnav__group a i{flex:1;min-width:16px;border-bottom:2px dotted var(--muted);transform:translateY(-5px)}
+.mnav__group a b{font-weight:400}
+.mnav__group a[aria-current="page"]{background:var(--ink);color:var(--accent-ink);margin:0 -10px;padding-inline:10px}
+.mnav__group a[aria-current="page"] i{border-color:currentColor}
+.mnav__group a:active{background:var(--tone-3)}
+.mnav :focus-visible{outline-color:var(--ink);outline-offset:2px}
 .menu-open,.menu-open body{overflow:hidden}
-@media (prefers-reduced-motion:reduce){.mnav,.mnav.is-open,.mnav__group,.dd__list,.dd__chev{transition:none}.mnav__group{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.mnav,.mnav__shade,.mnav__sheet,.dd__list,.dd__chev{transition:none}}
 
 /* Striped band on top of a paper card */
 .stripe{display:flex;width:100%;min-width:0;height:56px;flex:none;overflow:clip}

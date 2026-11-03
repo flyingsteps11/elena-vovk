@@ -55,17 +55,18 @@
   };
   reveal([...document.querySelectorAll('[data-r]')]);
 
-  // Phone menu: full-screen list of sections
+  // Phone menu: a receipt sliding up from the bottom; the shade, Esc or a swipe down closes it
   const menuBtn = document.querySelector('.menu-btn');
   const menu = document.getElementById('mnav');
   if (menuBtn && menu) {
     const links = [...menu.querySelectorAll('a')];
     const closeBtn = menu.querySelector('.mnav__close');
+    const sheet = menu.querySelector('.mnav__sheet');
     let hideTimer = 0;
     const setOpen = (open, refocus = true) => {
       clearTimeout(hideTimer);
       if (open) { menu.hidden = false; menu.getBoundingClientRect(); menu.classList.add('is-open'); }
-      else { menu.classList.remove('is-open'); hideTimer = setTimeout(() => { menu.hidden = true; }, reduce ? 0 : 220); }
+      else { menu.classList.remove('is-open'); hideTimer = setTimeout(() => { menu.hidden = true; }, reduce ? 0 : 320); }
       menuBtn.setAttribute('aria-expanded', String(open));
       document.documentElement.classList.toggle('menu-open', open);
       if (open) menu.focus({ preventScroll: true });
@@ -74,7 +75,33 @@
     menuBtn.addEventListener('click', () => setOpen(true));
     closeBtn.addEventListener('click', () => setOpen(false));
     links.forEach((a) => a.addEventListener('click', () => setOpen(false, false)));
-    addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('is-open')) setOpen(false); });
+    menu.querySelector('.mnav__shade').addEventListener('click', () => setOpen(false));
+    addEventListener('keydown', (e) => {
+      if (!menu.classList.contains('is-open')) return;
+      if (e.key === 'Escape') setOpen(false);
+      // Tab stays inside the open menu
+      if (e.key === 'Tab') {
+        const f = [...menu.querySelectorAll('a, button')];
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && (document.activeElement === first || document.activeElement === menu)) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    // a swipe down from the top of the receipt closes it
+    let startY = null;
+    sheet.addEventListener('touchstart', (e) => { startY = sheet.scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true });
+    sheet.addEventListener('touchmove', (e) => {
+      if (startY === null) return;
+      const dy = Math.max(0, e.touches[0].clientY - startY);
+      if (!reduce) { sheet.style.transition = 'none'; sheet.style.transform = `translateY(${dy}px)`; }
+    }, { passive: true });
+    sheet.addEventListener('touchend', (e) => {
+      if (startY === null) return;
+      const dy = e.changedTouches[0].clientY - startY;
+      startY = null;
+      sheet.style.transition = ''; sheet.style.transform = '';
+      if (dy > 90) setOpen(false);
+    });
     matchMedia('(min-width: 901px)').addEventListener('change', (m) => { if (m.matches) setOpen(false, false); });
   }
 

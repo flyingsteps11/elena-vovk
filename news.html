@@ -96,34 +96,37 @@
     <button class="btn btn--light menu-btn" type="button" aria-expanded="false" aria-controls="mnav">Меню</button>
   </div>
 </header>
-<nav class="mnav on-dark" id="mnav" aria-label="Разделы" tabindex="-1" hidden>
-  <div class="mnav__bar"><a class="mark" href="index.html">Е. А. Вовк</a><button class="btn btn--light mnav__close" type="button">Закрыть</button></div>
+<nav class="mnav" id="mnav" aria-label="Разделы" tabindex="-1" hidden>
+  <div class="mnav__shade" aria-hidden="true"></div>
+  <div class="mnav__sheet">
+  <div class="mnav__bar"><a class="mark" href="index.html">Е. А. Вовк</a><button class="btn mnav__close" type="button">Закрыть</button></div>
   <div class="mnav__groups">
     <div class="mnav__group" style="--k:0">
       <p class="mnav__h">О преподавателе</p>
       <ul>
-        <li><a href="index.html#about">О преподавателе</a></li>
-        <li><a href="index.html#subjects">Дисциплины</a></li>
-        <li><a href="index.html#education">Образование</a></li>
-        <li><a href="index.html#courses">Повышение квалификации</a></li>
-        <li><a href="achievements.html" data-key="achievements">Достижения и документы</a></li>
+        <li><a href="index.html#about"><span>О преподавателе</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="index.html#subjects"><span>Дисциплины</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="index.html#education"><span>Образование</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="index.html#courses"><span>Повышение квалификации</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="achievements.html" data-key="achievements"><span>Достижения и документы</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
       </ul>
     </div>
     <div class="mnav__group" style="--k:1">
       <p class="mnav__h">Работы</p>
-      <ul><li><a href="works.html" data-key="works">Методические работы</a></li></ul>
+      <ul><li><a href="works.html" data-key="works"><span>Методические работы</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li></ul>
     </div>
     <div class="mnav__group" style="--k:2">
       <p class="mnav__h">Студентам</p>
       <ul>
-        <li><a href="students.html" data-key="materials">Материалы к занятиям</a></li>
-        <li><a href="student-success.html" data-key="success">Успехи студентов</a></li>
+        <li><a href="students.html" data-key="materials"><span>Материалы к занятиям</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
+        <li><a href="student-success.html" data-key="success"><span>Успехи студентов</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li>
       </ul>
     </div>
     <div class="mnav__group" style="--k:3">
       <p class="mnav__h">Новости</p>
-      <ul><li><a href="news.html" data-key="news" aria-current="page">Новости и заметки</a></li></ul>
+      <ul><li><a href="news.html" data-key="news" aria-current="page"><span>Новости и заметки</span><i aria-hidden="true"></i><b aria-hidden="true">→</b></a></li></ul>
     </div>
+  </div>
   </div>
 </nav>
 <!-- /@header -->
