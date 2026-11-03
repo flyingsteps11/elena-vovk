@@ -198,14 +198,14 @@
 .leaf{position:relative;display:grid;grid-template-columns:170px minmax(0,1fr) 280px;background:var(--paper);transition:background-color var(--t-hover) ease}
 .leaf[hidden]{display:none}
 .leaf--noimg{grid-template-columns:170px minmax(0,1fr)}
-.leaf__date{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0 0 22px;background:var(--tone-1);text-align:center}
+.leaf__date{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0 0 22px;background:var(--tone-3);text-align:center}
 /* the punched binding at the top of a calendar leaf */
 .leaf__date::before{content:"";align-self:stretch;height:26px;background:var(--ink)}
-.leaf__date::after{content:"";position:absolute;top:9px;left:10px;right:10px;border-top:8px dotted var(--tone-1)}
+.leaf__date::after{content:"";position:absolute;top:9px;left:10px;right:10px;border-top:8px dotted var(--tone-3)}
 .leaf__day{margin-top:16px;font-size:clamp(3.5rem,2.6rem + 3vw,5.25rem);font-weight:500;line-height:.9;letter-spacing:-0.04em}
 .leaf__month{margin-top:10px;font-size:var(--step-body);font-weight:500}
 .leaf__dow{margin-top:2px;font-size:var(--step-small)}
-.leaf__year{margin-top:2px;font-size:var(--step-small);color:var(--muted)}
+.leaf__year{margin-top:2px;font-size:var(--step-small)}
 .leaf__body{display:flex;flex-direction:column;gap:14px;padding:28px clamp(20px,3vw,44px) 30px}
 .leaf__body h3{font-size:var(--step-lead);line-height:1.22;text-wrap:pretty;max-width:34ch}
 /* the whole leaf opens the note; the title link is its keyboard handle */
@@ -216,12 +216,31 @@
 .leaf__lead{max-width:62ch;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
 .leaf__pic{margin:0;overflow:clip;background:var(--tone-3)}
 .leaf__pic img{width:100%;height:100%;object-fit:cover}
-/* a note on its own page: the full text, the photo under it */
-.leaf--page{grid-template-columns:200px minmax(0,1fr)}
-.leaf--page .leaf__body{gap:18px;padding-block:36px 40px}
-.leaf--page h1{font-size:clamp(1.75rem,1.2rem + 1.9vw,2.75rem);line-height:1.1;letter-spacing:-0.02em;max-width:30ch}
-.leaf--page .leaf__text{display:flex;flex-direction:column;gap:14px;max-width:64ch}
-.leaf--page .leaf__pic{margin-top:8px;aspect-ratio:3 / 2;max-width:760px}
+/* a note on its own page: a desk-calendar leaf on a coloured column, then the full text */
+.note{display:grid;grid-template-columns:280px minmax(0,1fr);background:var(--paper);color:var(--ink)}
+.note__side{position:relative;z-index:0;background:var(--tone-3);padding:36px 48px 52px 32px}
+/* the leaf on top of two more, like the pad in the news hero */
+.note__stack{position:sticky;top:100px}
+.note__stack::before,.note__stack::after{content:"";position:absolute;inset:0;background:var(--tone-4);transform:translate(8px,8px)}
+.note__stack::after{background:var(--tone-1);transform:translate(16px,16px);z-index:-1}
+.note__stack::before{z-index:0}
+.note__cal{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;background:var(--paper);text-align:center;padding:0 0 22px}
+/* the binding with its punched holes */
+.note__cal::before{content:"";align-self:stretch;height:30px;background:var(--ink)}
+.note__cal::after{content:"";position:absolute;top:10px;left:12px;right:12px;border-top:10px dotted var(--tone-3)}
+.note__mon{margin-top:16px;font-size:var(--step-body);font-weight:500}
+.note__day{font-size:clamp(4.5rem,3rem + 3vw,6.5rem);font-weight:500;line-height:1;letter-spacing:-0.05em}
+.note__dow{font-size:var(--step-small)}
+.note__yr{align-self:stretch;margin:12px 20px 0;padding-top:10px;border-top:3px dotted var(--muted);color:var(--muted);font-size:var(--step-small)}
+.note__body{padding:44px clamp(24px,4vw,64px) 52px;max-width:880px}
+.note__meta{margin:0 0 26px;font-size:var(--step-small);color:var(--muted)}
+.note__meta a{color:inherit;text-underline-offset:.2em}
+.note h1{font-size:clamp(1.75rem,1.2rem + 1.9vw,2.75rem);line-height:1.1;letter-spacing:-0.02em;margin:0 0 12px;max-width:26ch;text-wrap:balance}
+.note__lead{margin:0;font-size:var(--step-lead);line-height:1.45;max-width:46ch}
+.note__text{margin-top:22px;padding-top:22px;border-top:3px dotted var(--muted);display:flex;flex-direction:column;gap:14px;max-width:64ch}
+.note__text p{margin:0}
+.note__pic{margin:30px 0 0;padding:12px;background:var(--tone-3)}
+.note__pic img{display:block;width:100%;aspect-ratio:3 / 2;object-fit:cover}
 .npage{background:var(--field-1);color:var(--field-1-ink);padding-block:clamp(28px,3vw,48px) var(--gap-section)}
 .npage .leaf{color:var(--ink)}
 .nmore{background:var(--surface);padding-block:var(--gap-section)}
@@ -230,15 +249,22 @@
 @media (max-width:1100px){
   .leaf{grid-template-columns:150px minmax(0,1fr)}
   .leaf__pic{grid-column:2;aspect-ratio:16 / 9;margin:0 clamp(20px,3vw,44px) 30px}
-  .leaf--page .leaf__pic{grid-column:auto;margin:8px 0 0}
+  .note{grid-template-columns:220px minmax(0,1fr)}
+  .note__side{padding:28px 24px 32px}
 }
 @media (max-width:640px){
-  .leaf,.leaf--noimg,.leaf--page{grid-template-columns:1fr}
+  .leaf,.leaf--noimg{grid-template-columns:1fr}
   .leaf__date{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:baseline;gap:4px 12px;padding:0 16px 14px}
   .leaf__date::before{flex-basis:calc(100% + 32px);margin:0 -16px}
   .leaf__day{margin-top:12px;font-size:3rem}
   .leaf__month,.leaf__dow,.leaf__year{margin-top:0}
-  .leaf__body,.leaf--page .leaf__body{padding:20px 16px 22px}
+  .leaf__body{padding:20px 16px 22px}
   .leaf__pic{grid-column:1;margin:0 16px 20px}
-  .leaf--page .leaf__pic{margin:8px 0 0}
+  .note{grid-template-columns:1fr}
+  .note__side{padding:20px 16px 26px}
+  .note__stack{position:relative;top:auto;width:150px}
+  .note__cal{padding-bottom:16px}
+  .note__day{font-size:4rem}
+  .note__body{padding:24px 16px 32px}
+  .note__pic{margin-inline:-4px;padding:8px}
 }

@@ -211,6 +211,7 @@ const notes = (JSON.parse(read('data/news.json')).news || [])
   .filter((n) => n && n.title && n.id && /^[a-z0-9-]+$/i.test(n.id) && /^\d{4}-\d{2}-\d{2}$/.test(n.date || '') && n.published !== false)
   .sort((a, b) => b.date.localeCompare(a.date));
 const ruDate = (iso, opts) => new Intl.DateTimeFormat('ru-RU', opts).format(new Date(iso + 'T12:00:00'));
+const fullDate = (iso) => ruDate(iso, { day: 'numeric', month: 'long', year: 'numeric' }).replace(/\s*г\.$/, '');
 const paras = (text) => String(text || '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 const leafDate = (n) => {
   const d = new Date(n.date + 'T12:00:00');
@@ -220,7 +221,7 @@ const leafDate = (n) => {
 const noteCard = (n) => {
   const pic = safeUrl(n.image);
   const lead = paras(n.text)[0];
-  return `      <article class="leaf${pic ? '' : ' leaf--noimg'}">${leafDate(n)}<div class="leaf__body"><h3><a class="leaf__link" href="${n.id}.html">${esc(n.title)}</a></h3><time class="sr-only" datetime="${n.date}">${esc(ruDate(n.date, { day: 'numeric', month: 'long', year: 'numeric' }))}</time>${lead ? `<p class="leaf__lead">${esc(lead)}</p>` : ''}</div>${pic ? `<figure class="leaf__pic"><img src="${esc(up(pic))}" alt="" loading="lazy" decoding="async"></figure>` : ''}</article>`;
+  return `      <article class="leaf${pic ? '' : ' leaf--noimg'}">${leafDate(n)}<div class="leaf__body"><h3><a class="leaf__link" href="${n.id}.html">${esc(n.title)}</a></h3><time class="sr-only" datetime="${n.date}">${esc(fullDate(n.date))}</time>${lead ? `<p class="leaf__lead">${esc(lead)}</p>` : ''}</div>${pic ? `<figure class="leaf__pic"><img src="${esc(up(pic))}" alt="" loading="lazy" decoding="async"></figure>` : ''}</article>`;
 };
 
 function notePage(n, i) {
@@ -266,15 +267,18 @@ function notePage(n, i) {
 <div class="npage">
   <div class="wrap">
     <p class="wpage__back" data-r style="--i:0"><a class="tlink" href="../news.html">← Все новости</a></p>
-    <article class="leaf leaf--page" data-r style="--i:1" aria-labelledby="note-h">
-      ${leafDate(n)}
-      <div class="leaf__body">
+    <article class="note" data-r style="--i:1" aria-labelledby="note-h">
+      <div class="note__side">
+        <div class="note__stack" aria-hidden="true"><div class="note__cal"><span class="note__mon">${esc(ruDate(n.date, { month: 'long' }))}</span><span class="note__day num">${Number(n.date.slice(8))}</span><span class="note__dow">${esc(ruDate(n.date, { weekday: 'long' }))}</span><span class="note__yr num">${n.date.slice(0, 4)}</span></div></div>
+      </div>
+      <div class="note__body">
         <h1 id="note-h">${esc(n.title)}</h1>
-        <time class="sr-only" datetime="${n.date}">${esc(ruDate(n.date, { day: 'numeric', month: 'long', year: 'numeric' }))}</time>
-        <div class="leaf__text">
-${text.map((p) => `          <p>${esc(p)}</p>`).join('\n')}
-        </div>
-        ${pic ? `<figure class="leaf__pic"><img src="${esc(up(pic))}" alt="" decoding="async" fetchpriority="high"></figure>` : ''}
+        <p class="note__meta"><a href="../news.html">Новости</a> · <time datetime="${n.date}">${esc(fullDate(n.date))}</time></p>
+        ${text.length ? `<p class="note__lead">${esc(text[0])}</p>` : ''}
+        ${text.length > 1 ? `<div class="note__text">
+${text.slice(1).map((p) => `          <p>${esc(p)}</p>`).join('\n')}
+        </div>` : ''}
+        ${pic ? `<figure class="note__pic"><img src="${esc(up(pic))}" alt="" decoding="async" fetchpriority="high"></figure>` : ''}
       </div>
     </article>
   </div>
