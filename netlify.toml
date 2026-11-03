@@ -1,0 +1,26 @@
+# Netlify builds the site on every push to main (also after each save in /admin/):
+# tools/build.mjs joins content/ into data/*.json, puts the header and footer into every page
+# and writes works/<id>.html, news/<id>.html and sitemap.xml. The repository root is published as is.
+[build]
+  command = "node tools/build.mjs"
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# fonts never change under the same name; pictures may be replaced, so they are kept for a month
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# the editor is not for search engines
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

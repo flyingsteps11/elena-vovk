@@ -7,7 +7,7 @@ window.kit = (() => {
     const a = n % 10, b = n % 100;
     return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many;
   };
-  // Absolute links stay; site paths are made relative so they work under /elena-vovk/
+  // Absolute links stay; site paths are made relative so they work under any base path
   const safeUrl = (u) => {
     u = String(u || '').trim();
     if (!u) return '';

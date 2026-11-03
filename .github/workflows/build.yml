@@ -1,16 +1,10 @@
 # Rebuilds the generated parts of the site (data/*.json from content/, header and footer in every
-# page, works/<id>.html, news/<id>.html, sitemap.xml) whenever the content or the partials change, for example after saving in /admin/.
+# page, works/<id>.html, news/<id>.html, sitemap.xml) and commits them to the repository.
+# The live site is built by Netlify on every push (netlify.toml), so this runs only by hand
+# (Actions → Build site → Run workflow), to bring the generated files in the repository up to date.
 name: Build site
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "content/**"
-      - "data/**"
-      - "partials/**"
-      - "tools/**"
-      - "*.html"
   workflow_dispatch:
 
 permissions:

@@ -11,7 +11,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const SITE = 'https://flyingsteps11.github.io/elena-vovk/';
+const SITE = 'https://elena-vovk.netlify.app/';
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 const write = (p, s) => { mkdirSync(dirname(join(ROOT, p)), { recursive: true }); writeFileSync(join(ROOT, p), s); };
 

@@ -1,17 +1,15 @@
-# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.256.1/schema/sveltia-cms.json
-# Editor for the site. Sign in with a GitHub token (button "Sign In with Token"):
-# fine-grained token, only this repository, Contents: Read and write.
-# Every entry is its own file in content/; tools/build.mjs (run by the GitHub Action on every save)
+# Editor for the site: Decap CMS on Netlify. Editors sign in with e-mail and password
+# (Netlify Identity, invite only); their saves go to GitHub through Netlify Git Gateway.
+# Every entry is its own file in content/; tools/build.mjs (run by Netlify on every save)
 # joins them into data/<section>.json, which the pages read.
 
-app_title: Сайт Е. А. Вовк
-site_url: https://flyingsteps11.github.io/elena-vovk
-logo:
-  src: /elena-vovk/admin/logo.svg
+locale: ru
+site_url: https://elena-vovk.netlify.app
+display_url: https://elena-vovk.netlify.app
+logo_url: /admin/logo.svg
 
 backend:
-  name: github
-  repo: flyingsteps11/elena-vovk
+  name: git-gateway
   branch: main
   commit_messages:
     create: "{{collection}}: добавлено «{{slug}}»"
@@ -22,19 +20,6 @@ backend:
 
 media_folder: uploads/works
 public_folder: /uploads/works
-
-media_libraries:
-  default:
-    config:
-      max_file_size: 20000000
-      slugify_filename: true
-  all:
-    transformations:
-      raster_image:
-        format: webp
-        quality: 82
-        width: 1600
-        height: 1600
 
 collections:
   - name: works
@@ -48,20 +33,15 @@ collections:
     identifier_field: title
     summary: "{{title}} · {{year}}"
     preview_path: "works/{{fields.id}}.html"
-    thumbnail: cover
-    sortable_fields:
-      fields: [year, title, type]
-      default: { field: year, direction: descending }
+    sortable_fields: [year, title, type]
     view_filters:
-      filters:
-        - { name: hidden, label: Скрытые с сайта, field: published, eq: false }
-        - { name: methodic, label: Методические разработки, field: type, eq: Методическая разработка }
-        - { name: lessons, label: Конспекты уроков, field: type, eq: Конспект урока }
-        - { name: articles, label: Статьи, field: type, eq: Статья }
+      - { label: Скрытые с сайта, field: published, pattern: false }
+      - { label: Методические разработки, field: type, pattern: 'Методическая разработка' }
+      - { label: Конспекты уроков, field: type, pattern: 'Конспект урока' }
+      - { label: Статьи, field: type, pattern: 'Статья' }
     view_groups:
-      groups:
-        - { name: year, label: По годам, field: year }
-        - { name: type, label: По виду, field: type }
+      - { label: По годам, field: year }
+      - { label: По виду, field: type }
     fields:
       - { name: title, label: Название, widget: string }
       - name: type
@@ -71,7 +51,7 @@ collections:
       - &year { name: year, label: Год, widget: number, value_type: int, min: 1990, max: 2100 }
       - { name: discipline, label: Код дисциплины, hint: "Например, МДК 02.02. Можно оставить пустым.", widget: string, required: false }
       - { name: description, label: Описание, hint: "Два-три предложения о том, что внутри и для кого работа.", widget: text, required: false }
-      - { name: cover, label: Обложка, hint: "Фото или скан первой страницы. Сохраняется в WebP автоматически. Без обложки карточка показывает вид работы и год.", widget: image, required: false }
+      - { name: cover, label: Обложка, hint: "Фото или скан первой страницы, лучше JPG или WebP до 1 МБ. Без обложки карточка показывает вид работы и год.", widget: image, required: false }
       - { name: credit, label: Источник обложки, hint: "Заполните, если картинка чужая (автор, лицензия). Свою фотографию можно не подписывать.", widget: string, required: false }
       - { name: file, label: Файл работы, hint: "PDF, DOCX или PPTX, до 20 МБ.", widget: file, required: false }
       - { name: link, label: Внешняя ссылка, hint: "Если работа опубликована на другом сайте.", widget: string, required: false }
@@ -94,10 +74,7 @@ collections:
     summary: "{{name}} · {{code}}"
     media_folder: /uploads/materials
     public_folder: /uploads/materials
-    thumbnail: image
-    sortable_fields:
-      fields: [order, name]
-      default: { field: order, direction: ascending }
+    sortable_fields: [order, name]
     fields:
       - { name: name, label: Название дисциплины, widget: string }
       - { name: code, label: Код МДК, widget: string }
@@ -119,19 +96,15 @@ collections:
     summary: "{{title}} · {{kind}}"
     media_folder: /uploads/materials
     public_folder: /uploads/materials
-    sortable_fields:
-      fields: [title, discipline, order]
-      default: { field: discipline, direction: ascending }
+    sortable_fields: [title, discipline, order]
     view_filters:
-      filters:
-        - { name: hidden, label: Скрытые с сайта, field: published, eq: false }
-        - { name: tasks, label: Задания, field: kind, eq: Задания }
-        - { name: exam, label: Вопросы к экзамену, field: kind, eq: Вопросы к экзамену }
-        - { name: guides, label: Методические указания, field: kind, eq: Методические указания }
+      - { label: Скрытые с сайта, field: published, pattern: false }
+      - { label: Задания, field: kind, pattern: 'Задания' }
+      - { label: Вопросы к экзамену, field: kind, pattern: 'Вопросы к экзамену' }
+      - { label: Методические указания, field: kind, pattern: 'Методические указания' }
     view_groups:
-      groups:
-        - { name: discipline, label: По дисциплинам, field: discipline }
-        - { name: kind, label: По виду, field: kind }
+      - { label: По дисциплинам, field: discipline }
+      - { label: По виду, field: kind }
     fields:
       - { name: title, label: Название, widget: string }
       - name: discipline
@@ -140,7 +113,7 @@ collections:
         collection: disciplines
         value_field: id
         search_fields: [name, code]
-        display_fields: ["{{name}} ({{code}})"]
+        display_fields: [name, code]
       - { name: kind, label: Вид, widget: select, options: [Задания, Вопросы к экзамену, Методические указания, Ссылка] }
       - { name: note, label: Пояснение, widget: string, required: false }
       - { name: file, label: Файл, hint: "PDF, DOCX или PPTX, до 20 МБ.", widget: file, required: false }
@@ -159,20 +132,15 @@ collections:
     summary: "{{event}} · {{result}} · {{year}}"
     media_folder: /uploads/success
     public_folder: /uploads/success
-    thumbnail: image
-    sortable_fields:
-      fields: [year, event, level]
-      default: { field: year, direction: descending }
+    sortable_fields: [year, event, level]
     view_filters:
-      filters:
-        - { name: hidden, label: Скрытые с сайта, field: published, eq: false }
-        - { name: russia, label: Всероссийский уровень, field: level, eq: Всероссийский }
-        - { name: region, label: Региональный уровень, field: level, eq: Региональный }
-        - { name: college, label: Уровень колледжа, field: level, eq: Колледж }
+      - { label: Скрытые с сайта, field: published, pattern: false }
+      - { label: Всероссийский уровень, field: level, pattern: 'Всероссийский' }
+      - { label: Региональный уровень, field: level, pattern: 'Региональный' }
+      - { label: Уровень колледжа, field: level, pattern: 'Колледж' }
     view_groups:
-      groups:
-        - { name: year, label: По годам, field: year }
-        - { name: level, label: По уровню, field: level }
+      - { label: По годам, field: year }
+      - { label: По уровню, field: level }
     fields:
       - { name: event, label: Мероприятие, widget: string }
       - { name: result, label: Результат, hint: "Например: 1 место, 2 место, Лауреат, Диплом участника.", widget: string }
@@ -206,19 +174,14 @@ collections:
     summary: "{{title}} · {{kind}} · {{year}}"
     media_folder: /uploads/achievements
     public_folder: /uploads/achievements
-    thumbnail: image
-    sortable_fields:
-      fields: [year, title, kind]
-      default: { field: year, direction: descending }
+    sortable_fields: [year, title, kind]
     view_filters:
-      filters:
-        - { name: hidden, label: Скрытые с сайта, field: published, eq: false }
-        - { name: gramota, label: Грамоты, field: kind, eq: Грамота }
-        - { name: cert, label: Сертификаты и удостоверения, field: kind, in: [Сертификат, Удостоверение] }
+      - { label: Скрытые с сайта, field: published, pattern: false }
+      - { label: Грамоты, field: kind, pattern: 'Грамота' }
+      - { label: Сертификаты и удостоверения, field: kind, pattern: 'Сертификат|Удостоверение' }
     view_groups:
-      groups:
-        - { name: year, label: По годам, field: year }
-        - { name: kind, label: По виду, field: kind }
+      - { label: По годам, field: year }
+      - { label: По виду, field: kind }
     fields:
       - { name: title, label: Название, widget: string }
       - { name: kind, label: Вид, widget: select, options: [Грамота, Благодарность, Диплом, Сертификат, Удостоверение] }
@@ -240,16 +203,11 @@ collections:
     preview_path: "news/{{slug}}.html"
     media_folder: /uploads/news
     public_folder: /uploads/news
-    thumbnail: image
-    sortable_fields:
-      fields: [date, title]
-      default: { field: date, direction: descending }
+    sortable_fields: [date, title]
     view_filters:
-      filters:
-        - { name: hidden, label: Скрытые с сайта, field: published, eq: false }
+      - { label: Скрытые с сайта, field: published, pattern: false }
     view_groups:
-      groups:
-        - { name: year, label: По годам, field: date, pattern: '\d{4}' }
+      - { label: По годам, field: date, pattern: '\d{4}' }
     fields:
       - { name: date, label: Дата, widget: datetime, time_format: false, date_format: "YYYY-MM-DD", format: "YYYY-MM-DD" }
       - { name: title, label: Заголовок, hint: "Коротко, до 60 знаков.", widget: string }
