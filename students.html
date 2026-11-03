@@ -19,7 +19,6 @@
 <link rel="preload" href="fonts/vollkorn-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/vollkorn-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/literata-digits.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="img/hero-reading-room-800.webp" imagesrcset="img/hero-reading-room-800.webp 800w, img/hero-reading-room-1600.webp 1600w" imagesizes="(max-width: 900px) 100vw, 50vw" fetchpriority="high">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/kit.css">
 <style>
@@ -80,6 +79,43 @@
   .folder__count{display:none}
   .mrow{grid-template-columns:1fr}
 }
+/* hero drawing: a student at her desk thinking over her notes */
+.study{display:grid;place-items:center;padding:clamp(20px,4vw,56px)}
+.study svg{width:min(100%,600px);height:auto;overflow:visible}
+.study text{font-family:"Literata Digits","Vollkorn",Georgia,serif}
+@media (max-width:900px){.whero .study{height:auto;padding:20px 20px 44px}.study svg{width:min(100%,360px)}}
+.s-head,.s-chest,.s-eyes,.s-pencil,.s-t1,.s-t2,.s-t3,.s-t4,.s-steam{transform-box:view-box}
+.s-head{transform-origin:205px 190px}
+.s-chest{transform-origin:200px 300px}
+.s-eyes{transform-origin:205px 152px}
+.s-pencil{transform-origin:274px 292px}
+.s-t2,.s-t3,.s-t4{opacity:0}
+.s-write{stroke-dasharray:50;stroke-dashoffset:0}
+@media (prefers-reduced-motion:no-preference){
+  .s-head{animation:s-tilt 9s ease-in-out infinite}
+  .s-chest{animation:s-breathe 4.5s ease-in-out infinite}
+  .s-eyes{animation:s-blink 6s infinite}
+  .s-pencil{animation:s-tap 9s infinite}
+  .s-t1{animation:s-t1 9s infinite}
+  .s-t2{animation:s-t2 9s infinite}
+  .s-t3{animation:s-t3 9s infinite}
+  .s-t4{animation:s-t4 9s infinite}
+  .s-write{animation:s-write 9s ease-out infinite}
+  .s-steam{animation:s-steam 3s ease-in-out infinite}
+  .s-steam2{animation-delay:1.5s}
+}
+@keyframes s-tilt{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(1.5deg)}}
+@keyframes s-breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.018)}}
+@keyframes s-blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+/* the pencil taps while she thinks, then writes once the idea comes */
+@keyframes s-tap{0%,4%,8%,12%,16%,20%,24%,28%,32%,36%,40%,44%,48%,52%,56%,60%,64%,68%,72%{transform:rotate(0)}2%,6%,10%,14%,18%,22%,26%,30%,34%,38%,42%,46%,50%,54%,58%,62%,66%,70%{transform:rotate(-7deg)}78%{transform:translate(-30px,6px)}92%,100%{transform:translate(0,0)}}
+/* thoughts in turn: the entry, the tax rate, a question, the answer */
+@keyframes s-t1{0%,24%{opacity:1}28%,100%{opacity:0}}
+@keyframes s-t2{0%,26%{opacity:0}30%,50%{opacity:1}54%,100%{opacity:0}}
+@keyframes s-t3{0%,52%{opacity:0}56%,72%{opacity:1}76%,100%{opacity:0}}
+@keyframes s-t4{0%,74%{opacity:0}78%,96%{opacity:1}100%{opacity:0}}
+@keyframes s-write{0%,78%{stroke-dashoffset:50}92%,98%{stroke-dashoffset:0}100%{stroke-dashoffset:50}}
+@keyframes s-steam{0%{transform:translateY(6px);opacity:0}40%{opacity:.8}100%{transform:translateY(-14px);opacity:0}}
 </style>
 </head>
 <body id="top" data-page="materials">
@@ -162,9 +198,96 @@
       </dl>
     </div>
   </div>
-  <figure class="wphoto">
-    <img src="img/hero-reading-room-800.webp" srcset="img/hero-reading-room-800.webp 800w, img/hero-reading-room-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" width="1600" height="1199" alt="Студентка за столом в читальном зале склонилась над конспектами и папками с бумагами" fetchpriority="high">
-  </figure>
+  <div class="wphoto study" aria-hidden="true">
+    <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" focusable="false">
+      <!-- timetable pinned to the wall -->
+      <g transform="rotate(-4 77 122)">
+        <rect x="34" y="70" width="86" height="104" fill="#f6e3da"/>
+        <g stroke="#b88a99" stroke-width="2" stroke-linecap="round">
+          <line x1="46" y1="92" x2="106" y2="92"/><line x1="46" y1="108" x2="98" y2="108"/><line x1="46" y1="124" x2="106" y2="124"/><line x1="46" y1="140" x2="90" y2="140"/><line x1="46" y1="156" x2="102" y2="156"/>
+        </g>
+      </g>
+      <circle cx="77" cy="74" r="5" fill="#351a2b"/>
+      <!-- thought bubble -->
+      <circle cx="252" cy="104" r="6" fill="#f6e3da"/>
+      <circle cx="268" cy="84" r="9" fill="#f6e3da"/>
+      <path d="M262 62 Q256 30 292 28 Q306 6 334 18 Q366 8 376 34 Q400 44 386 66 Q384 86 356 84 Q336 96 312 84 Q284 92 278 72 Q258 74 262 62 Z" fill="#f6e3da"/>
+      <text class="s-t1" x="324" y="62" font-size="17" text-anchor="middle" fill="#351a2b">Тема № 3</text>
+      <text class="s-t2" x="324" y="62" font-size="17" text-anchor="middle" fill="#351a2b">НДС 20%</text>
+      <text class="s-t3" x="324" y="68" font-size="30" text-anchor="middle" fill="#351a2b">?</text>
+      <text class="s-t4" x="324" y="68" font-size="30" text-anchor="middle" fill="#351a2b">!</text>
+      <!-- desk lamp and its light -->
+      <polygon points="306,210 350,206 384,300 280,300" fill="#fbf1ea" opacity=".35"/>
+      <path d="M346 298 L356 222 L336 196" fill="none" stroke="#351a2b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M304 210 L334 180 L354 206 Z" fill="#351a2b"/>
+      <rect x="328" y="294" width="40" height="8" rx="3" fill="#351a2b"/>
+      <!-- long hair falling behind the shoulders -->
+      <path d="M168 150 Q160 104 206 100 Q252 104 246 152 Q252 206 248 248 L162 248 Q158 206 168 150 Z" fill="#2a1421"/>
+      <!-- body, breathing: a cardigan over a blouse with a soft collar -->
+      <g class="s-chest">
+        <path d="M134 304 L140 252 Q146 222 180 212 L230 212 Q264 222 270 252 L276 304 Z" fill="#6c4857"/>
+        <path d="M186 212 L205 252 L224 212 Z" fill="#f6e3da"/>
+        <path d="M186 212 L198 232 L205 222 Z M224 212 L212 232 L205 222 Z" fill="#fbf1ea"/>
+        <circle cx="205" cy="262" r="2.4" fill="#f6e3da"/><circle cx="205" cy="280" r="2.4" fill="#f6e3da"/>
+        <path d="M195 186 L215 186 L218 214 Q205 222 192 214 Z" fill="#dfa48c"/>
+      </g>
+      <!-- head, thinking, resting on her hand -->
+      <g class="s-head">
+        <path d="M177 148 Q177 116 206 115 Q235 116 235 148 Q235 176 206 192 Q177 176 177 148 Z" fill="#f2c7b1"/>
+        <!-- side-parted fringe and a strand over the right shoulder -->
+        <path d="M172 158 Q166 106 208 104 Q246 106 242 156 Q236 130 220 122 Q204 136 182 140 Q176 148 172 158 Z" fill="#2a1421"/>
+        <path d="M236 140 Q252 186 242 236 Q236 244 230 236 Q240 192 230 152 Z" fill="#2a1421"/>
+        <ellipse cx="189" cy="168" rx="6" ry="3.6" fill="#e9978a" opacity=".5"/>
+        <ellipse cx="223" cy="167" rx="6" ry="3.6" fill="#e9978a" opacity=".5"/>
+        <!-- eyes glancing up at the thought -->
+        <g class="s-eyes">
+          <ellipse cx="194" cy="153" rx="3.4" ry="4" fill="#2a1421"/>
+          <ellipse cx="217" cy="152" rx="3.4" ry="4" fill="#2a1421"/>
+          <circle cx="195.3" cy="151.4" r="1.2" fill="#fbf1ea"/>
+          <circle cx="218.3" cy="150.4" r="1.2" fill="#fbf1ea"/>
+        </g>
+        <path d="M188 149 Q194 145 200 148 L202 146" fill="none" stroke="#2a1421" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M211 148 Q217 144 223 147 L225 145" fill="none" stroke="#2a1421" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M187 141 Q194 137 200 140" fill="none" stroke="#2a1421" stroke-width="2" stroke-linecap="round"/>
+        <path d="M211 137 Q218 132 225 137" fill="none" stroke="#2a1421" stroke-width="2" stroke-linecap="round"/>
+        <path d="M206 156 Q209 164 205 167" fill="none" stroke="#d48f78" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M199 175 Q205 172 212 175 Q205 179 199 175 Z" fill="#c7647a"/>
+      </g>
+      <!-- arm propping the cheek: elbow on the desk, the hand under the jaw -->
+      <path d="M150 248 Q136 284 156 298 Q168 246 180 192" fill="none" stroke="#6c4857" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M172 196 Q170 176 182 170 Q192 168 192 180 Q190 194 180 198 Z" fill="#f2c7b1"/>
+      <path d="M180 176 Q186 175 190 178" fill="none" stroke="#d48f78" stroke-width="1.4" stroke-linecap="round"/>
+      <!-- desk -->
+      <rect x="10" y="300" width="400" height="26" fill="#a96f5c"/>
+      <rect x="28" y="326" width="364" height="76" fill="#c48a76"/>
+      <line x1="40" y1="364" x2="380" y2="364" stroke="#a96f5c" stroke-width="4" stroke-dasharray="0 10" stroke-linecap="round"/>
+      <!-- folders with discipline tabs -->
+      <rect x="44" y="250" width="26" height="9" fill="#e3b9a7"/>
+      <rect x="36" y="258" width="92" height="14" fill="#e3b9a7"/>
+      <rect x="40" y="272" width="88" height="14" fill="#6c4857"/>
+      <rect x="34" y="286" width="96" height="14" fill="#351a2b"/>
+      <text x="44" y="297" font-size="9" fill="#f6e3da">Конспекты</text>
+      <!-- open notebook: a ruled summary, one line being written -->
+      <path d="M200 300 L134 304 L130 322 L200 318 L270 322 L266 304 Z" fill="#351a2b"/>
+      <path d="M200 302 L140 305 L137 318 L200 315 Z" fill="#fbf1ea"/>
+      <path d="M200 302 L260 305 L263 318 L200 315 Z" fill="#f6e3da"/>
+      <g stroke="#b88a99" stroke-width="1.5" stroke-linecap="round">
+        <line x1="146" y1="308" x2="194" y2="306"/><line x1="145" y1="312" x2="190" y2="310"/>
+      </g>
+      <line class="s-write" x1="208" y1="309" x2="256" y2="311" stroke="#351a2b" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- the writing hand and its pencil -->
+      <path d="M248 240 Q262 270 270 290" fill="none" stroke="#6c4857" stroke-width="22" stroke-linecap="round"/>
+      <g class="s-pencil">
+        <line x1="268" y1="298" x2="292" y2="262" stroke="#351a2b" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="274" cy="292" r="10" fill="#eab9a2"/>
+      </g>
+      <!-- mug with steam -->
+      <rect x="296" y="276" width="22" height="24" rx="4" fill="#f6e3da"/>
+      <path d="M318 282 Q328 288 318 294" fill="none" stroke="#f6e3da" stroke-width="3"/>
+      <path class="s-steam" d="M302 270 Q298 262 304 256" fill="none" stroke="#fbf1ea" stroke-width="2.4" stroke-linecap="round"/>
+      <path class="s-steam s-steam2" d="M311 270 Q307 262 313 256" fill="none" stroke="#fbf1ea" stroke-width="2.4" stroke-linecap="round"/>
+    </svg>
+  </div>
 </section>
 
 <section class="folders" id="folders" aria-labelledby="folders-h">
