@@ -37,6 +37,23 @@
 .pad__day{font-size:clamp(7rem,4rem + 9vw,11rem);font-weight:500;line-height:1;letter-spacing:-0.05em;margin:4px 0 0}
 .pad__dow{font-size:var(--step-lead)}
 .pad__year{margin-top:14px;padding-top:12px;border-top:3px dotted var(--muted);align-self:stretch;font-size:var(--step-lead);color:var(--muted)}
+/* the four earlier days lie on top of the latest one and are torn off in turn; without motion only the latest shows */
+/* phones: the whole calendar stays above the card instead of being cropped like a photo */
+@media (max-width:900px){.whero .pad{height:auto;padding:24px 24px 52px}.pad__stack{width:min(100%,250px)}.pad__day{font-size:6rem}.pad__month,.pad__dow,.pad__year{font-size:var(--step-body)}}
+.pad__fly{position:absolute;inset:0;display:none;transform-origin:50% 0}
+.pad__fly--1{z-index:5}.pad__fly--2{z-index:4}.pad__fly--3{z-index:3}.pad__fly--4{z-index:2}
+@media (prefers-reduced-motion:no-preference){
+  .pad__fly{display:flex}
+  .pad__fly--1{animation:pad-fall1 11s ease-in infinite}
+  .pad__fly--2{animation:pad-fall2 11s ease-in infinite}
+  .pad__fly--3{animation:pad-fall3 11s ease-in infinite}
+  .pad__fly--4{animation:pad-fall4 11s ease-in infinite}
+}
+/* each leaf: a tug at the binding, then it tumbles down and away; all four come back together before the next round */
+@keyframes pad-fall1{0%,10%{transform:none;opacity:1}12%{transform:rotate(-4deg)}22%{transform:translate(-90px,420px) rotate(-38deg);opacity:0}22.1%,92%{transform:translate(-90px,420px) rotate(-38deg);opacity:0}92.1%{transform:none;opacity:0}98%,100%{transform:none;opacity:1}}
+@keyframes pad-fall2{0%,20%{transform:none;opacity:1}22%{transform:rotate(4deg)}32%{transform:translate(110px,420px) rotate(42deg);opacity:0}32.1%,92%{transform:translate(110px,420px) rotate(42deg);opacity:0}92.1%{transform:none;opacity:0}98%,100%{transform:none;opacity:1}}
+@keyframes pad-fall3{0%,30%{transform:none;opacity:1}32%{transform:rotate(-4deg)}42%{transform:translate(-120px,420px) rotate(-50deg);opacity:0}42.1%,92%{transform:translate(-120px,420px) rotate(-50deg);opacity:0}92.1%{transform:none;opacity:0}98%,100%{transform:none;opacity:1}}
+@keyframes pad-fall4{0%,40%{transform:none;opacity:1}42%{transform:rotate(4deg)}52%{transform:translate(90px,420px) rotate(36deg);opacity:0}52.1%,92%{transform:translate(90px,420px) rotate(36deg);opacity:0}92.1%{transform:none;opacity:0}98%,100%{transform:none;opacity:1}}
 .archive{background:var(--field-1);color:var(--field-1-ink);padding-block:var(--gap-section)}
 .archive__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
 .archive__left{grid-column:1 / span 6;align-self:start;display:flex;flex-direction:column}
@@ -135,6 +152,11 @@
         <span class="pad__dow" id="pad-dow">вторник</span>
         <span class="pad__year num" id="pad-year">2025</span>
       </div>
+      <!-- the days before the latest note: torn off one by one until its date shows -->
+      <div class="pad__leaf pad__fly pad__fly--1"><span class="pad__month">октябрь</span><span class="pad__day num">10</span><span class="pad__dow">пятница</span><span class="pad__year num">2025</span></div>
+      <div class="pad__leaf pad__fly pad__fly--2"><span class="pad__month">октябрь</span><span class="pad__day num">11</span><span class="pad__dow">суббота</span><span class="pad__year num">2025</span></div>
+      <div class="pad__leaf pad__fly pad__fly--3"><span class="pad__month">октябрь</span><span class="pad__day num">12</span><span class="pad__dow">воскресенье</span><span class="pad__year num">2025</span></div>
+      <div class="pad__leaf pad__fly pad__fly--4"><span class="pad__month">октябрь</span><span class="pad__day num">13</span><span class="pad__dow">понедельник</span><span class="pad__year num">2025</span></div>
     </div>
   </div>
 </section>
@@ -321,6 +343,13 @@
     $('pad-day').textContent = latest.getDate();
     $('pad-dow').textContent = fmt(latest, { weekday: 'long' });
     $('pad-year').textContent = latestYear;
+    // the leaves torn off above it: the four days before, across a month or year boundary too
+    document.querySelectorAll('.pad__fly').forEach((leaf, i) => {
+      const d = new Date(latest); d.setDate(d.getDate() - (4 - i));
+      const [mon, day, dow, yr] = leaf.children;
+      mon.textContent = fmt(d, { month: 'long' }); day.textContent = d.getDate();
+      dow.textContent = fmt(d, { weekday: 'long' }); yr.textContent = d.getFullYear();
+    });
 
     leaves = notes.map(leaf);
     $('n-list').replaceChildren(...leaves);
