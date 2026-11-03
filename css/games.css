@@ -213,3 +213,46 @@
   .od__text{font-size:var(--step-small)}
   .od__bar .btn{flex:1 1 auto}
 }
+
+/* «Разложи по корзинам»: a pile of cards above dashed trays with dark name plates; on the phone, the pile is a sticky strip */
+.sb{display:flex;flex-direction:column;gap:20px}
+.sb__task{font-size:var(--step-body)}
+.sb__pile{display:flex;flex-wrap:wrap;gap:8px;min-height:64px;padding:14px;background:#e8c2b2;transition:background-color var(--t-ui) ease}
+.sb__pile.is-empty::before{content:"Все карточки разложены";align-self:center;color:var(--muted);font-size:var(--step-small)}
+.sb__card{position:relative;padding:10px 14px;background:#f6e3da;color:var(--ink);border:0;font:inherit;font-size:var(--step-body);line-height:1.3;text-align:left;cursor:grab;box-shadow:0 3px 0 #c48a76;user-select:none;transition:background-color var(--t-hover) ease,color var(--t-hover) ease,box-shadow var(--t-hover) ease}
+.sb__card:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.sb__card.is-sel{background:var(--ink);color:var(--accent-ink);box-shadow:0 3px 0 #24111d}
+.sb__card.is-lift{z-index:5;cursor:grabbing;background:var(--tone-3);box-shadow:0 10px 0 #c48a76}
+.sb__card.is-ok{background:#d9a441;color:var(--ink);box-shadow:0 3px 0 #a87a26}
+.sb__card.is-no{background:#f0d4c7;color:#a5566a;box-shadow:0 3px 0 #a5566a}
+@media (hover:hover){.sb__card:not(.is-sel):not(.is-ok):hover{background:var(--tone-3)}}
+.sb__bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px}
+.sb__bin{display:flex;flex-direction:column;border:2px dashed var(--ink);min-height:180px;transition:background-color var(--t-ui) ease,border-style var(--t-ui) ease}
+.sb__head{display:block;width:100%;padding:12px 16px;background:var(--ink);color:var(--accent-ink);border:0;font:inherit;font-size:var(--step-body);font-weight:600;text-align:left;cursor:pointer}
+.sb__head:focus-visible{outline:3px solid #d9a441;outline-offset:-3px}
+.sb__count{font-weight:400;opacity:.7}
+.sb__in{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;padding:12px}
+.sb.is-picking .sb__bin,.sb__bin.is-over{border-style:solid;background:#f0d4c7;cursor:pointer}
+.sb.is-picking .sb__pile,.sb__pile.is-over{background:#e3b9a7;cursor:pointer}
+.sb.is-solved .sb__card{cursor:default}
+.sb.is-solved .sb__pile{display:none}
+@media (prefers-reduced-motion:no-preference){
+  .sb__card.is-drop{animation:sb-drop 260ms var(--ease-out)}
+  .sb__card.is-no{animation:mt-shake 300ms ease}
+  .sb__pile.is-nudge{animation:mt-shake 300ms ease}
+}
+@keyframes sb-drop{from{transform:translateY(-8px) scale(.96);opacity:.4}}
+.sb__done{background:var(--ink);color:var(--accent-ink);padding:18px 22px;font-size:var(--step-lead)}
+.sb__done[hidden]{display:none}
+.sb__why{display:block;margin-top:8px;font-size:var(--step-body);opacity:.85}
+.sb__bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}
+.sb__status{font-size:var(--step-body)}
+@media (max-width:760px){
+  .sb__pile{position:sticky;top:60px;z-index:3;flex-wrap:nowrap;overflow-x:auto;margin-inline:calc(var(--m) * -1);padding:12px var(--m);scrollbar-width:none}
+  .sb__pile::-webkit-scrollbar{display:none}
+  .sb__pile .sb__card{flex:0 0 auto;max-width:72vw}
+  .sb__card{font-size:var(--step-small);padding:9px 12px}
+  .sb__bins{grid-template-columns:minmax(0,1fr)}
+  .sb__bin{min-height:110px}
+  .sb__bar .btn{flex:1 1 auto}
+}

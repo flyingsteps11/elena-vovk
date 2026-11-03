@@ -4,7 +4,8 @@
 //     <!-- @header --> … <!-- /@header --> and <!-- @footer --> … <!-- /@footer -->,
 //     marking the current section from <body data-page="…">;
 //  2. writes works/<id>.html for every published work, news/<id>.html for every published note,
-//     games/<id>.html for every published game (crossword, quiz, «Найди пару», «Расставь по порядку»)
+//     games/<id>.html for every published game (crossword, quiz, «Найди пару», «Расставь по порядку»,
+//     «Разложи по корзинам»)
 //     and the list of games in games.html;
 //  3. writes sitemap.xml.
 // Run it after changing a partial or anything in content/; the GitHub Action runs it on every push.
@@ -49,6 +50,7 @@ if (existsSync(join(ROOT, 'content'))) {
     quizzes: entries('content/quizzes').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
     matches: entries('content/matches').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
     orders: entries('content/orders').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
+    sorts: entries('content/sorts').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
   });
 }
 
@@ -451,6 +453,32 @@ function orderPage(o) {
   });
 }
 
+// «Разложи по корзинам»: cards from a shuffled pile go into the bins they belong to
+const cardsText = (n) => `${n} ${plural(n, 'карточка', 'карточки', 'карточек')}`;
+const sorts = (existsSync(join(ROOT, 'data/games.json')) ? (JSON.parse(read('data/games.json')).sorts || []) : [])
+  .filter((s) => s && s.title && s.id && /^[a-z0-9-]+$/.test(s.id) && s.published !== false
+    && ![...crosswords, ...quizzes, ...matches, ...orders].some((g) => g.id === s.id))
+  .map((s) => ({ ...s, bins: (s.bins || []).map((b) => ({
+    name: String((b && b.name) || '').trim(),
+    items: ((b && b.items) || []).map((i) => String((i && i.text) || '').trim()).filter(Boolean),
+  })).filter((b) => b.name && b.items.length) }))
+  .filter((s) => s.bins.length >= 2 && s.bins.reduce((n, b) => n + b.items.length, 0) >= 4);
+const sortCount = (s) => s.bins.reduce((n, b) => n + b.items.length, 0);
+
+// three trays with cards in them and one card still on the way, for the catalog card
+const sortSvg = '<svg viewBox="0 0 120 90" aria-hidden="true" focusable="false"><g fill="#e3b9a7"><rect x="6" y="40" width="32" height="8"/><rect x="44" y="40" width="32" height="8"/><rect x="82" y="40" width="32" height="8"/></g><g fill="none" stroke="#e3b9a7" stroke-width="1.5" stroke-dasharray="4 3"><rect x="7" y="48" width="30" height="36"/><rect x="45" y="48" width="30" height="36"/><rect x="83" y="48" width="30" height="36"/></g><g fill="#f6e3da"><rect x="11" y="53" width="22" height="9"/><rect x="11" y="66" width="22" height="9"/><rect x="49" y="53" width="22" height="9"/><rect x="87" y="53" width="22" height="9"/></g><rect x="49" y="66" width="22" height="9" fill="#d9a441"/><rect x="40" y="8" width="40" height="14" fill="#f6e3da" transform="rotate(-6 60 15)"/></svg>';
+
+function sortPage(s) {
+  const n = sortCount(s);
+  const desc = s.description || `Разложи по корзинам «${s.title}»: ${cardsText(n)} по бухгалтерскому учёту.`;
+  const data = { id: s.id, b: enc(JSON.stringify(s.bins.map((b) => [b.name, b.items]))), why: s.explain || '' };
+  return gameShell(s, {
+    kind: 'Разложи по корзинам', desc, size: cardsText(n), data, script: 'sort.js', body: `
+      ${s.description ? `<p class="cw__desc">${esc(s.description)}</p>` : ''}
+      <div class="sb"><p class="sb__task">${esc(s.task || 'Разложите карточки по корзинам: перетащите карточку или нажмите на неё, а потом на корзину.')}</p><noscript><p>Для игры нужен включённый JavaScript.</p></noscript></div>`,
+  });
+}
+
 // the page around a game: the same head, header, back link and footer for every kind
 function gameShell(g, { kind, desc, size, data, script, body }) {
   const d = discOf(g.discipline);
@@ -514,13 +542,15 @@ for (const c of crosswords) write(`games/${c.id}.html`, fillPage(gamePage(c), '.
 for (const q of quizzes) write(`games/${q.id}.html`, fillPage(quizPage(q), '../'));
 for (const m of matches) write(`games/${m.id}.html`, fillPage(matchPage(m), '../'));
 for (const o of orders) write(`games/${o.id}.html`, fillPage(orderPage(o), '../'));
-console.log('game pages', crosswords.length + quizzes.length + matches.length + orders.length);
+for (const t of sorts) write(`games/${t.id}.html`, fillPage(sortPage(t), '../'));
+console.log('game pages', crosswords.length + quizzes.length + matches.length + orders.length + sorts.length);
 if (existsSync(join(ROOT, 'games.html'))) {
   const games = [
     ...crosswords.map((c) => ({ g: c, kind: 'Кроссворд', pic: gridSvg(c.grid), size: wordsText(c.grid.words.length) })),
     ...quizzes.map((q) => ({ g: q, kind: 'Викторина', pic: ticketSvg, size: questionsText(q.questions.length) })),
     ...matches.map((m) => ({ g: m, kind: 'Найди пару', pic: pairsSvg, size: pairsText(m.pairs.length) })),
     ...orders.map((o) => ({ g: o, kind: 'Расставь по порядку', pic: orderSvg, size: stepsText(o.steps.length) })),
+    ...sorts.map((t) => ({ g: t, kind: 'Разложи по корзинам', pic: sortSvg, size: cardsText(sortCount(t)) })),
   ].sort((a, b) => String(a.g.title).localeCompare(String(b.g.title), 'ru'));
   const cards = games.length
     ? `<ul class="gcat__list">\n${games.map(({ g, kind, pic, size }, i) => {
@@ -543,6 +573,7 @@ const urls = [
   ...quizzes.map((q) => `${SITE}games/${q.id}.html`),
   ...matches.map((m) => `${SITE}games/${m.id}.html`),
   ...orders.map((o) => `${SITE}games/${o.id}.html`),
+  ...sorts.map((t) => `${SITE}games/${t.id}.html`),
 ];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
