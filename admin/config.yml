@@ -252,3 +252,53 @@ collections:
       - { name: variant, label: Вариант сетки, hint: "Если сетка не понравилась или какое-то слово не встало, поставьте другое число (2, 3…) и опубликуйте снова.", widget: number, value_type: int, default: 1, min: 1 }
       - { name: id, label: Адрес страницы, hint: "Латиницей через дефис, например osnovy-ucheta. Получится адрес games/osnovy-ucheta.html.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
       - *published
+
+  - name: quizzes
+    label: Викторины
+    label_singular: викторину
+    description: "Викторины для раздела «Игры»: вопрос, варианты ответа А–Г, пояснение. Лучше 8–15 вопросов."
+    folder: content/quizzes
+    format: json
+    create: true
+    slug: "{{fields.id}}"
+    identifier_field: title
+    summary: "{{title}}"
+    preview_path: "games/{{fields.id}}.html"
+    sortable_fields: [title]
+    view_filters:
+      - { label: Скрытые с сайта, field: published, pattern: false }
+    fields:
+      - { name: title, label: Тема викторины, hint: "Например: Расчёты с персоналом. На сайте получится «Викторина · Расчёты с персоналом».", widget: string }
+      - name: discipline
+        label: Дисциплина
+        required: false
+        widget: relation
+        collection: disciplines
+        value_field: id
+        search_fields: [name, code]
+        display_fields: [name, code]
+      - { name: description, label: Описание, hint: "Одно-два предложения: о чём викторина.", widget: text, required: false }
+      - name: questions
+        label: Вопросы
+        label_singular: вопрос
+        widget: list
+        summary: "{{question}}"
+        min: 1
+        fields:
+          - { name: question, label: Вопрос, widget: text }
+          - name: options
+            label: Варианты ответа
+            label_singular: вариант
+            hint: "2–6 вариантов. Отметьте верный; если отметить несколько, студент выбирает все верные и нажимает «Ответить»."
+            widget: list
+            summary: "{{text}}"
+            min: 2
+            max: 6
+            fields:
+              - { name: text, label: Ответ, widget: string }
+              - { name: correct, label: Верный, widget: boolean, default: false }
+          - { name: explain, label: Пояснение, hint: "Показывается после ответа: почему верно именно так.", widget: text, required: false }
+          - { name: image, label: Картинка к вопросу, hint: "Например, фрагмент документа. Можно оставить пустым.", widget: image, required: false, media_folder: /uploads/games, public_folder: /uploads/games }
+      - { name: shuffle, label: Перемешивать вопросы и ответы, widget: boolean, default: true }
+      - { name: id, label: Адрес страницы, hint: "Латиницей через дефис, например raschety-s-personalom. Не должен совпадать с адресом кроссворда.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
+      - *published

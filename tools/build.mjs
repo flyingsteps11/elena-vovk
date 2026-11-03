@@ -4,7 +4,7 @@
 //     <!-- @header --> … <!-- /@header --> and <!-- @footer --> … <!-- /@footer -->,
 //     marking the current section from <body data-page="…">;
 //  2. writes works/<id>.html for every published work, news/<id>.html for every published note,
-//     games/<id>.html for every published crossword and the list of games in games.html;
+//     games/<id>.html for every published crossword and quiz, and the list of games in games.html;
 //  3. writes sitemap.xml.
 // Run it after changing a partial or anything in content/; the GitHub Action runs it on every push.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync, existsSync, statSync } from 'node:fs';
@@ -43,7 +43,10 @@ if (existsSync(join(ROOT, 'content'))) {
   });
   putData('student-success', { items: entries('content/success').sort(byYear) });
   putData('news', { news: entries('content/news').sort((a, b) => String(b.date).localeCompare(String(a.date))) });
-  putData('games', { crosswords: entries('content/crosswords').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')) });
+  putData('games', {
+    crosswords: entries('content/crosswords').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
+    quizzes: entries('content/quizzes').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
+  });
 }
 
 const header = read('partials/header.html');
@@ -334,9 +337,8 @@ const gridSvg = (g) => {
 };
 
 function gamePage(c) {
-  const g = c.grid, d = discOf(c.discipline), n = g.words.length;
+  const g = c.grid, n = g.words.length;
   const desc = c.description || `Кроссворд «${c.title}»: ${wordsText(n)} по бухгалтерскому учёту.`;
-  const url = `${SITE}games/${c.id}.html`;
   const num = new Map();
   const labels = new Map();
   g.words.forEach((w) => {
@@ -361,18 +363,63 @@ function gamePage(c) {
     return ws.length ? `<section><h2>${title}</h2><ol>${ws.map((w) => `<li data-w="${w.i}"><b>${w.n}.</b> ${esc(w.clue)} <span class="len">(${w.answer.length})</span></li>`).join('')}</ol></section>` : '';
   };
   const data = { id: c.id, words: g.words.map((w) => ({ n: w.n, dir: w.dir, x: w.x, y: w.y, a: enc(w.answer), clue: w.clue })) };
+  return gameShell(c, {
+    kind: 'Кроссворд', desc, size: wordsText(n), data, script: 'crossword.js', body: `
+      ${c.description ? `<p class="cw__desc">${esc(c.description)}</p>` : ''}
+      <div class="cw__card"><button type="button" data-act="prev" aria-label="Предыдущая подсказка">‹</button><div><span class="cw__no"></span><p class="cw__q" aria-live="polite"></p></div><button type="button" data-act="next" aria-label="Следующая подсказка">›</button></div>
+      <div class="cw__board" style="--w:${g.width}"><div class="cw__grid">${cells}</div></div>
+      <div class="cw__prog" aria-hidden="true">${g.words.map(() => '<i></i>').join('')}</div>
+      <details class="cw__clues" open><summary>Все подсказки</summary>${list('across', 'По горизонтали')}${list('down', 'По вертикали')}</details>
+      <div class="cw__bar"><button class="btn" type="button" data-act="check">Проверить</button><button class="btn btn--light" type="button" data-act="hint">Открыть букву</button><button class="btn btn--light" type="button" data-act="reset">Начать заново</button><p class="cw__status" role="status">Разгадано 0 из ${n}</p></div>
+      <p class="cw__done" hidden>Кроссворд разгадан! Все ${wordsText(n)} на месте.</p>`,
+  });
+}
+
+// a quiz: questions with lettered answers, checked at once with an explanation (the exam-ticket look)
+const questionsText = (n) => `${n} ${plural(n, 'вопрос', 'вопроса', 'вопросов')}`;
+const quizzes = (existsSync(join(ROOT, 'data/games.json')) ? (JSON.parse(read('data/games.json')).quizzes || []) : [])
+  .filter((q) => q && q.title && q.id && /^[a-z0-9-]+$/.test(q.id) && q.published !== false && !crosswords.some((c) => c.id === q.id))
+  .map((q) => ({ ...q, questions: (q.questions || []).filter((x) => x && x.question && (x.options || []).filter((o) => o && o.text).length >= 2 && x.options.some((o) => o && o.correct)) }))
+  .filter((q) => q.questions.length);
+
+// a small exam ticket with one answer chosen, for the catalog card
+const ticketSvg = '<svg viewBox="0 0 120 90" aria-hidden="true" focusable="false"><rect x="14" y="8" width="92" height="74" fill="#f6e3da"/><path d="M22 18h60" stroke="#351a2b" stroke-width="3"/><path d="M22 26h44" stroke="#c48a76" stroke-width="2"/><g fill="#e3b9a7"><rect x="22" y="34" width="76" height="8"/><rect x="22" y="56" width="76" height="8"/><rect x="22" y="67" width="76" height="8"/></g><rect x="22" y="45" width="76" height="8" fill="#351a2b"/></svg>';
+
+function quizPage(q) {
+  const n = q.questions.length;
+  const desc = q.description || `Викторина «${q.title}»: ${questionsText(n)} по бухгалтерскому учёту.`;
+  const data = {
+    id: q.id,
+    shuffle: q.shuffle !== false,
+    questions: q.questions.map((x) => {
+      const opts = x.options.filter((o) => o && o.text);
+      const img = safeUrl(x.image);
+      return { q: x.question, img: img ? up(img) : '', why: x.explain || '', opts: opts.map((o) => String(o.text)), a: enc(JSON.stringify(opts.map((o, k) => (o.correct ? k : -1)).filter((k) => k >= 0))) };
+    }),
+  };
+  return gameShell(q, {
+    kind: 'Викторина', desc, size: questionsText(n), data, script: 'quiz.js', body: `
+      ${q.description ? `<p class="cw__desc">${esc(q.description)}</p>` : ''}
+      <div class="qz"><noscript><p>Для викторины нужен включённый JavaScript.</p></noscript></div>`,
+  });
+}
+
+// the page around a game: the same head, header, back link and footer for every kind
+function gameShell(g, { kind, desc, size, data, script, body }) {
+  const d = discOf(g.discipline);
+  const url = `${SITE}games/${g.id}.html`;
   return `<!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#351a2b">
-<title>Кроссворд «${esc(c.title)}» — Е. А. Вовк</title>
+<title>${kind} «${esc(g.title)}» — Е. А. Вовк</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${url}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:title" content="Кроссворд «${esc(c.title)}»">
+<meta property="og:title" content="${kind} «${esc(g.title)}»">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${SITE}og.jpg">
@@ -394,18 +441,11 @@ function gamePage(c) {
 <div class="cwp">
   <div class="wrap">
     <p class="wpage__back"><a class="tlink" href="../games.html">← Все игры</a></p>
-    <article class="cw" aria-labelledby="cw-h">
+    <article class="cw${kind === 'Викторина' ? ' cw--quiz' : ''}" aria-labelledby="cw-h">
       <header class="cw__head">
-        <h1 id="cw-h">Кроссворд · ${esc(c.title)}</h1>
-        <p class="cw__meta">${d ? `<span class="code num">${esc(d.code)}</span>` : ''}<span>${wordsText(n)}</span></p>
-      </header>
-      ${c.description ? `<p class="cw__desc">${esc(c.description)}</p>` : ''}
-      <div class="cw__card"><button type="button" data-act="prev" aria-label="Предыдущая подсказка">‹</button><div><span class="cw__no"></span><p class="cw__q" aria-live="polite"></p></div><button type="button" data-act="next" aria-label="Следующая подсказка">›</button></div>
-      <div class="cw__board" style="--w:${g.width}"><div class="cw__grid">${cells}</div></div>
-      <div class="cw__prog" aria-hidden="true">${g.words.map(() => '<i></i>').join('')}</div>
-      <details class="cw__clues" open><summary>Все подсказки</summary>${list('across', 'По горизонтали')}${list('down', 'По вертикали')}</details>
-      <div class="cw__bar"><button class="btn" type="button" data-act="check">Проверить</button><button class="btn btn--light" type="button" data-act="hint">Открыть букву</button><button class="btn btn--light" type="button" data-act="reset">Начать заново</button><p class="cw__status" role="status">Разгадано 0 из ${n}</p></div>
-      <p class="cw__done" hidden>Кроссворд разгадан! Все ${wordsText(n)} на месте.</p>
+        <h1 id="cw-h">${kind} · ${esc(g.title)}</h1>
+        <p class="cw__meta">${d ? `<span class="code num">${esc(d.code)}</span>` : ''}<span>${size}</span></p>
+      </header>${body}
     </article>
   </div>
 </div>
@@ -416,7 +456,7 @@ function gamePage(c) {
 
 <script type="application/json" id="cw-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>
 <script src="../js/base.js"></script>
-<script src="../js/crossword.js"></script>
+<script src="../js/${script}"></script>
 </body>
 </html>
 `;
@@ -424,13 +464,18 @@ function gamePage(c) {
 
 if (existsSync(join(ROOT, 'games'))) rmSync(join(ROOT, 'games'), { recursive: true });
 for (const c of crosswords) write(`games/${c.id}.html`, fillPage(gamePage(c), '../'));
-console.log('game pages', crosswords.length);
+for (const q of quizzes) write(`games/${q.id}.html`, fillPage(quizPage(q), '../'));
+console.log('game pages', crosswords.length + quizzes.length);
 if (existsSync(join(ROOT, 'games.html'))) {
-  const cards = crosswords.length
-    ? `<ul class="gcat__list">\n${crosswords.map((c, i) => {
-      const d = discOf(c.discipline);
-      const meta = [d && d.code, wordsText(c.grid.words.length)].filter(Boolean).map(esc).join(' · ');
-      return `        <li data-r style="--i:${i}"><a class="gcard" href="games/${c.id}.html"><span class="gcard__pic">${gridSvg(c.grid)}</span><span class="gcard__kind">Кроссворд</span><span class="gcard__title">${esc(c.title)}</span><span class="gcard__meta">${meta}</span></a></li>`;
+  const games = [
+    ...crosswords.map((c) => ({ g: c, kind: 'Кроссворд', pic: gridSvg(c.grid), size: wordsText(c.grid.words.length) })),
+    ...quizzes.map((q) => ({ g: q, kind: 'Викторина', pic: ticketSvg, size: questionsText(q.questions.length) })),
+  ].sort((a, b) => String(a.g.title).localeCompare(String(b.g.title), 'ru'));
+  const cards = games.length
+    ? `<ul class="gcat__list">\n${games.map(({ g, kind, pic, size }, i) => {
+      const d = discOf(g.discipline);
+      const meta = [d && d.code, size].filter(Boolean).map(esc).join(' · ');
+      return `        <li data-r style="--i:${i}"><a class="gcard" href="games/${g.id}.html"><span class="gcard__pic">${pic}</span><span class="gcard__kind">${kind}</span><span class="gcard__title">${esc(g.title)}</span><span class="gcard__meta">${meta}</span></a></li>`;
     }).join('\n')}\n      </ul>`
     : '<p class="gcat__empty">Игры скоро появятся.</p>';
   const html = read('games.html');
@@ -444,6 +489,7 @@ const urls = [
   ...works.map((w) => `${SITE}works/${w.id}.html`),
   ...notes.map((n) => `${SITE}news/${n.id}.html`),
   ...crosswords.map((c) => `${SITE}games/${c.id}.html`),
+  ...quizzes.map((q) => `${SITE}games/${q.id}.html`),
 ];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
