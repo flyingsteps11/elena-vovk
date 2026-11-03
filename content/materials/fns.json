@@ -1,0 +1,11 @@
+{
+  "id": "fns",
+  "discipline": "budget",
+  "kind": "Ссылка",
+  "title": "Сайт Федеральной налоговой службы",
+  "note": "Формы деклараций и разъяснения",
+  "file": "",
+  "link": "https://www.nalog.gov.ru/",
+  "published": true,
+  "order": 40
+}

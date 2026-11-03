@@ -1,10 +1,11 @@
 // Builds the static parts of the site. No dependencies: node tools/build.mjs
+//  0. joins the admin's one-file-per-entry folders in content/ into data/<section>.json;
 //  1. puts partials/header.html and partials/footer.html into every page between
 //     <!-- @header --> … <!-- /@header --> and <!-- @footer --> … <!-- /@footer -->,
 //     marking the current section from <body data-page="…">;
 //  2. writes works/<id>.html for every published work in data/works.json;
 //  3. writes sitemap.xml.
-// Run it after changing a partial or the works data; the GitHub Action runs it on every push.
+// Run it after changing a partial or anything in content/; the GitHub Action runs it on every push.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync, existsSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,6 +14,34 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://flyingsteps11.github.io/elena-vovk/';
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 const write = (p, s) => { mkdirSync(dirname(join(ROOT, p)), { recursive: true }); writeFileSync(join(ROOT, p), s); };
+
+// 0. the admin keeps one file per entry in content/; the pages read one JSON per section from data/
+const entries = (dir) => (existsSync(join(ROOT, dir)) ? readdirSync(join(ROOT, dir)) : [])
+  .filter((f) => f.endsWith('.json'))
+  .sort()
+  .map((f) => {
+    const e = JSON.parse(read(`${dir}/${f}`));
+    // an entry made in the admin has no id field: its file name is the id
+    if (!e.id) e.id = f.replace(/\.json$/, '');
+    return e;
+  });
+const byOrder = (a, b) => (Number(a.order) || 0) - (Number(b.order) || 0) || String(a.title || a.name).localeCompare(String(b.title || b.name), 'ru');
+const byYear = (a, b) => (Number(b.year) || 0) - (Number(a.year) || 0) || String(a.title || a.event).localeCompare(String(b.title || b.event), 'ru');
+const putData = (name, obj) => {
+  const out = JSON.stringify(obj, null, 2) + '\n';
+  const path = `data/${name}.json`;
+  if (!existsSync(join(ROOT, path)) || read(path) !== out) { write(path, out); console.log('data', path); }
+};
+if (existsSync(join(ROOT, 'content'))) {
+  putData('works', { works: entries('content/works').sort(byYear) });
+  putData('materials', { disciplines: entries('content/disciplines').sort(byOrder), materials: entries('content/materials').sort(byOrder) });
+  putData('achievements', {
+    category: existsSync(join(ROOT, 'content/category.json')) ? JSON.parse(read('content/category.json')) : {},
+    awards: entries('content/awards').sort(byYear),
+  });
+  putData('student-success', { items: entries('content/success').sort(byYear) });
+  putData('news', { news: entries('content/news').sort((a, b) => String(b.date).localeCompare(String(a.date))) });
+}
 
 const header = read('partials/header.html');
 const footer = read('partials/footer.html');

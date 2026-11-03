@@ -1,18 +1,24 @@
-# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
-# Editor for works.html. Sign in with a GitHub token (button "Sign In with Token"):
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.256.1/schema/sveltia-cms.json
+# Editor for the site. Sign in with a GitHub token (button "Sign In with Token"):
 # fine-grained token, only this repository, Contents: Read and write.
+# Every entry is its own file in content/; tools/build.mjs (run by the GitHub Action on every save)
+# joins them into data/<section>.json, which the pages read.
 
-app_title: Редактор работ
+app_title: Сайт Е. А. Вовк
 site_url: https://flyingsteps11.github.io/elena-vovk
+logo:
+  src: /elena-vovk/admin/logo.svg
 
 backend:
   name: github
   repo: flyingsteps11/elena-vovk
   branch: main
   commit_messages:
-    update: "Работы: обновлён каталог"
-    uploadMedia: "Работы: загружен файл {{path}}"
-    deleteMedia: "Работы: удалён файл {{path}}"
+    create: "{{collection}}: добавлено «{{slug}}»"
+    update: "{{collection}}: изменено «{{slug}}»"
+    delete: "{{collection}}: удалено «{{slug}}»"
+    uploadMedia: "Загружен файл {{path}}"
+    deleteMedia: "Удалён файл {{path}}"
 
 media_folder: uploads/works
 public_folder: /uploads/works
@@ -31,205 +37,221 @@ media_libraries:
         height: 1600
 
 collections:
-  - name: catalog
-    label: Каталог работ
-    files:
-      - name: works
-        label: Работы
-        file: data/works.json
-        format: json
-        fields:
-          - name: works
-            label: Работы
-            label_singular: работу
-            widget: list
-            summary: "{{fields.year}} · {{fields.type}} · {{fields.title}}"
-            add_to_top: true
-            fields:
-              - name: title
-                label: Название
-                widget: string
-              - name: type
-                label: Вид работы
-                widget: select
-                options:
-                  - Методическая разработка
-                  - Конспект урока
-                  - Статья
-                  - Презентация
-                  - Сертификат
-                  - Работа студентов
-                  - Другое
-              - name: year
-                label: Год
-                widget: number
-                value_type: int
-                min: 1990
-                max: 2100
-              - name: discipline
-                label: Код дисциплины
-                hint: Например, МДК 02.02. Можно оставить пустым.
-                widget: string
-                required: false
-              - name: description
-                label: Описание
-                hint: Два-три предложения о том, что внутри и для кого работа.
-                widget: text
-                required: false
-              - name: cover
-                label: Обложка
-                hint: Фото или скан первой страницы. Сохраняется в WebP автоматически. Без обложки карточка показывает вид работы и год.
-                widget: image
-                required: false
-              - name: credit
-                label: Источник обложки
-                hint: Заполните, если картинка чужая (автор, лицензия). Свою фотографию можно не подписывать.
-                widget: string
-                required: false
-              - name: file
-                label: Файл работы
-                hint: PDF, DOCX или PPTX, до 20 МБ.
-                widget: file
-                required: false
-              - name: link
-                label: Внешняя ссылка
-                hint: Если работа опубликована на другом сайте.
-                widget: string
-                required: false
-              - name: id
-                label: Адрес карточки
-                hint: Латиницей, через дефис, например otkrytyj-urok-nds. По нему открывается ссылка works.html#otkrytyj-urok-nds.
-                widget: string
-                required: false
-                pattern: ['^[a-z0-9-]*$', 'Только строчные латинские буквы, цифры и дефис']
-              - name: published
-                label: Показывать на сайте
-                widget: boolean
-                default: true
+  - name: works
+    label: Работы
+    label_singular: работу
+    description: Методические разработки, статьи и другие работы для каталога.
+    folder: content/works
+    format: json
+    create: true
+    slug: "{{fields.id}}"
+    identifier_field: title
+    summary: "{{title}} · {{year}}"
+    preview_path: "works/{{fields.id}}.html"
+    thumbnail: cover
+    sortable_fields:
+      fields: [year, title, type]
+      default: { field: year, direction: descending }
+    view_filters:
+      filters:
+        - { name: hidden, label: Скрытые с сайта, field: published, eq: false }
+        - { name: methodic, label: Методические разработки, field: type, eq: Методическая разработка }
+        - { name: lessons, label: Конспекты уроков, field: type, eq: Конспект урока }
+        - { name: articles, label: Статьи, field: type, eq: Статья }
+    view_groups:
+      groups:
+        - { name: year, label: По годам, field: year }
+        - { name: type, label: По виду, field: type }
+    fields:
+      - { name: title, label: Название, widget: string }
+      - name: type
+        label: Вид работы
+        widget: select
+        options: [Методическая разработка, Конспект урока, Статья, Презентация, Сертификат, Работа студентов, Другое]
+      - &year { name: year, label: Год, widget: number, value_type: int, min: 1990, max: 2100 }
+      - { name: discipline, label: Код дисциплины, hint: "Например, МДК 02.02. Можно оставить пустым.", widget: string, required: false }
+      - { name: description, label: Описание, hint: "Два-три предложения о том, что внутри и для кого работа.", widget: text, required: false }
+      - { name: cover, label: Обложка, hint: "Фото или скан первой страницы. Сохраняется в WebP автоматически. Без обложки карточка показывает вид работы и год.", widget: image, required: false }
+      - { name: credit, label: Источник обложки, hint: "Заполните, если картинка чужая (автор, лицензия). Свою фотографию можно не подписывать.", widget: string, required: false }
+      - { name: file, label: Файл работы, hint: "PDF, DOCX или PPTX, до 20 МБ.", widget: file, required: false }
+      - { name: link, label: Внешняя ссылка, hint: "Если работа опубликована на другом сайте.", widget: string, required: false }
+      - name: id
+        label: Адрес страницы
+        hint: Латиницей через дефис, например otkrytyj-urok-nds. Из него получится адрес works/otkrytyj-urok-nds.html. После публикации лучше не менять.
+        widget: string
+        pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис']
+      - &published { name: published, label: Показывать на сайте, widget: boolean, default: true }
 
-  - name: students
-    label: Студентам
-    files:
-      - name: materials
-        label: Материалы к занятиям
-        file: data/materials.json
-        format: json
-        media_folder: /uploads/materials
-        public_folder: /uploads/materials
-        fields:
-          - name: disciplines
-            label: Дисциплины
-            label_singular: дисциплину
-            widget: list
-            summary: "{{fields.code}} · {{fields.name}}"
-            fields:
-              - { name: id, label: Код для связи, hint: "Латиницей, например budget. Его выбирают у материалов.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
-              - { name: code, label: Код МДК, widget: string }
-              - { name: name, label: Название дисциплины, widget: string }
-              - { name: specialty, label: Специальность, widget: string, required: false }
-              - { name: about, label: Коротко о дисциплине, widget: text, required: false }
-              - { name: image, label: Картинка папки, widget: image, required: false }
-          - name: materials
-            label: Материалы
-            label_singular: материал
-            widget: list
-            add_to_top: true
-            summary: "{{fields.discipline}} · {{fields.kind}} · {{fields.title}}"
-            fields:
-              - { name: title, label: Название, widget: string }
-              - name: discipline
-                label: Дисциплина
-                hint: Код для связи из списка дисциплин выше.
-                widget: select
-                options:
-                  - { label: "Расчёты с бюджетами (budget)", value: budget }
-                  - { label: "Анализ бухгалтерской отчётности (analysis)", value: analysis }
-                  - { label: "Инвентаризация (inventory)", value: inventory }
-                  - { label: "Документация по эксплуатации оборудования (electro-docs)", value: electro-docs }
-                  - { label: "Планирование работы подразделения (planning)", value: planning }
-              - { name: kind, label: Вид, widget: select, options: [Задания, Вопросы к экзамену, Методические указания, Ссылка] }
-              - { name: note, label: Пояснение, widget: string, required: false }
-              - { name: file, label: Файл, hint: "PDF, DOCX или PPTX, до 20 МБ.", widget: file, required: false }
-              - { name: link, label: Ссылка, hint: "Если материал на другом сайте.", widget: string, required: false }
-              - { name: id, label: Код записи, widget: string, required: false }
-              - { name: published, label: Показывать на сайте, widget: boolean, default: true }
-      - name: success
-        label: Успехи студентов
-        file: data/student-success.json
-        format: json
-        media_folder: /uploads/success
-        public_folder: /uploads/success
-        fields:
-          - name: items
-            label: Результаты
-            label_singular: результат
-            widget: list
-            add_to_top: true
-            summary: "{{fields.year}} · {{fields.result}} · {{fields.event}}"
-            fields:
-              - { name: event, label: Мероприятие, widget: string }
-              - { name: result, label: Результат, hint: "Например: 1 место, 2 место, Лауреат, Диплом участника.", widget: string }
-              - { name: level, label: Уровень, widget: select, options: [Всероссийский, Региональный, Колледж] }
-              - { name: group, label: Кто, hint: "Без фамилий без согласия студентов: «Студенты группы ЭБУ-22».", widget: string, required: false }
-              - { name: discipline, label: Код дисциплины, widget: string, required: false }
-              - { name: year, label: Год, widget: number, value_type: int, min: 1990, max: 2100 }
-              - { name: image, label: Фото, widget: image, required: false }
-              - { name: id, label: Код записи, widget: string, required: false }
-              - { name: published, label: Показывать на сайте, widget: boolean, default: true }
+  - name: disciplines
+    label: Дисциплины
+    label_singular: дисциплину
+    description: Папки на странице «Материалы к занятиям».
+    folder: content/disciplines
+    format: json
+    create: true
+    slug: "{{fields.id}}"
+    identifier_field: name
+    summary: "{{name}} · {{code}}"
+    media_folder: /uploads/materials
+    public_folder: /uploads/materials
+    thumbnail: image
+    sortable_fields:
+      fields: [order, name]
+      default: { field: order, direction: ascending }
+    fields:
+      - { name: name, label: Название дисциплины, widget: string }
+      - { name: code, label: Код МДК, widget: string }
+      - { name: specialty, label: Специальность, widget: string, required: false }
+      - { name: about, label: Коротко о дисциплине, widget: text, required: false }
+      - { name: image, label: Картинка папки, widget: image, required: false }
+      - { name: order, label: Порядок на странице, hint: "Меньше число — выше папка: 10, 20, 30…", widget: number, value_type: int, default: 100 }
+      - { name: id, label: Код для связи, hint: "Латиницей, например budget. После создания не меняйте: по нему материалы находят свою дисциплину.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
+
+  - name: materials
+    label: Материалы к занятиям
+    label_singular: материал
+    folder: content/materials
+    format: json
+    create: true
+    # entries without a latin address get a date-and-time file name
+    slug: &stamp "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}{{second}}"
+    identifier_field: title
+    summary: "{{title}} · {{kind}}"
+    media_folder: /uploads/materials
+    public_folder: /uploads/materials
+    sortable_fields:
+      fields: [title, discipline, order]
+      default: { field: discipline, direction: ascending }
+    view_filters:
+      filters:
+        - { name: hidden, label: Скрытые с сайта, field: published, eq: false }
+        - { name: tasks, label: Задания, field: kind, eq: Задания }
+        - { name: exam, label: Вопросы к экзамену, field: kind, eq: Вопросы к экзамену }
+        - { name: guides, label: Методические указания, field: kind, eq: Методические указания }
+    view_groups:
+      groups:
+        - { name: discipline, label: По дисциплинам, field: discipline }
+        - { name: kind, label: По виду, field: kind }
+    fields:
+      - { name: title, label: Название, widget: string }
+      - name: discipline
+        label: Дисциплина
+        widget: relation
+        collection: disciplines
+        value_field: id
+        search_fields: [name, code]
+        display_fields: ["{{name}} ({{code}})"]
+      - { name: kind, label: Вид, widget: select, options: [Задания, Вопросы к экзамену, Методические указания, Ссылка] }
+      - { name: note, label: Пояснение, widget: string, required: false }
+      - { name: file, label: Файл, hint: "PDF, DOCX или PPTX, до 20 МБ.", widget: file, required: false }
+      - { name: link, label: Ссылка, hint: "Если материал на другом сайте.", widget: string, required: false }
+      - { name: order, label: Порядок внутри дисциплины, hint: "Меньше число — выше: 10, 20, 30…", widget: number, value_type: int, default: 100 }
+      - *published
+
+  - name: success
+    label: Успехи студентов
+    label_singular: результат
+    folder: content/success
+    format: json
+    create: true
+    slug: *stamp
+    identifier_field: event
+    summary: "{{event}} · {{result}} · {{year}}"
+    media_folder: /uploads/success
+    public_folder: /uploads/success
+    thumbnail: image
+    sortable_fields:
+      fields: [year, event, level]
+      default: { field: year, direction: descending }
+    view_filters:
+      filters:
+        - { name: hidden, label: Скрытые с сайта, field: published, eq: false }
+        - { name: russia, label: Всероссийский уровень, field: level, eq: Всероссийский }
+        - { name: region, label: Региональный уровень, field: level, eq: Региональный }
+        - { name: college, label: Уровень колледжа, field: level, eq: Колледж }
+    view_groups:
+      groups:
+        - { name: year, label: По годам, field: year }
+        - { name: level, label: По уровню, field: level }
+    fields:
+      - { name: event, label: Мероприятие, widget: string }
+      - { name: result, label: Результат, hint: "Например: 1 место, 2 место, Лауреат, Диплом участника.", widget: string }
+      - { name: level, label: Уровень, widget: select, options: [Всероссийский, Региональный, Колледж] }
+      - { name: group, label: Кто, hint: "Без фамилий без согласия студентов: «Студенты группы ЭБУ-22».", widget: string, required: false }
+      - { name: discipline, label: Код дисциплины, widget: string, required: false }
+      - *year
+      - { name: image, label: Фото, widget: image, required: false }
+      - *published
 
   - name: about
     label: О преподавателе
     files:
-      - name: achievements
-        label: Достижения и документы
-        file: data/achievements.json
+      - name: category
+        label: Квалификационная категория
+        file: content/category.json
         format: json
-        media_folder: /uploads/achievements
-        public_folder: /uploads/achievements
         fields:
-          - name: category
-            label: Квалификационная категория
-            widget: object
-            fields:
-              - { name: title, label: Категория, hint: "Например: Высшая квалификационная категория. Первое слово попадает в печать.", widget: string }
-              - { name: year, label: Год присвоения, widget: number, value_type: int, required: false }
-              - { name: note, label: Пояснение, widget: text, required: false }
-          - name: awards
-            label: Грамоты и сертификаты
-            label_singular: документ
-            widget: list
-            add_to_top: true
-            summary: "{{fields.year}} · {{fields.kind}} · {{fields.title}}"
-            fields:
-              - { name: title, label: Название, widget: string }
-              - { name: kind, label: Вид, widget: select, options: [Грамота, Благодарность, Диплом, Сертификат, Удостоверение] }
-              - { name: issuer, label: Кем выдан, widget: string, required: false }
-              - { name: year, label: Год, widget: number, value_type: int, min: 1990, max: 2100 }
-              - { name: image, label: Скан или фото, widget: image, required: false }
-              - { name: file, label: Файл (PDF), widget: file, required: false }
-              - { name: id, label: Код записи, widget: string, required: false }
-              - { name: published, label: Показывать на сайте, widget: boolean, default: true }
+          - { name: title, label: Категория, hint: "Например: Высшая квалификационная категория. Первое слово попадает в печать.", widget: string }
+          - { name: year, label: Год присвоения, widget: number, value_type: int, required: false }
+          - { name: note, label: Пояснение, widget: text, required: false }
+
+  - name: awards
+    label: Грамоты и сертификаты
+    label_singular: документ
+    folder: content/awards
+    format: json
+    create: true
+    slug: *stamp
+    identifier_field: title
+    summary: "{{title}} · {{kind}} · {{year}}"
+    media_folder: /uploads/achievements
+    public_folder: /uploads/achievements
+    thumbnail: image
+    sortable_fields:
+      fields: [year, title, kind]
+      default: { field: year, direction: descending }
+    view_filters:
+      filters:
+        - { name: hidden, label: Скрытые с сайта, field: published, eq: false }
+        - { name: gramota, label: Грамоты, field: kind, eq: Грамота }
+        - { name: cert, label: Сертификаты и удостоверения, field: kind, in: [Сертификат, Удостоверение] }
+    view_groups:
+      groups:
+        - { name: year, label: По годам, field: year }
+        - { name: kind, label: По виду, field: kind }
+    fields:
+      - { name: title, label: Название, widget: string }
+      - { name: kind, label: Вид, widget: select, options: [Грамота, Благодарность, Диплом, Сертификат, Удостоверение] }
+      - { name: issuer, label: Кем выдан, widget: string, required: false }
+      - *year
+      - { name: image, label: Скан или фото, widget: image, required: false }
+      - { name: file, label: Файл (PDF), widget: file, required: false }
+      - *published
 
   - name: news
     label: Новости
-    files:
-      - name: news
-        label: Новости и заметки
-        file: data/news.json
-        format: json
-        media_folder: /uploads/news
-        public_folder: /uploads/news
-        fields:
-          - name: news
-            label: Записи
-            label_singular: запись
-            widget: list
-            add_to_top: true
-            summary: "{{fields.date}} · {{fields.title}}"
-            fields:
-              - { name: date, label: Дата, widget: datetime, time_format: false, date_format: "YYYY-MM-DD", format: "YYYY-MM-DD" }
-              - { name: title, label: Заголовок, hint: "Коротко, до 60 знаков.", widget: string }
-              - { name: text, label: Текст, hint: "Абзацы разделяйте пустой строкой. Первый абзац виден сразу.", widget: text }
-              - { name: image, label: Фото, widget: image, required: false }
-              - { name: id, label: Код записи, widget: string, required: false }
-              - { name: published, label: Показывать на сайте, widget: boolean, default: true }
+    label_singular: запись
+    folder: content/news
+    format: json
+    create: true
+    slug: *stamp
+    identifier_field: title
+    summary: "{{date}} · {{title}}"
+    media_folder: /uploads/news
+    public_folder: /uploads/news
+    thumbnail: image
+    sortable_fields:
+      fields: [date, title]
+      default: { field: date, direction: descending }
+    view_filters:
+      filters:
+        - { name: hidden, label: Скрытые с сайта, field: published, eq: false }
+    view_groups:
+      groups:
+        - { name: year, label: По годам, field: date, pattern: '\d{4}' }
+    fields:
+      - { name: date, label: Дата, widget: datetime, time_format: false, date_format: "YYYY-MM-DD", format: "YYYY-MM-DD" }
+      - { name: title, label: Заголовок, hint: "Коротко, до 60 знаков.", widget: string }
+      - { name: text, label: Текст, hint: "Абзацы разделяйте пустой строкой. Первый абзац виден сразу.", widget: text }
+      - { name: image, label: Фото, widget: image, required: false }
+      - *published

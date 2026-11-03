@@ -5,11 +5,65 @@
     "note": "Присвоена по результатам аттестации педагогических работников. Пример: замените на данные из приказа."
   },
   "awards": [
-    { "id": "gramota-ministerstvo", "kind": "Грамота", "title": "Почётная грамота за многолетний добросовестный труд", "issuer": "Министерство образования и науки ЛНР", "year": 2024, "image": "/uploads/achievements/sample-certificate-1851.webp", "file": "", "published": true },
-    { "id": "blagodarnost-olimpiada", "kind": "Благодарность", "title": "Благодарность за подготовку студентов к региональной олимпиаде", "issuer": "ГБПОО ЛНР «Ровеньковский технико-экономический колледж»", "year": 2025, "image": "/uploads/achievements/sample-certificate-1943.webp", "file": "", "published": true },
-    { "id": "udostoverenie-fgos", "kind": "Удостоверение", "title": "Удостоверение о повышении квалификации «Преподавание экономических дисциплин по ФГОС», 72 ч", "issuer": "ООО «ГРУППКОНСАЛТ»", "year": 2025, "image": "/uploads/achievements/sample-diploma.webp", "file": "", "published": true },
-    { "id": "diplom-perepodgotovka", "kind": "Диплом", "title": "Диплом о профессиональной переподготовке «Педагогика профессионального образования», 256 ч", "issuer": "ФГБОУ ВО «ЛГПУ»", "year": 2023, "image": "", "file": "", "published": true },
-    { "id": "sertifikat-vebinar", "kind": "Сертификат", "title": "Сертификат участника вебинара «Цифровые инструменты преподавателя»", "issuer": "Образовательная платформа", "year": 2025, "image": "", "file": "", "published": true },
-    { "id": "gramota-konferenciya", "kind": "Грамота", "title": "Грамота за выступление на методической конференции колледжа", "issuer": "ГБПОО ЛНР «Ровеньковский технико-экономический колледж»", "year": 2024, "image": "", "file": "", "published": true }
+    {
+      "id": "blagodarnost-olimpiada",
+      "kind": "Благодарность",
+      "title": "Благодарность за подготовку студентов к региональной олимпиаде",
+      "issuer": "ГБПОО ЛНР «Ровеньковский технико-экономический колледж»",
+      "year": 2025,
+      "image": "/uploads/achievements/sample-certificate-1943.webp",
+      "file": "",
+      "published": true
+    },
+    {
+      "id": "sertifikat-vebinar",
+      "kind": "Сертификат",
+      "title": "Сертификат участника вебинара «Цифровые инструменты преподавателя»",
+      "issuer": "Образовательная платформа",
+      "year": 2025,
+      "image": "",
+      "file": "",
+      "published": true
+    },
+    {
+      "id": "udostoverenie-fgos",
+      "kind": "Удостоверение",
+      "title": "Удостоверение о повышении квалификации «Преподавание экономических дисциплин по ФГОС», 72 ч",
+      "issuer": "ООО «ГРУППКОНСАЛТ»",
+      "year": 2025,
+      "image": "/uploads/achievements/sample-diploma.webp",
+      "file": "",
+      "published": true
+    },
+    {
+      "id": "gramota-konferenciya",
+      "kind": "Грамота",
+      "title": "Грамота за выступление на методической конференции колледжа",
+      "issuer": "ГБПОО ЛНР «Ровеньковский технико-экономический колледж»",
+      "year": 2024,
+      "image": "",
+      "file": "",
+      "published": true
+    },
+    {
+      "id": "gramota-ministerstvo",
+      "kind": "Грамота",
+      "title": "Почётная грамота за многолетний добросовестный труд",
+      "issuer": "Министерство образования и науки ЛНР",
+      "year": 2024,
+      "image": "/uploads/achievements/sample-certificate-1851.webp",
+      "file": "",
+      "published": true
+    },
+    {
+      "id": "diplom-perepodgotovka",
+      "kind": "Диплом",
+      "title": "Диплом о профессиональной переподготовке «Педагогика профессионального образования», 256 ч",
+      "issuer": "ФГБОУ ВО «ЛГПУ»",
+      "year": 2023,
+      "image": "",
+      "file": "",
+      "published": true
+    }
   ]
 }
