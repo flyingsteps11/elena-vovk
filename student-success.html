@@ -19,7 +19,6 @@
 <link rel="preload" href="fonts/vollkorn-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/vollkorn-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/literata-digits.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="img/hero-class-1950-800.webp" imagesrcset="img/hero-class-1950-800.webp 800w, img/hero-class-1950-1600.webp 1600w" imagesizes="(max-width: 900px) 100vw, 50vw" fetchpriority="high">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/kit.css">
 <style>
@@ -59,6 +58,38 @@
   .place--word b{font-size:var(--step-body)}
   .honor__body{padding:18px 16px}
 }
+/* hero drawing: the teacher pins new diplomas to the honour board, one after another */
+.hboard{display:grid;place-items:center;padding:clamp(20px,4vw,56px)}
+.hboard svg{width:min(100%,600px);height:auto;overflow:visible}
+.hboard text{font-family:"Vollkorn",Georgia,serif}
+@media (max-width:900px){.whero .hboard{height:auto;padding:20px 20px 44px}.hboard svg{width:min(100%,360px)}}
+.h-arm,.h-head,.h-chest,.h-new{transform-box:view-box}
+.h-arm{transform-origin:306px 214px;transform:rotate(18deg)}
+.h-head{transform-origin:350px 200px}
+.h-chest{transform-origin:350px 300px}
+.h-pin{transform-origin:center;transform-box:fill-box}
+@media (prefers-reduced-motion:no-preference){
+  .h-arm{animation:h-arm 12s ease-in-out infinite}
+  .h-head{animation:h-head 12s ease-in-out infinite}
+  .h-chest{animation:h-breathe 4.5s ease-in-out infinite}
+  .h-new1{animation:h-new1 12s cubic-bezier(.3,.7,.3,1) infinite}
+  .h-new2{animation:h-new2 12s cubic-bezier(.3,.7,.3,1) infinite}
+  .h-new3{animation:h-new3 12s cubic-bezier(.3,.7,.3,1) infinite}
+  .h-pin1{animation:h-pin1 12s ease-out infinite}
+  .h-pin2{animation:h-pin2 12s ease-out infinite}
+  .h-pin3{animation:h-pin3 12s ease-out infinite}
+}
+/* she reaches up three times: one new diploma each time */
+@keyframes h-arm{0%{transform:rotate(18deg)}6%,12%{transform:rotate(118deg)}20%,25%{transform:rotate(18deg)}31%,37%{transform:rotate(118deg)}45%,50%{transform:rotate(18deg)}56%,62%{transform:rotate(118deg)}70%,100%{transform:rotate(18deg)}}
+@keyframes h-head{0%,100%{transform:rotate(0)}8%,36%,60%{transform:rotate(-5deg)}22%,48%,72%{transform:rotate(1deg)}}
+@keyframes h-breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.015)}}
+/* each diploma leaves her hand and settles in its place; all three come down together before the next round */
+@keyframes h-new1{0%,5%{opacity:0;transform:translate(162px,-23px) scale(.8)}6%{opacity:1;transform:translate(162px,-23px) scale(.8)}12%,92%{opacity:1;transform:none}97%,100%{opacity:0;transform:none}}
+@keyframes h-new2{0%,30%{opacity:0;transform:translate(77px,-23px) scale(.8)}31%{opacity:1;transform:translate(77px,-23px) scale(.8)}37%,92%{opacity:1;transform:none}97%,100%{opacity:0;transform:none}}
+@keyframes h-new3{0%,55%{opacity:0;transform:translate(-8px,-23px) scale(.8)}56%{opacity:1;transform:translate(-8px,-23px) scale(.8)}62%,92%{opacity:1;transform:none}97%,100%{opacity:0;transform:none}}
+@keyframes h-pin1{0%,12%{transform:scale(0)}15%,92%{transform:scale(1);opacity:1}97%,100%{transform:scale(1);opacity:0}}
+@keyframes h-pin2{0%,37%{transform:scale(0)}40%,92%{transform:scale(1);opacity:1}97%,100%{transform:scale(1);opacity:0}}
+@keyframes h-pin3{0%,62%{transform:scale(0)}65%,92%{transform:scale(1);opacity:1}97%,100%{transform:scale(1);opacity:0}}
 </style>
 </head>
 <body id="top" data-page="success">
@@ -141,9 +172,58 @@
       </dl>
     </div>
   </div>
-  <figure class="wphoto">
-    <img src="img/hero-class-1950-800.webp" srcset="img/hero-class-1950-800.webp 800w, img/hero-class-1950-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" width="1600" height="1280" alt="Студенты технического института за лабораторными столами в светлой аудитории с большими окнами" fetchpriority="high">
-  </figure>
+  <div class="wphoto hboard" aria-hidden="true">
+    <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" focusable="false">
+      <!-- the honour board -->
+      <rect x="20" y="40" width="280" height="226" fill="#351a2b"/>
+      <rect x="32" y="72" width="256" height="182" fill="#c48a76"/>
+      <text x="160" y="62" font-size="15" text-anchor="middle" fill="#f6e3da">Доска почёта</text>
+      <g transform="translate(75 112) rotate(-3)"><rect x="-34" y="-24" width="68" height="48" fill="#fbf1ea" stroke="#351a2b" stroke-width="2"/><rect x="-28" y="-18" width="56" height="36" fill="none" stroke="#c48a76" stroke-width="1.5"/><line x1="-18" y1="-6" x2="18" y2="-6" stroke="#6c4857" stroke-width="3" stroke-linecap="round"/><line x1="-20" y1="3" x2="20" y2="3" stroke="#b88a99" stroke-width="1.6"/><line x1="-14" y1="10" x2="14" y2="10" stroke="#b88a99" stroke-width="1.6"/><circle cx="22" cy="14" r="6" fill="#a5566a"/></g><g transform="translate(160 108) rotate(2)"><rect x="-34" y="-24" width="68" height="48" fill="#fbf1ea" stroke="#351a2b" stroke-width="2"/><rect x="-28" y="-18" width="56" height="36" fill="none" stroke="#c48a76" stroke-width="1.5"/><line x1="-18" y1="-6" x2="18" y2="-6" stroke="#6c4857" stroke-width="3" stroke-linecap="round"/><line x1="-20" y1="3" x2="20" y2="3" stroke="#b88a99" stroke-width="1.6"/><line x1="-14" y1="10" x2="14" y2="10" stroke="#b88a99" stroke-width="1.6"/><circle cx="22" cy="14" r="6" fill="#a5566a"/></g><g transform="translate(245 114) rotate(-2)"><rect x="-34" y="-24" width="68" height="48" fill="#fbf1ea" stroke="#351a2b" stroke-width="2"/><rect x="-28" y="-18" width="56" height="36" fill="none" stroke="#c48a76" stroke-width="1.5"/><line x1="-18" y1="-6" x2="18" y2="-6" stroke="#6c4857" stroke-width="3" stroke-linecap="round"/><line x1="-20" y1="3" x2="20" y2="3" stroke="#b88a99" stroke-width="1.6"/><line x1="-14" y1="10" x2="14" y2="10" stroke="#b88a99" stroke-width="1.6"/><circle cx="22" cy="14" r="6" fill="#a5566a"/></g>
+      <circle cx="75" cy="90" r="4.5" fill="#351a2b"/><circle cx="160" cy="86" r="4.5" fill="#351a2b"/><circle cx="245" cy="92" r="4.5" fill="#351a2b"/>
+      <!-- the three she pins now -->
+      <g class="h-new h-new1"><g transform="translate(75 200) rotate(2)"><rect x="-34" y="-24" width="68" height="48" fill="#fbf1ea" stroke="#351a2b" stroke-width="2"/><rect x="-28" y="-18" width="56" height="36" fill="none" stroke="#c48a76" stroke-width="1.5"/><line x1="-18" y1="-6" x2="18" y2="-6" stroke="#6c4857" stroke-width="3" stroke-linecap="round"/><line x1="-20" y1="3" x2="20" y2="3" stroke="#b88a99" stroke-width="1.6"/><line x1="-14" y1="10" x2="14" y2="10" stroke="#b88a99" stroke-width="1.6"/><circle cx="22" cy="14" r="6" fill="#a5566a"/></g></g>
+      <g class="h-new h-new2"><g transform="translate(160 200) rotate(-3)"><rect x="-34" y="-24" width="68" height="48" fill="#fbf1ea" stroke="#351a2b" stroke-width="2"/><rect x="-28" y="-18" width="56" height="36" fill="none" stroke="#c48a76" stroke-width="1.5"/><line x1="-18" y1="-6" x2="18" y2="-6" stroke="#6c4857" stroke-width="3" stroke-linecap="round"/><line x1="-20" y1="3" x2="20" y2="3" stroke="#b88a99" stroke-width="1.6"/><line x1="-14" y1="10" x2="14" y2="10" stroke="#b88a99" stroke-width="1.6"/><circle cx="22" cy="14" r="6" fill="#a5566a"/></g></g>
+      <g class="h-new h-new3"><g transform="translate(245 202) rotate(3)"><rect x="-34" y="-24" width="68" height="48" fill="#fbf1ea" stroke="#351a2b" stroke-width="2"/><rect x="-28" y="-18" width="56" height="36" fill="none" stroke="#c48a76" stroke-width="1.5"/><line x1="-18" y1="-6" x2="18" y2="-6" stroke="#6c4857" stroke-width="3" stroke-linecap="round"/><line x1="-20" y1="3" x2="20" y2="3" stroke="#b88a99" stroke-width="1.6"/><line x1="-14" y1="10" x2="14" y2="10" stroke="#b88a99" stroke-width="1.6"/><circle cx="22" cy="14" r="6" fill="#a5566a"/></g></g>
+      <circle class="h-pin h-pin1" cx="75" cy="178" r="4.5" fill="#351a2b"/><circle class="h-pin h-pin2" cx="160" cy="178" r="4.5" fill="#351a2b"/><circle class="h-pin h-pin3" cx="245" cy="180" r="4.5" fill="#351a2b"/>
+      <line x1="10" y1="398" x2="410" y2="398" stroke="#351a2b" stroke-width="4" stroke-dasharray="0 10" stroke-linecap="round"/>
+      <!-- the teacher: hair in a neat bun, thin glasses, pearl earrings, a cardigan over a blouse -->
+      <rect x="334" y="364" width="12" height="30" rx="5" fill="#e8b49d"/>
+      <rect x="354" y="364" width="12" height="30" rx="5" fill="#e8b49d"/>
+      <ellipse cx="338" cy="395" rx="11" ry="5" fill="#351a2b"/><ellipse cx="362" cy="395" rx="11" ry="5" fill="#351a2b"/>
+      <path d="M308 298 L392 298 L400 368 L300 368 Z" fill="#351a2b"/>
+      <g class="h-chest">
+        <path d="M314 210 Q320 200 338 198 L362 198 Q380 200 386 210 L392 300 L308 300 Z" fill="#6c4857"/>
+        <path d="M340 198 L350 222 L360 198 Z" fill="#fbf1ea"/>
+        <path d="M340 198 L346 212 L350 206 Z M360 198 L354 212 L350 206 Z" fill="#f6e3da"/>
+        <circle cx="350" cy="236" r="2.4" fill="#f6e3da"/><circle cx="350" cy="256" r="2.4" fill="#f6e3da"/><circle cx="350" cy="276" r="2.4" fill="#f6e3da"/>
+        <path d="M386 214 Q398 250 392 290" fill="none" stroke="#6c4857" stroke-width="15" stroke-linecap="round"/>
+        <circle cx="391" cy="294" r="7.5" fill="#f2c7b1"/>
+        <path d="M342 176 L358 176 L358 200 Q350 206 342 200 Z" fill="#dfa48c"/>
+      </g>
+      <g class="h-head">
+        <circle cx="350" cy="124" r="14" fill="#2a1421"/>
+        <path d="M320 166 Q316 126 350 124 Q384 126 380 166 Q380 186 372 194 L328 194 Q320 186 320 166 Z" fill="#2a1421"/>
+        <path d="M323 164 Q323 134 350 133 Q377 134 377 164 Q377 192 350 206 Q323 192 323 164 Z" fill="#f2c7b1"/>
+        <path d="M320 170 Q316 126 352 126 Q382 128 380 160 Q372 140 354 140 Q338 148 326 160 Q322 164 320 170 Z" fill="#2a1421"/>
+        <circle cx="323" cy="178" r="2.6" fill="#fbf1ea"/><circle cx="377" cy="178" r="2.6" fill="#fbf1ea"/>
+        <ellipse cx="335" cy="180" rx="5.5" ry="3.2" fill="#e9978a" opacity=".5"/><ellipse cx="365" cy="180" rx="5.5" ry="3.2" fill="#e9978a" opacity=".5"/>
+        <path d="M333 167 Q339 162 345 167" fill="none" stroke="#2a1421" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M355 167 Q361 162 367 167" fill="none" stroke="#2a1421" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M331 155 Q338 151 345 154" fill="none" stroke="#2a1421" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M355 154 Q362 151 369 155" fill="none" stroke="#2a1421" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="339" cy="166" r="9" fill="none" stroke="#2a1421" stroke-width="1.5"/>
+        <circle cx="361" cy="166" r="9" fill="none" stroke="#2a1421" stroke-width="1.5"/>
+        <path d="M348 165 Q350 163 352 165" fill="none" stroke="#2a1421" stroke-width="1.5"/>
+        <path d="M351 170 Q354 177 350 179" fill="none" stroke="#d48f78" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M344 187 Q350 184 356 187 Q350 192 344 187 Z" fill="#c0566e"/>
+      </g>
+      <!-- the arm that pins the diplomas -->
+      <g class="h-arm">
+        <path d="M306 214 L306 286" fill="none" stroke="#6c4857" stroke-width="15" stroke-linecap="round"/>
+        <circle cx="306" cy="292" r="7.5" fill="#f2c7b1"/>
+      </g>
+    </svg>
+  </div>
 </section>
 
 <section class="board" id="board" aria-labelledby="board-h">
