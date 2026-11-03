@@ -58,8 +58,19 @@
 .plate img{width:100%;transition:transform 900ms var(--ease-soft)}
 .plate:hover img{transform:scale(1.04)}
 .plate figcaption{padding:14px 6px 16px;font-size:var(--step-small);line-height:1.45}
-.plate--ledger .imgbox{aspect-ratio:4/3}
-.plate--ledger img{height:100%;object-fit:cover;object-position:50% 12%}
+.plate--gallery .gallery svg{display:block;width:100%;height:auto}
+.plate--gallery text{font-family:"Literata Digits","Vollkorn",Georgia,serif}
+/* the sitters blink now and then, the frames sway a little on their cord */
+.gallery .lid{transform-box:fill-box;transform-origin:50% 0;transform:scaleY(0)}
+.gal-hang{transform-box:view-box;transform-origin:210px 12px}
+@media (prefers-reduced-motion:no-preference){
+  .gallery .pupil{transition:transform 260ms var(--ease-out)}
+  .gallery .lid{animation:gal-blink 5.2s infinite}
+  .gal-frame+.gal-frame .lid{animation-duration:6.7s;animation-delay:-2.1s}
+  .gal-hang{animation:gal-sway 7s ease-in-out infinite alternate}
+}
+@keyframes gal-blink{0%,93%,100%{transform:scaleY(0)}95.5%{transform:scaleY(1)}}
+@keyframes gal-sway{from{transform:rotate(-.7deg)}to{transform:rotate(.7deg)}}
 
 /* Disciplines: index cards */
 .subjects{padding-block:var(--gap-section)}
@@ -199,7 +210,7 @@
 /* Tablet */
 @media (max-width:1100px){
   .sheet{grid-column:1 / -1}
-  .plates{grid-column:1 / -1;grid-template-columns:1fr 1fr;gap:24px}
+  .plates{grid-column:1 / -1;grid-template-columns:minmax(0,520px);gap:24px}
   .deck{grid-template-columns:1fr;gap:16px;padding-top:0;padding-left:40px}
   .deck::before{left:6px;right:auto;top:8px;bottom:8px;width:2px;height:auto;transform-origin:center top}
   .ecard{min-height:0}
@@ -346,13 +357,66 @@
       </dl>
     </article>
     <div class="plates">
-      <figure class="plate" data-r="pic" style="--i:1">
-        <div class="imgbox"><img src="img/pacioli-960.webp" srcset="img/pacioli-480.webp 480w, img/pacioli-960.webp 960w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 32vw" width="960" height="800" alt="Картина: Лука Пачоли у стола с книгой и геометрическими телами, рядом ученик" loading="lazy" decoding="async"></div>
-        <figcaption>Лука Пачоли, автор первого печатного изложения двойной записи. Портрет 1495 года, приписывается Якопо де Барбари.</figcaption>
-      </figure>
-      <figure class="plate plate--ledger" data-r="pic" style="--i:2">
-        <div class="imgbox"><img src="img/ledger-1833-960.webp" srcset="img/ledger-1833-480.webp 480w, img/ledger-1833-960.webp 960w" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 32vw" width="960" height="1440" alt="Рукописная страница торговой книги 1833 года с колонками сумм" loading="lazy" decoding="async"></div>
-        <figcaption>Страница торговой книги, 1833 год: дебет, суммы и итог внизу листа.</figcaption>
+      <figure class="plate plate--gallery" data-r="pic" style="--i:1">
+        <div class="gallery" id="gallery" role="img" aria-label="Рисунок: портреты Луки Пачоли и Адама Смита в золочёных рамах, их глаза следят за курсором">
+        <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+          <rect width="420" height="420" fill="#f6e3da"/><rect x="14" y="0" width="14" height="360" fill="#fbf1ea" opacity=".5"/><rect x="56" y="0" width="14" height="360" fill="#fbf1ea" opacity=".5"/><rect x="98" y="0" width="14" height="360" fill="#fbf1ea" opacity=".5"/><rect x="140" y="0" width="14" height="360" fill="#fbf1ea" opacity=".5"/><rect x="182" y="0" width="14" height="360" fill="#fbf1ea" opacity=".5"/><rect x="224" y="0" width="14" height="360" fill="#fbf1ea" opacity=".5"/><rect x="266" y="0" width="14" height="360" fill="#fbf1ea" opacity=".5"/><rect x="308" y="0" width="14" height="360" fill="#fbf1ea" opacity=".5"/><rect x="350" y="0" width="14" height="360" fill="#fbf1ea" opacity=".5"/><rect x="392" y="0" width="14" height="360" fill="#fbf1ea" opacity=".5"/>
+          <rect x="0" y="360" width="420" height="60" fill="#c48a76"/><rect x="0" y="356" width="420" height="8" fill="#a96f5c"/>
+          <g class="gal-hang">
+            <path d="M210 14 L112 72 M210 14 L308 72" fill="none" stroke="#6c4857" stroke-width="2"/>
+            <g class="gal-frame">
+              <clipPath id="gal-c1"><rect x="41" y="84" width="142" height="192"/></clipPath>
+              <rect x="27" y="70" width="170" height="220" fill="#d9a441"/>
+              <rect x="33" y="76" width="158" height="208" fill="none" stroke="#b9862d" stroke-width="2"/>
+              <rect x="41" y="84" width="142" height="192" fill="#4a2a3d"/>
+              <g clip-path="url(#gal-c1)"><path d="M42 362 L52 252 Q72 212 112 212 Q152 212 172 252 L182 362 Z" fill="#6c4857"/>
+<path d="M68 178 Q66 114 112 112 Q158 114 156 178 Q160 228 168 250 Q112 268 56 250 Q64 228 68 178 Z" fill="#6c4857"/>
+<path d="M68 178 Q82 242 112 258 Q142 242 156 178" fill="none" stroke="#4a2a3d" stroke-width="3"/>
+<path d="M79 174 Q78 128 112 126 Q146 128 145 174 Q145 212 112 228 Q79 212 79 174 Z" fill="#4a2a3d"/>
+<path d="M84 166 Q84 138 112 137 Q140 138 140 166 Q140 202 124 210 L100 210 Q84 202 84 166 Z" fill="#f2c7b1"/>
+<path d="M92 192 Q94 202 102 206 M132 192 Q130 202 122 206" fill="none" stroke="#d48f78" stroke-width="1.4"/>
+<g class="eyes"><ellipse cx="101" cy="172" rx="5.6" ry="4" fill="#fbf1ea"/><g class="pupil"><circle cx="101" cy="172" r="2.8" fill="#6c4857"/><circle cx="101" cy="172" r="1.5" fill="#2a1421"/><circle cx="101.9" cy="171" r=".7" fill="#fbf1ea"/></g><ellipse class="lid" cx="101" cy="172" rx="6.2" ry="4.6" fill="#f2c7b1"/><path d="M95 171 Q101 166 107 171" fill="none" stroke="#2a1421" stroke-width="1.4" stroke-linecap="round"/><ellipse cx="123" cy="172" rx="5.6" ry="4" fill="#fbf1ea"/><g class="pupil"><circle cx="123" cy="172" r="2.8" fill="#6c4857"/><circle cx="123" cy="172" r="1.5" fill="#2a1421"/><circle cx="123.9" cy="171" r=".7" fill="#fbf1ea"/></g><ellipse class="lid" cx="123" cy="172" rx="6.2" ry="4.6" fill="#f2c7b1"/><path d="M117 171 Q123 166 129 171" fill="none" stroke="#2a1421" stroke-width="1.4" stroke-linecap="round"/></g>
+<path d="M94 163 Q101 158 108 162" fill="none" stroke="#2a1421" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M116 162 Q123 158 130 163" fill="none" stroke="#2a1421" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M100 152 Q112 149 124 152" fill="none" stroke="#d48f78" stroke-width="1.4"/>
+<path d="M113 175 Q116 184 111 186" fill="none" stroke="#d48f78" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M106 195 Q112 194 118 195" fill="none" stroke="#a5566a" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M84 160 Q86 134 112 134 Q138 134 140 160 L134 150 L126 154 L118 148 L110 153 L102 148 L94 154 L88 150 Z" fill="#2a1421"/></g>
+              <rect x="41" y="84" width="142" height="192" fill="none" stroke="#351a2b" stroke-width="2"/>
+              <rect x="62" y="300" width="100" height="30" fill="#d9a441"/><rect x="66" y="304" width="92" height="22" fill="none" stroke="#b9862d"/>
+              <text x="112" y="314" font-size="11" text-anchor="middle" fill="#351a2b">Лука Пачоли</text>
+              <text x="112" y="324" font-size="9" text-anchor="middle" fill="#6c4857">1494</text>
+            </g>
+            <g class="gal-frame">
+              <clipPath id="gal-c2"><rect x="237" y="84" width="142" height="192"/></clipPath>
+              <rect x="223" y="70" width="170" height="220" fill="#d9a441"/>
+              <rect x="229" y="76" width="158" height="208" fill="none" stroke="#b9862d" stroke-width="2"/>
+              <rect x="237" y="84" width="142" height="192" fill="#4a2a3d"/>
+              <g clip-path="url(#gal-c2)"><path d="M242 362 L252 252 Q274 224 308 224 Q342 224 364 252 L374 362 Z" fill="#351a2b"/>
+<path d="M282 232 L302 362 M334 232 L314 362" stroke="#4a2a3d" stroke-width="3"/>
+<path d="M294 222 Q308 232 322 222 L320 260 Q308 268 296 260 Z" fill="#fbf1ea"/>
+<path d="M302 238 L314 238 M301 248 L315 248" stroke="#e3b9a7" stroke-width="1.6"/>
+<path d="M272 168 Q272 126 308 126 Q344 126 344 168 Z" fill="#fbf1ea"/>
+<path d="M280 166 Q280 138 308 137 Q336 138 336 166 Q336 202 320 210 L296 210 Q280 202 280 166 Z" fill="#f2c7b1"/>
+<path d="M288 192 Q290 202 298 206 M328 192 Q326 202 318 206" fill="none" stroke="#d48f78" stroke-width="1.4"/>
+<g class="eyes"><ellipse cx="297" cy="172" rx="5.6" ry="4" fill="#fbf1ea"/><g class="pupil"><circle cx="297" cy="172" r="2.8" fill="#6c4857"/><circle cx="297" cy="172" r="1.5" fill="#2a1421"/><circle cx="297.9" cy="171" r=".7" fill="#fbf1ea"/></g><ellipse class="lid" cx="297" cy="172" rx="6.2" ry="4.6" fill="#f2c7b1"/><path d="M291 171 Q297 166 303 171" fill="none" stroke="#2a1421" stroke-width="1.4" stroke-linecap="round"/><ellipse cx="319" cy="172" rx="5.6" ry="4" fill="#fbf1ea"/><g class="pupil"><circle cx="319" cy="172" r="2.8" fill="#6c4857"/><circle cx="319" cy="172" r="1.5" fill="#2a1421"/><circle cx="319.9" cy="171" r=".7" fill="#fbf1ea"/></g><ellipse class="lid" cx="319" cy="172" rx="6.2" ry="4.6" fill="#f2c7b1"/><path d="M313 171 Q319 166 325 171" fill="none" stroke="#2a1421" stroke-width="1.4" stroke-linecap="round"/></g>
+<path d="M290 163 Q297 158 304 162" fill="none" stroke="#a96f5c" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M312 162 Q319 158 326 163" fill="none" stroke="#a96f5c" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M296 152 Q308 149 320 152" fill="none" stroke="#d48f78" stroke-width="1.4"/>
+<path d="M309 175 Q312 184 307 186" fill="none" stroke="#d48f78" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M302 195 Q308 194 314 195" fill="none" stroke="#a5566a" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M278 160 Q280 132 308 132 Q336 132 338 160 Q322 144 308 144 Q294 144 278 160 Z" fill="#fbf1ea"/>
+<path d="M290 140 Q308 134 326 140" fill="none" stroke="#e3b9a7" stroke-width="1.6"/><circle cx="274" cy="170" r="9" fill="#fbf1ea" stroke="#e3b9a7"/><circle cx="342" cy="170" r="9" fill="#fbf1ea" stroke="#e3b9a7"/><circle cx="274" cy="184" r="9" fill="#fbf1ea" stroke="#e3b9a7"/><circle cx="342" cy="184" r="9" fill="#fbf1ea" stroke="#e3b9a7"/><circle cx="274" cy="198" r="9" fill="#fbf1ea" stroke="#e3b9a7"/><circle cx="342" cy="198" r="9" fill="#fbf1ea" stroke="#e3b9a7"/></g>
+              <rect x="237" y="84" width="142" height="192" fill="none" stroke="#351a2b" stroke-width="2"/>
+              <rect x="258" y="300" width="100" height="30" fill="#d9a441"/><rect x="262" y="304" width="92" height="22" fill="none" stroke="#b9862d"/>
+              <text x="308" y="314" font-size="11" text-anchor="middle" fill="#351a2b">Адам Смит</text>
+              <text x="308" y="324" font-size="9" text-anchor="middle" fill="#6c4857">1776</text>
+            </g>
+          </g>
+          <circle cx="210" cy="12" r="6" fill="#351a2b"/>
+        </svg>
+        </div>
+        <figcaption>Лука Пачоли первым напечатал правила двойной записи (1494), Адам Смит написал «Богатство народов» (1776). Оба присматривают за посетителем.</figcaption>
       </figure>
     </div>
   </div>
@@ -921,6 +985,30 @@
     sumLabel.textContent = 'Итого, ' + vis.length + ' ' + plural(vis.length);
     cap.textContent = y === 'all' ? 'часов за девять курсов, 2024–2025' : 'часов за ' + y + ' год, ' + vis.length + ' ' + plural(vis.length);
   }));
+
+  // Gallery: the sitters' eyes follow the pointer (or the finger), back to the viewer when it leaves
+  const gallery = document.getElementById('gallery');
+  if (gallery) {
+    const pupils = [...gallery.querySelectorAll('.pupil')];
+    let px = null, py = null, queued = false;
+    const aim = () => {
+      queued = false;
+      pupils.forEach((pu) => {
+        if (px === null) { pu.style.transform = ''; return; }
+        const m = pu.parentNode.getScreenCTM();
+        if (!m) return;
+        const c = pu.firstElementChild;
+        const pt = new DOMPoint(px, py).matrixTransform(m.inverse());
+        const dx = pt.x - c.cx.baseVal.value, dy = pt.y - c.cy.baseVal.value;
+        const d = Math.hypot(dx, dy) || 1, k = Math.min(2.4, d / 30);
+        pu.style.transform = 'translate(' + (dx / d * k).toFixed(2) + 'px,' + (dy / d * k * 0.7).toFixed(2) + 'px)';
+      });
+    };
+    const track = (x, y) => { px = x; py = y; if (!queued) { queued = true; requestAnimationFrame(aim); } };
+    addEventListener('pointermove', (e) => track(e.clientX, e.clientY), { passive: true });
+    addEventListener('pointerdown', (e) => track(e.clientX, e.clientY), { passive: true });
+    document.documentElement.addEventListener('pointerleave', () => track(null, null));
+  }
 })();
 </script>
 </body>
