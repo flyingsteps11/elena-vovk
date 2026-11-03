@@ -4,7 +4,7 @@
 //     <!-- @header --> … <!-- /@header --> and <!-- @footer --> … <!-- /@footer -->,
 //     marking the current section from <body data-page="…">;
 //  2. writes works/<id>.html for every published work, news/<id>.html for every published note,
-//     games/<id>.html for every published crossword and quiz, and the list of games in games.html;
+//     games/<id>.html for every published crossword, quiz and «Найди пару», and the list of games in games.html;
 //  3. writes sitemap.xml.
 // Run it after changing a partial or anything in content/; the GitHub Action runs it on every push.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync, existsSync, statSync } from 'node:fs';
@@ -46,6 +46,7 @@ if (existsSync(join(ROOT, 'content'))) {
   putData('games', {
     crosswords: entries('content/crosswords').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
     quizzes: entries('content/quizzes').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
+    matches: entries('content/matches').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
   });
 }
 
@@ -404,6 +405,28 @@ function quizPage(q) {
   });
 }
 
+// «Найди пару»: terms on the left, definitions on the right, joined by a thread when they match
+const pairsText = (n) => `${n} ${plural(n, 'пара', 'пары', 'пар')}`;
+const matches = (existsSync(join(ROOT, 'data/games.json')) ? (JSON.parse(read('data/games.json')).matches || []) : [])
+  .filter((m) => m && m.title && m.id && /^[a-z0-9-]+$/.test(m.id) && m.published !== false
+    && !crosswords.some((c) => c.id === m.id) && !quizzes.some((q) => q.id === m.id))
+  .map((m) => ({ ...m, pairs: (m.pairs || []).filter((p) => p && p.term && p.definition) }))
+  .filter((m) => m.pairs.length >= 2);
+
+// two columns of cards joined by threads, for the catalog card
+const pairsSvg = '<svg viewBox="0 0 120 90" aria-hidden="true" focusable="false"><g fill="#f6e3da"><rect x="8" y="12" width="36" height="12"/><rect x="8" y="32" width="36" height="12"/><rect x="8" y="52" width="36" height="12"/><rect x="76" y="12" width="36" height="12"/><rect x="76" y="32" width="36" height="12"/><rect x="76" y="52" width="36" height="12"/></g><path d="M44 18 C60 18 60 58 76 58 M44 38 C60 38 60 18 76 18" fill="none" stroke="#d9a441" stroke-width="2.5"/><path d="M44 58 C60 58 60 38 76 38" fill="none" stroke="#e3b9a7" stroke-width="2" stroke-dasharray="3 3"/></svg>';
+
+function matchPage(m) {
+  const n = m.pairs.length;
+  const desc = m.description || `Найди пару «${m.title}»: ${pairsText(n)} «термин — определение» по бухгалтерскому учёту.`;
+  const data = { id: m.id, p: enc(JSON.stringify(m.pairs.map((p) => [String(p.term), String(p.definition)]))) };
+  return gameShell(m, {
+    kind: 'Найди пару', desc, size: pairsText(n), data, script: 'match.js', body: `
+      ${m.description ? `<p class="cw__desc">${esc(m.description)}</p>` : ''}
+      <div class="mt"><noscript><p>Для игры нужен включённый JavaScript.</p></noscript></div>`,
+  });
+}
+
 // the page around a game: the same head, header, back link and footer for every kind
 function gameShell(g, { kind, desc, size, data, script, body }) {
   const d = discOf(g.discipline);
@@ -441,7 +464,7 @@ function gameShell(g, { kind, desc, size, data, script, body }) {
 <div class="cwp">
   <div class="wrap">
     <p class="wpage__back"><a class="tlink" href="../games.html">← Все игры</a></p>
-    <article class="cw${kind === 'Викторина' ? ' cw--quiz' : ''}" aria-labelledby="cw-h">
+    <article class="cw${kind === 'Кроссворд' ? '' : ' cw--quiz'}" aria-labelledby="cw-h">
       <header class="cw__head">
         <h1 id="cw-h">${kind} · ${esc(g.title)}</h1>
         <p class="cw__meta">${d ? `<span class="code num">${esc(d.code)}</span>` : ''}<span>${size}</span></p>
@@ -465,11 +488,13 @@ function gameShell(g, { kind, desc, size, data, script, body }) {
 if (existsSync(join(ROOT, 'games'))) rmSync(join(ROOT, 'games'), { recursive: true });
 for (const c of crosswords) write(`games/${c.id}.html`, fillPage(gamePage(c), '../'));
 for (const q of quizzes) write(`games/${q.id}.html`, fillPage(quizPage(q), '../'));
-console.log('game pages', crosswords.length + quizzes.length);
+for (const m of matches) write(`games/${m.id}.html`, fillPage(matchPage(m), '../'));
+console.log('game pages', crosswords.length + quizzes.length + matches.length);
 if (existsSync(join(ROOT, 'games.html'))) {
   const games = [
     ...crosswords.map((c) => ({ g: c, kind: 'Кроссворд', pic: gridSvg(c.grid), size: wordsText(c.grid.words.length) })),
     ...quizzes.map((q) => ({ g: q, kind: 'Викторина', pic: ticketSvg, size: questionsText(q.questions.length) })),
+    ...matches.map((m) => ({ g: m, kind: 'Найди пару', pic: pairsSvg, size: pairsText(m.pairs.length) })),
   ].sort((a, b) => String(a.g.title).localeCompare(String(b.g.title), 'ru'));
   const cards = games.length
     ? `<ul class="gcat__list">\n${games.map(({ g, kind, pic, size }, i) => {
@@ -490,6 +515,7 @@ const urls = [
   ...notes.map((n) => `${SITE}news/${n.id}.html`),
   ...crosswords.map((c) => `${SITE}games/${c.id}.html`),
   ...quizzes.map((q) => `${SITE}games/${q.id}.html`),
+  ...matches.map((m) => `${SITE}games/${m.id}.html`),
 ];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -302,3 +302,42 @@ collections:
       - { name: shuffle, label: Перемешивать вопросы и ответы, widget: boolean, default: true }
       - { name: id, label: Адрес страницы, hint: "Латиницей через дефис, например raschety-s-personalom. Не должен совпадать с адресом кроссворда.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
       - *published
+
+  - name: matches
+    label: Найди пару
+    label_singular: игру «Найди пару»
+    description: "Термины слева, определения справа: студент соединяет их нитью. Лучше 5–10 пар."
+    folder: content/matches
+    format: json
+    create: true
+    slug: "{{fields.id}}"
+    identifier_field: title
+    summary: "{{title}}"
+    preview_path: "games/{{fields.id}}.html"
+    sortable_fields: [title]
+    view_filters:
+      - { label: Скрытые с сайта, field: published, pattern: false }
+    fields:
+      - { name: title, label: Тема, hint: "Например: Термины бухгалтерского учёта. На сайте получится «Найди пару · Термины бухгалтерского учёта».", widget: string }
+      - name: discipline
+        label: Дисциплина
+        required: false
+        widget: relation
+        collection: disciplines
+        value_field: id
+        search_fields: [name, code]
+        display_fields: [name, code]
+      - { name: description, label: Описание, hint: "Одно-два предложения: что соединяем и зачем.", widget: text, required: false }
+      - name: pairs
+        label: Пары
+        label_singular: пару
+        hint: "Слева короткое: термин, номер счёта, название коэффициента. Справа его определение или формула."
+        widget: list
+        summary: "{{term}} — {{definition}}"
+        min: 2
+        max: 12
+        fields:
+          - { name: term, label: Термин, widget: string }
+          - { name: definition, label: Определение, widget: string }
+      - { name: id, label: Адрес страницы, hint: "Латиницей через дефис, например terminy-ucheta. Не должен совпадать с адресом другой игры.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
+      - *published
