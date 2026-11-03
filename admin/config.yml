@@ -430,3 +430,65 @@ collections:
       - { name: explain, label: Пояснение, hint: "Показывается, когда всё разложено верно: на что обратить внимание.", widget: text, required: false }
       - { name: id, label: Адрес страницы, hint: "Латиницей через дефис, например klassifikaciya-schetov. Не должен совпадать с адресом другой игры.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
       - *published
+
+  - name: tests
+    label: Тесты по дисциплинам
+    label_singular: тест
+    description: "Тест с оценкой: студент отвечает на вопросы по одному, с таймером, в конце видит оценку, разбор ошибок и бланк результата. Можно завести банк вопросов побольше — каждому студенту достанется свой набор."
+    folder: content/tests
+    format: json
+    create: true
+    slug: "{{fields.id}}"
+    identifier_field: title
+    summary: "{{title}}"
+    preview_path: "tests/{{fields.id}}.html"
+    sortable_fields: [title, discipline]
+    view_filters:
+      - { label: Скрытые с сайта, field: published, pattern: false }
+    view_groups:
+      - { label: Дисциплина, field: discipline }
+    fields:
+      - { name: title, label: Тема теста, hint: "Например: НДФЛ и страховые взносы.", widget: string }
+      - name: discipline
+        label: Дисциплина
+        widget: relation
+        collection: disciplines
+        value_field: id
+        search_fields: [name, code]
+        display_fields: [name, code]
+      - { name: description, label: Описание, hint: "Одно-два предложения: что проверяет тест.", widget: text, required: false }
+      - { name: minutes, label: "Время на тест, минут", hint: "0 — без ограничения времени.", widget: number, value_type: int, min: 0, max: 180, default: 20 }
+      - { name: count, label: Сколько вопросов давать, hint: "Если вопросов в банке больше, каждому студенту достанется случайный набор такого размера. Пусто — все вопросы.", widget: number, value_type: int, min: 1, required: false }
+      - { name: five, label: "Оценка «5» — от, %", widget: number, value_type: int, min: 1, max: 100, default: 90 }
+      - { name: four, label: "Оценка «4» — от, %", widget: number, value_type: int, min: 1, max: 100, default: 75 }
+      - { name: three, label: "Оценка «3» — от, %", hint: "Меньше — «2».", widget: number, value_type: int, min: 1, max: 100, default: 60 }
+      - name: questions
+        label: Вопросы
+        label_singular: вопрос
+        summary: "{{question}}"
+        widget: list
+        min: 2
+        fields:
+          - name: type
+            label: Тип вопроса
+            widget: select
+            default: one
+            options:
+              - { label: Один верный ответ, value: one }
+              - { label: Несколько верных ответов, value: many }
+              - { label: Ввести ответ с клавиатуры, value: text }
+          - { name: question, label: Вопрос, widget: text }
+          - name: options
+            label: Варианты ответа
+            label_singular: вариант
+            hint: "Для вопросов с выбором. Отметьте верные — тест перемешает варианты сам."
+            widget: list
+            required: false
+            summary: "{{text}}"
+            fields:
+              - { name: text, label: Вариант, widget: string }
+              - { name: correct, label: Верный, widget: boolean, default: false }
+          - { name: answer, label: Верный ответ для ввода, hint: "Для вопросов с вводом. Несколько допустимых ответов — через точку с запятой: 13; 13%. Регистр, пробелы и буква ё не важны.", widget: string, required: false }
+          - { name: explain, label: Пояснение, hint: "Показывается в разборе после теста.", widget: text, required: false }
+      - { name: id, label: Адрес страницы, hint: "Латиницей через дефис, например ndfl-i-vznosy.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
+      - *published

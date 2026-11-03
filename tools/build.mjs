@@ -5,8 +5,8 @@
 //     marking the current section from <body data-page="…">;
 //  2. writes works/<id>.html for every published work, news/<id>.html for every published note,
 //     games/<id>.html for every published game (crossword, quiz, «Найди пару», «Расставь по порядку»,
-//     «Разложи по корзинам»)
-//     and the list of games in games.html;
+//     «Разложи по корзинам») and the list of games in games.html; tests/<id>.html for every published
+//     test and the list of tests by discipline in tests.html;
 //  3. writes sitemap.xml.
 // Run it after changing a partial or anything in content/; the GitHub Action runs it on every push.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync, existsSync, statSync } from 'node:fs';
@@ -38,7 +38,9 @@ const putData = (name, obj) => {
 };
 if (existsSync(join(ROOT, 'content'))) {
   putData('works', { works: entries('content/works').sort(byYear) });
-  putData('materials', { disciplines: entries('content/disciplines').sort(byOrder), materials: entries('content/materials').sort(byOrder) });
+  const testCounts = {};
+  for (const t of entries('content/tests')) if (t.published !== false && t.discipline) testCounts[t.discipline] = (testCounts[t.discipline] || 0) + 1;
+  putData('materials', { disciplines: entries('content/disciplines').sort(byOrder), materials: entries('content/materials').sort(byOrder), tests: testCounts });
   putData('achievements', {
     category: existsSync(join(ROOT, 'content/category.json')) ? JSON.parse(read('content/category.json')) : {},
     awards: entries('content/awards').sort(byYear),
@@ -52,12 +54,13 @@ if (existsSync(join(ROOT, 'content'))) {
     orders: entries('content/orders').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
     sorts: entries('content/sorts').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')),
   });
+  putData('tests', { tests: entries('content/tests').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')) });
 }
 
 const header = read('partials/header.html');
 const footer = read('partials/footer.html');
 // which header group holds which page
-const GROUPS = { about: ['achievements'], students: ['materials', 'success', 'games'] };
+const GROUPS = { about: ['achievements'], students: ['materials', 'success', 'games', 'tests'] };
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -65,7 +68,7 @@ function renderPartial(src, { root, page }) {
   let out = src.replaceAll('{{root}}', root);
   // links to sections of the main page stay inside the page when we are on it
   if (page === 'home') out = out.replaceAll('href="index.html#', 'href="#').replaceAll('href="index.html"', 'href="#top"');
-  const key = { work: 'works', note: 'news', game: 'games' }[page] || page;
+  const key = { work: 'works', note: 'news', game: 'games', test: 'tests' }[page] || page;
   out = out.replaceAll(`data-key="${key}"`, `data-key="${key}" aria-current="page"`);
   for (const [group, keys] of Object.entries(GROUPS)) {
     if (keys.includes(key)) out = out.replaceAll(`data-group="${group}"`, `data-group="${group}" data-current`);
@@ -480,9 +483,9 @@ function sortPage(s) {
 }
 
 // the page around a game: the same head, header, back link and footer for every kind
-function gameShell(g, { kind, desc, size, data, script, body }) {
+function gameShell(g, { kind, desc, size, data, script, body, dir = 'games', back = ['games.html', 'Все игры'], pageKey = 'game', cls }) {
   const d = discOf(g.discipline);
-  const url = `${SITE}games/${g.id}.html`;
+  const url = `${SITE}${dir}/${g.id}.html`;
   return `<!doctype html>
 <html lang="ru">
 <head>
@@ -508,15 +511,15 @@ function gameShell(g, { kind, desc, size, data, script, body }) {
 <link rel="stylesheet" href="../css/kit.css">
 <link rel="stylesheet" href="../css/games.css">
 </head>
-<body id="top" data-page="game">
+<body id="top" data-page="${pageKey}">
 <!-- @header -->
 <!-- /@header -->
 
 <main>
 <div class="cwp">
   <div class="wrap">
-    <p class="wpage__back"><a class="tlink" href="../games.html">← Все игры</a></p>
-    <article class="cw${kind === 'Кроссворд' ? '' : ' cw--quiz'}" aria-labelledby="cw-h">
+    <p class="wpage__back"><a class="tlink" href="../${back[0]}">← ${back[1]}</a></p>
+    <article class="${cls || `cw${kind === 'Кроссворд' ? '' : ' cw--quiz'}`}" aria-labelledby="cw-h">
       <header class="cw__head">
         <h1 id="cw-h">${kind} · ${esc(g.title)}</h1>
         <p class="cw__meta">${d ? `<span class="code num">${esc(d.code)}</span>` : ''}<span>${size}</span></p>
@@ -564,6 +567,66 @@ if (existsSync(join(ROOT, 'games.html'))) {
   if (out !== html) { write('games.html', out); console.log('page games.html (list)'); }
 }
 
+// 2d. tests by discipline: one page per test in tests/, and their cards in tests.html grouped by discipline
+const minutesText = (n) => `${n} ${plural(n, 'минута', 'минуты', 'минут')}`;
+const tests = (existsSync(join(ROOT, 'data/tests.json')) ? (JSON.parse(read('data/tests.json')).tests || []) : [])
+  .filter((t) => t && t.title && t.id && /^[a-z0-9-]+$/.test(t.id) && t.published !== false)
+  .map((t) => ({ ...t, questions: (t.questions || []).map((q) => {
+    const text = String((q && q.question) || '').trim();
+    const opts = ((q && q.options) || []).map((o) => [String((o && o.text) || '').trim(), !!(o && o.correct)]).filter((o) => o[0]);
+    const answers = String((q && q.answer) || '').split(';').map((a) => a.trim()).filter(Boolean);
+    const right = opts.filter((o) => o[1]).length;
+    // the type follows what was filled in: an answer to type, one right option, or several
+    const type = q && q.type === 'text' ? 'text' : right > 1 || (q && q.type === 'many') ? 'many' : 'one';
+    const ok = type === 'text' ? answers.length > 0 : opts.length >= 2 && right >= 1;
+    return ok && text ? { q: text, t: type, o: type === 'text' ? [] : opts, a: type === 'text' ? answers : [], e: String((q && q.explain) || '').trim() } : null;
+  }).filter(Boolean) }))
+  .filter((t) => t.questions.length >= 2);
+// how many questions one attempt draws from the bank
+const testCount = (t) => Math.min(t.questions.length, Number(t.count) > 0 ? Number(t.count) : t.questions.length);
+const testMinutes = (t) => Math.max(0, Math.round(Number(t.minutes) || 0));
+const testSize = (t) => [questionsText(testCount(t)), testMinutes(t) ? minutesText(testMinutes(t)) : ''].filter(Boolean).join(' · ');
+
+// the question navigator with a clock beside it, for the test card
+const testSvg = '<svg viewBox="0 0 120 90" aria-hidden="true" focusable="false"><g fill="#f6e3da"><rect x="10" y="14" width="14" height="14"/><rect x="28" y="14" width="14" height="14"/><rect x="10" y="32" width="14" height="14"/><rect x="46" y="32" width="14" height="14"/><rect x="10" y="50" width="14" height="14"/><rect x="28" y="50" width="14" height="14"/><rect x="46" y="50" width="14" height="14"/></g><rect x="46" y="14" width="14" height="14" fill="#d9a441"/><rect x="28" y="32" width="14" height="14" fill="#e3b9a7"/><rect x="10" y="68" width="50" height="8" fill="#e3b9a7"/><circle cx="90" cy="40" r="20" fill="none" stroke="#f6e3da" stroke-width="3"/><path d="M90 28 V40 L99 46" fill="none" stroke="#d9a441" stroke-width="3" stroke-linecap="round"/></svg>';
+
+function testPage(t) {
+  const n = testCount(t), min = testMinutes(t);
+  const d = discOf(t.discipline);
+  const desc = t.description || `Тест «${t.title}»${d ? ` по дисциплине «${d.name}»` : ''}: ${testSize(t)}.`;
+  const g = [Number(t.five) || 90, Number(t.four) || 75, Number(t.three) || 60];
+  const data = { id: t.id, q: enc(JSON.stringify(t.questions)), n, min, g, title: t.title, disc: d ? [d.code, d.name].filter(Boolean).join(' · ') : '' };
+  return gameShell(t, {
+    kind: 'Тест', desc, size: testSize(t), data, script: 'test.js', dir: 'tests', back: [d ? `tests.html#t-${d.id}` : 'tests.html', 'Все тесты'], pageKey: 'test', cls: 'cw cw--quiz ts-page', body: `
+      ${t.description ? `<p class="cw__desc">${esc(t.description)}</p>` : ''}
+      <div class="ts"><noscript><p>Для теста нужен включённый JavaScript.</p></noscript></div>`,
+  });
+}
+
+if (existsSync(join(ROOT, 'tests'))) rmSync(join(ROOT, 'tests'), { recursive: true });
+for (const t of tests) write(`tests/${t.id}.html`, fillPage(testPage(t), '../'));
+console.log('test pages', tests.length);
+if (existsSync(join(ROOT, 'tests.html'))) {
+  // one section per discipline that has tests, in the order of the disciplines; when there are several,
+  // chips at the top jump to them
+  const groups = [...disciplines, { id: '', name: 'Другие тесты' }]
+    .map((d) => ({ d, list: tests.filter((t) => (d.id ? t.discipline === d.id : !discOf(t.discipline))).sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')) }))
+    .filter((x) => x.list.length);
+  let i = 0;
+  const body = groups.length
+    ? `${groups.length > 1 ? `<nav class="tnav" aria-label="Дисциплины">${groups.map(({ d }) => `<a href="#t-${d.id || 'other'}">${esc(d.code || d.name)}</a>`).join('')}</nav>` : ''}
+${groups.map(({ d, list }) => `      <section class="tdisc" id="t-${d.id || 'other'}" aria-labelledby="t-${d.id || 'other'}-h">
+        <header class="tdisc__head"><h2 id="t-${d.id || 'other'}-h">${esc(d.name)}</h2>${d.code ? `<span class="code num">${esc(d.code)}</span>` : ''}</header>
+        <ul class="gcat__list">
+${list.map((t) => `          <li data-r style="--i:${i++ % 3}"><a class="gcard" href="tests/${t.id}.html"><span class="gcard__pic">${testSvg}</span><span class="gcard__kind">Тест</span><span class="gcard__title">${esc(t.title)}</span><span class="gcard__meta">${esc(testSize(t))}</span></a></li>`).join('\n')}
+        </ul>
+      </section>`).join('\n')}`
+    : '<p class="gcat__empty">Тесты скоро появятся.</p>';
+  const html = read('tests.html');
+  const out = html.replace(/<!-- @tests -->[\s\S]*?<!-- \/@tests -->/, () => `<!-- @tests -->\n      ${body}\n      <!-- /@tests -->`);
+  if (out !== html) { write('tests.html', out); console.log('page tests.html (list)'); }
+}
+
 // 3. sitemap
 const urls = [
   ...pages.filter((f) => f !== '404.html').map((f) => (f === 'index.html' ? SITE : SITE + f)),
@@ -574,6 +637,7 @@ const urls = [
   ...matches.map((m) => `${SITE}games/${m.id}.html`),
   ...orders.map((o) => `${SITE}games/${o.id}.html`),
   ...sorts.map((t) => `${SITE}games/${t.id}.html`),
+  ...tests.map((t) => `${SITE}tests/${t.id}.html`),
 ];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

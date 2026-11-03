@@ -201,5 +201,8 @@
       "published": true,
       "order": 140
     }
-  ]
+  ],
+  "tests": {
+    "budget": 1
+  }
 }
