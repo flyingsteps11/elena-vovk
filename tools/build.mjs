@@ -3,12 +3,14 @@
 //  1. puts partials/header.html and partials/footer.html into every page between
 //     <!-- @header --> … <!-- /@header --> and <!-- @footer --> … <!-- /@footer -->,
 //     marking the current section from <body data-page="…">;
-//  2. writes works/<id>.html for every published work and news/<id>.html for every published note;
+//  2. writes works/<id>.html for every published work, news/<id>.html for every published note,
+//     games/<id>.html for every published crossword and the list of games in games.html;
 //  3. writes sitemap.xml.
 // Run it after changing a partial or anything in content/; the GitHub Action runs it on every push.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync, existsSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { layoutCrossword } from './crossword.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://elena-vovk.netlify.app/';
@@ -41,12 +43,13 @@ if (existsSync(join(ROOT, 'content'))) {
   });
   putData('student-success', { items: entries('content/success').sort(byYear) });
   putData('news', { news: entries('content/news').sort((a, b) => String(b.date).localeCompare(String(a.date))) });
+  putData('games', { crosswords: entries('content/crosswords').sort((a, b) => String(a.title).localeCompare(String(b.title), 'ru')) });
 }
 
 const header = read('partials/header.html');
 const footer = read('partials/footer.html');
 // which header group holds which page
-const GROUPS = { about: ['achievements'], students: ['materials', 'success'] };
+const GROUPS = { about: ['achievements'], students: ['materials', 'success', 'games'] };
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -54,7 +57,7 @@ function renderPartial(src, { root, page }) {
   let out = src.replaceAll('{{root}}', root);
   // links to sections of the main page stay inside the page when we are on it
   if (page === 'home') out = out.replaceAll('href="index.html#', 'href="#').replaceAll('href="index.html"', 'href="#top"');
-  const key = { work: 'works', note: 'news' }[page] || page;
+  const key = { work: 'works', note: 'news', game: 'games' }[page] || page;
   out = out.replaceAll(`data-key="${key}"`, `data-key="${key}" aria-current="page"`);
   for (const [group, keys] of Object.entries(GROUPS)) {
     if (keys.includes(key)) out = out.replaceAll(`data-group="${group}"`, `data-group="${group}" data-current`);
@@ -308,11 +311,139 @@ if (existsSync(join(ROOT, 'news'))) rmSync(join(ROOT, 'news'), { recursive: true
 notes.forEach((n, i) => write(`news/${n.id}.html`, fillPage(notePage(n, i), '../')));
 console.log('news pages', notes.length);
 
+// 2c. one page per crossword, and their cards in games.html
+const disciplines = existsSync(join(ROOT, 'data/materials.json')) ? (JSON.parse(read('data/materials.json')).disciplines || []) : [];
+const discOf = (id) => disciplines.find((d) => d.id === id);
+const plural = (n, one, few, many) => (n % 10 === 1 && n % 100 !== 11 ? one : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? few : many);
+const wordsText = (n) => `${n} ${plural(n, 'слово', 'слова', 'слов')}`;
+// answers travel base64-encoded: the page source does not give them away at a glance
+const enc = (s) => Buffer.from(s, 'utf8').toString('base64');
+const cellOf = (w, k) => (w.x + (w.dir === 'down' ? 0 : k)) + ',' + (w.y + (w.dir === 'down' ? k : 0));
+const crosswords = (existsSync(join(ROOT, 'data/games.json')) ? (JSON.parse(read('data/games.json')).crosswords || []) : [])
+  .filter((c) => c && c.title && c.id && /^[a-z0-9-]+$/.test(c.id) && c.published !== false)
+  .map((c) => ({ ...c, grid: layoutCrossword(c.words, c.variant) }))
+  .filter((c) => c.grid && c.grid.words.length >= 2);
+for (const c of crosswords) if (c.grid.skipped.length) console.log(`crossword ${c.id}: did not fit:`, c.grid.skipped.join(', '));
+
+// a small picture of the grid for the catalog card
+const gridSvg = (g) => {
+  const set = new Set();
+  g.words.forEach((w) => { for (let k = 0; k < w.answer.length; k++) set.add(cellOf(w, k)); });
+  const rects = [...set].map((p) => { const [x, y] = p.split(','); return `<rect x="${x}" y="${y}" width="1" height="1"/>`; }).join('');
+  return `<svg viewBox="-0.2 -0.2 ${g.width + 0.4} ${g.height + 0.4}" aria-hidden="true" focusable="false"><g fill="#f6e3da" stroke="#351a2b" stroke-width=".08">${rects}</g></svg>`;
+};
+
+function gamePage(c) {
+  const g = c.grid, d = discOf(c.discipline), n = g.words.length;
+  const desc = c.description || `Кроссворд «${c.title}»: ${wordsText(n)} по бухгалтерскому учёту.`;
+  const url = `${SITE}games/${c.id}.html`;
+  const num = new Map();
+  const labels = new Map();
+  g.words.forEach((w) => {
+    if (!num.has(w.x + ',' + w.y)) num.set(w.x + ',' + w.y, w.n);
+    for (let k = 0; k < w.answer.length; k++) {
+      const p = cellOf(w, k);
+      if (!labels.has(p)) labels.set(p, []);
+      labels.get(p).push(`${w.n} ${w.dir === 'down' ? 'по вертикали' : 'по горизонтали'}, буква ${k + 1} из ${w.answer.length}`);
+    }
+  });
+  let cells = '';
+  for (let y = 0; y < g.height; y++) {
+    for (let x = 0; x < g.width; x++) {
+      const p = x + ',' + y;
+      if (!labels.has(p)) { cells += '<span class="cw__x"></span>'; continue; }
+      const nn = num.get(p);
+      cells += `<span class="cw__c" data-x="${x}" data-y="${y}">${nn ? `<span class="cw__n">${nn}</span>` : ''}<input maxlength="2" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="next" aria-label="${esc(labels.get(p).join('; '))}"></span>`;
+    }
+  }
+  const list = (dir, title) => {
+    const ws = g.words.map((w, i) => ({ ...w, i })).filter((w) => w.dir === dir);
+    return ws.length ? `<section><h2>${title}</h2><ol>${ws.map((w) => `<li data-w="${w.i}"><b>${w.n}.</b> ${esc(w.clue)} <span class="len">(${w.answer.length})</span></li>`).join('')}</ol></section>` : '';
+  };
+  const data = { id: c.id, words: g.words.map((w) => ({ n: w.n, dir: w.dir, x: w.x, y: w.y, a: enc(w.answer), clue: w.clue })) };
+  return `<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#351a2b">
+<title>Кроссворд «${esc(c.title)}» — Е. А. Вовк</title>
+<meta name="description" content="${esc(desc)}">
+<link rel="canonical" href="${url}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Кроссворд «${esc(c.title)}»">
+<meta property="og:description" content="${esc(desc)}">
+<meta property="og:url" content="${url}">
+<meta property="og:image" content="${SITE}og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 fill=%22%23351a2b%22/%3E%3Ctext x=%2232%22 y=%2247%22 font-family=%22Georgia,serif%22 font-size=%2244%22 text-anchor=%22middle%22 fill=%22%23edccbe%22%3EВ%3C/text%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__pageReady)document.documentElement.classList.remove('js')},2500)</script>
+<link rel="preload" href="../fonts/vollkorn-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/vollkorn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/literata-digits.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/kit.css">
+<link rel="stylesheet" href="../css/games.css">
+</head>
+<body id="top" data-page="game">
+<!-- @header -->
+<!-- /@header -->
+
+<main>
+<div class="cwp">
+  <div class="wrap">
+    <p class="wpage__back"><a class="tlink" href="../games.html">← Все игры</a></p>
+    <article class="cw" aria-labelledby="cw-h">
+      <header class="cw__head">
+        <h1 id="cw-h">Кроссворд · ${esc(c.title)}</h1>
+        <p class="cw__meta">${d ? `<span class="code num">${esc(d.code)}</span>` : ''}<span>${wordsText(n)}</span></p>
+      </header>
+      ${c.description ? `<p class="cw__desc">${esc(c.description)}</p>` : ''}
+      <div class="cw__card"><button type="button" data-act="prev" aria-label="Предыдущая подсказка">‹</button><div><span class="cw__no"></span><p class="cw__q" aria-live="polite"></p></div><button type="button" data-act="next" aria-label="Следующая подсказка">›</button></div>
+      <div class="cw__board" style="--w:${g.width}"><div class="cw__grid">${cells}</div></div>
+      <div class="cw__prog" aria-hidden="true">${g.words.map(() => '<i></i>').join('')}</div>
+      <details class="cw__clues" open><summary>Все подсказки</summary>${list('across', 'По горизонтали')}${list('down', 'По вертикали')}</details>
+      <div class="cw__bar"><button class="btn" type="button" data-act="check">Проверить</button><button class="btn btn--light" type="button" data-act="hint">Открыть букву</button><button class="btn btn--light" type="button" data-act="reset">Начать заново</button><p class="cw__status" role="status">Разгадано 0 из ${n}</p></div>
+      <p class="cw__done" hidden>Кроссворд разгадан! Все ${wordsText(n)} на месте.</p>
+    </article>
+  </div>
+</div>
+</main>
+
+<!-- @footer -->
+<!-- /@footer -->
+
+<script type="application/json" id="cw-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>
+<script src="../js/base.js"></script>
+<script src="../js/crossword.js"></script>
+</body>
+</html>
+`;
+}
+
+if (existsSync(join(ROOT, 'games'))) rmSync(join(ROOT, 'games'), { recursive: true });
+for (const c of crosswords) write(`games/${c.id}.html`, fillPage(gamePage(c), '../'));
+console.log('game pages', crosswords.length);
+if (existsSync(join(ROOT, 'games.html'))) {
+  const cards = crosswords.length
+    ? `<ul class="gcat__list">\n${crosswords.map((c, i) => {
+      const d = discOf(c.discipline);
+      const meta = [d && d.code, wordsText(c.grid.words.length)].filter(Boolean).map(esc).join(' · ');
+      return `        <li data-r style="--i:${i}"><a class="gcard" href="games/${c.id}.html"><span class="gcard__pic">${gridSvg(c.grid)}</span><span class="gcard__kind">Кроссворд</span><span class="gcard__title">${esc(c.title)}</span><span class="gcard__meta">${meta}</span></a></li>`;
+    }).join('\n')}\n      </ul>`
+    : '<p class="gcat__empty">Игры скоро появятся.</p>';
+  const html = read('games.html');
+  const out = html.replace(/<!-- @games -->[\s\S]*?<!-- \/@games -->/, () => `<!-- @games -->\n      ${cards}\n      <!-- /@games -->`);
+  if (out !== html) { write('games.html', out); console.log('page games.html (list)'); }
+}
+
 // 3. sitemap
 const urls = [
   ...pages.filter((f) => f !== '404.html').map((f) => (f === 'index.html' ? SITE : SITE + f)),
   ...works.map((w) => `${SITE}works/${w.id}.html`),
   ...notes.map((n) => `${SITE}news/${n.id}.html`),
+  ...crosswords.map((c) => `${SITE}games/${c.id}.html`),
 ];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

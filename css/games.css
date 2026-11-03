@@ -1,0 +1,91 @@
+/* Games: the catalog (games.html) and the crossword pages (games/<id>.html).
+   Desktop: a newspaper sheet, the grid beside both lists of clues.
+   Phone: one clue at a time on a card above the grid, a word-by-word progress strip. */
+
+/* catalog */
+.gcat{background:var(--field-1);color:var(--field-1-ink);padding-block:clamp(28px,3vw,48px) var(--gap-section)}
+.gcat__card{background:var(--paper);color:var(--ink)}
+.gcat__head{display:flex;flex-direction:column;gap:18px;padding:clamp(32px,4vw,56px) clamp(24px,4vw,64px) clamp(24px,3vw,40px)}
+.gcat__head h1{font-size:var(--step-head);line-height:1}
+.gcat__lead{max-width:56ch;font-size:var(--step-lead);line-height:1.35}
+.gcat__list{list-style:none;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px;padding:0 clamp(24px,4vw,64px) clamp(32px,4vw,64px)}
+.gcard{display:flex;flex-direction:column;gap:14px;height:100%;padding:18px 18px 22px;background:var(--tone-4);color:var(--ink);text-decoration:none;transition:transform var(--t-ui) var(--ease-out),background-color var(--t-hover) ease}
+.gcard__pic{display:grid;place-items:center;aspect-ratio:4/3;background:var(--ink);padding:18px}
+.gcard__pic svg{width:100%;height:100%}
+.gcard__kind{align-self:flex-start;background:var(--ink);color:var(--accent-ink);padding:3px 9px;font-size:var(--step-small)}
+.gcard__title{font-size:var(--step-lead);line-height:1.2;font-weight:500;text-wrap:balance}
+.gcard__meta{margin-top:auto;font-size:var(--step-small);color:var(--muted)}
+.gcard:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+@media (hover:hover){.gcard:hover{transform:translateY(-6px);background:var(--tone-3)}}
+.gcat__empty{padding:0 clamp(24px,4vw,64px) clamp(32px,4vw,64px)}
+
+/* crossword page */
+.cwp{background:var(--field-1);color:var(--field-1-ink);padding-block:clamp(28px,3vw,48px) var(--gap-section)}
+.cw{--cell:38px;background:#fbf1ea;color:var(--ink);padding:clamp(24px,3vw,40px) clamp(20px,3vw,44px) clamp(28px,3vw,44px);display:grid;grid-template-columns:auto minmax(0,1fr);gap:32px clamp(28px,3vw,48px);align-items:start}
+.cw__head{grid-column:1 / -1;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:10px 24px;padding-bottom:16px;border-bottom:5px dotted var(--ink)}
+.cw__head h1{font-size:clamp(2rem,1.3rem + 2.2vw,3.25rem);line-height:1.03;text-wrap:balance}
+.cw__meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:var(--step-small);color:var(--muted)}
+.cw__desc{grid-column:1 / -1;max-width:60ch;margin-top:-12px}
+
+/* the board is a size container (cell text scales with it), so its width is set, never taken from the content */
+.cw__board{container-type:inline-size;width:calc(var(--w) * var(--cell));max-width:100%}
+.cw__grid{display:grid;grid-template-columns:repeat(var(--w),1fr)}
+.cw__x{aspect-ratio:1}
+.cw__c{position:relative;aspect-ratio:1;background:#fbf1ea;box-shadow:inset 0 0 0 1px var(--ink);margin:0 -1px -1px 0}
+.cw__n{position:absolute;left:3px;top:1px;font-size:calc(100cqi / var(--w) * .26);line-height:1;color:var(--muted);pointer-events:none}
+.cw__c input{display:block;width:100%;height:100%;padding:8% 0 0;border:0;background:transparent;color:var(--ink);font:inherit;font-weight:500;font-size:calc(100cqi / var(--w) * .56);text-align:center;text-transform:uppercase;caret-color:transparent;border-radius:0;outline:0;cursor:pointer}
+.cw__c.hl{background:#f0d4c7}
+.cw__c.cur{background:var(--tone-3)}
+.cw__c.cur::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 3px var(--ink);pointer-events:none}
+.cw__c.bad input{color:#a5566a;text-decoration:line-through}
+.cw__c.given input{color:var(--muted)}
+
+.cw__clues{columns:2 220px;column-gap:28px;font-size:var(--step-small);line-height:1.45}
+.cw__clues summary{display:none}
+.cw__clues h2{font-size:var(--step-body);margin:0 0 8px;break-after:avoid}
+.cw__clues section+section{margin-top:18px}
+.cw__clues ol{list-style:none;margin:0;padding:0}
+.cw__clues li{break-inside:avoid;margin:0 0 4px;padding:3px 6px;cursor:pointer;transition:background-color var(--t-hover) ease}
+.cw__clues li b{font-weight:600}
+.cw__clues li .len{color:var(--muted)}
+.cw__clues li.act{background:#f0d4c7}
+.cw__clues li.ok{color:var(--muted);text-decoration:line-through;text-decoration-color:rgb(53 26 43 / 35%)}
+@media (hover:hover){.cw__clues li:hover{background:var(--tone-4)}}
+
+.cw__bar{grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.cw__status{margin-left:auto;font-size:var(--step-body)}
+.cw__done{grid-column:1 / -1;background:var(--ink);color:var(--accent-ink);padding:18px 22px;font-size:var(--step-lead)}
+.cw__done[hidden]{display:none}
+
+/* the phone card and the progress strip exist only on narrow screens */
+.cw__card,.cw__prog{display:none}
+
+@media (max-width:760px){
+  .cwp{padding-top:16px}
+  .cwp .wrap{padding-inline:0}
+  .cwp .wpage__back{padding-inline:var(--m)}
+  .cw{background:var(--field-1);color:var(--field-1-ink);grid-template-columns:minmax(0,1fr);gap:18px;padding:0 var(--m) 32px}
+  .cw__head{border-bottom-color:var(--accent-ink)}
+  .cw__meta{color:var(--accent-ink)}
+  .cw__meta .code{background:var(--accent-ink);color:var(--ink)}
+  .cw__card{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:4px;position:sticky;top:68px;z-index:2;background:var(--paper);color:var(--ink);padding:12px 4px 14px;transform:rotate(-1deg);box-shadow:0 7px 0 #24111d}
+  .cw__card button{width:44px;height:44px;border:0;background:none;color:var(--ink);font:inherit;font-size:28px;line-height:1;cursor:pointer}
+  .cw__no{justify-self:start;display:inline-block;background:var(--ink);color:var(--accent-ink);padding:4px 9px;font-size:var(--step-small)}
+  .cw__q{margin:6px 0 0;font-size:var(--step-body);line-height:1.3}
+  .cw__board{justify-self:center}
+  .cw__c{background:var(--paper)}
+  .cw__c.hl{background:var(--accent-ink)}
+  .cw__c.cur{background:#d9a441}
+  .cw__prog{display:flex;gap:4px}
+  .cw__prog i{flex:1;height:8px;background:#5a3a4d;transition:background-color var(--t-ui) ease}
+  .cw__prog i.ok{background:#d9a441}
+  .cw__clues{order:9;columns:1;background:var(--paper);color:var(--ink);padding:14px 18px}
+  .cw__clues summary{display:list-item;cursor:pointer;font-weight:500}
+  .cw__clues[open] summary{margin-bottom:12px}
+  .cw__bar{justify-content:center}
+  .cw__bar .btn{flex:1 1 auto;min-height:48px;padding:0 16px}
+  .cw__bar .btn:not(.btn--light){background:#d9a441;color:var(--ink)}
+  .cw__bar .btn:not(.btn--light)::before{background:#e6b85c}
+  .cw__status{margin:0;width:100%;text-align:center}
+  .cw__done{background:#d9a441;color:var(--ink)}
+}

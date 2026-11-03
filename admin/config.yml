@@ -214,3 +214,41 @@ collections:
       - { name: text, label: Текст, hint: "Абзацы разделяйте пустой строкой. Первый абзац виден сразу.", widget: text }
       - { name: image, label: Фото, widget: image, required: false }
       - *published
+
+  - name: crosswords
+    label: Кроссворды
+    label_singular: кроссворд
+    description: "Кроссворды для раздела «Игры». Сетка собирается сама из слов и подсказок: лучше 8–15 слов с общими буквами."
+    folder: content/crosswords
+    format: json
+    create: true
+    slug: "{{fields.id}}"
+    identifier_field: title
+    summary: "{{title}}"
+    preview_path: "games/{{fields.id}}.html"
+    sortable_fields: [title]
+    view_filters:
+      - { label: Скрытые с сайта, field: published, pattern: false }
+    fields:
+      - { name: title, label: Тема кроссворда, hint: "Например: Основы бухгалтерского учёта. На сайте получится «Кроссворд · Основы бухгалтерского учёта».", widget: string }
+      - name: discipline
+        label: Дисциплина
+        required: false
+        widget: relation
+        collection: disciplines
+        value_field: id
+        search_fields: [name, code]
+        display_fields: [name, code]
+      - { name: description, label: Описание, hint: "Одно-два предложения: о чём кроссворд и когда его разгадывать.", widget: text, required: false }
+      - name: words
+        label: Слова и подсказки
+        label_singular: слово
+        widget: list
+        summary: "{{answer}} — {{clue}}"
+        min: 2
+        fields:
+          - { name: answer, label: Слово, hint: "Одно слово, без пробелов. Ё и Е считаются одной буквой.", widget: string, pattern: ['^[А-Яа-яЁёA-Za-z]{2,}$', 'Только буквы, одно слово без пробелов'] }
+          - { name: clue, label: Подсказка, widget: string }
+      - { name: variant, label: Вариант сетки, hint: "Если сетка не понравилась или какое-то слово не встало, поставьте другое число (2, 3…) и опубликуйте снова.", widget: number, value_type: int, default: 1, min: 1 }
+      - { name: id, label: Адрес страницы, hint: "Латиницей через дефис, например osnovy-ucheta. Получится адрес games/osnovy-ucheta.html.", widget: string, pattern: ['^[a-z0-9-]+$', 'Только строчные латинские буквы, цифры и дефис'] }
+      - *published
