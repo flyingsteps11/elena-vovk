@@ -4,8 +4,8 @@
 # to GitHub Pages (.github/workflows/pages.yml), Netlify builds its own copy the same way (netlify.toml).
 
 locale: ru
-site_url: https://flyingsteps11.github.io/elena-vovk/
-display_url: https://flyingsteps11.github.io/elena-vovk/
+site_url: https://vovk-elena.github.io/
+display_url: https://vovk-elena.github.io/
 logo_url: /admin/logo.svg
 
 backend:

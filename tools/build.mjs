@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 import { layoutCrossword } from './crossword.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const SITE = 'https://flyingsteps11.github.io/elena-vovk/';
+const SITE = 'https://vovk-elena.github.io/';
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 const write = (p, s) => { mkdirSync(dirname(join(ROOT, p)), { recursive: true }); writeFileSync(join(ROOT, p), s); };
 
