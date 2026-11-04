@@ -2,7 +2,7 @@
 
 Статический сайт Елены Александровны Вовк, преподавателя Ровеньковского технико-экономического колледжа: работы, материалы к занятиям, успехи студентов, достижения, новости, учебные игры и тесты по дисциплинам.
 
-- Сайт: https://elena-vovk.netlify.app
+- Сайт: https://flyingsteps11.github.io/elena-vovk/ (GitHub Pages), запасной адрес — https://elena-vovk.netlify.app
 - Редактор (Decap CMS): https://elena-vovk.netlify.app/admin/
 - Справка редактора: [`admin/help.html`](admin/help.html) — открывается кнопкой «? Справка» в редакторе
 - Справка для студентов: [`help.html`](help.html) — ссылка «Как пользоваться сайтом» в подвале
@@ -55,12 +55,23 @@ sitemap.xml
 
 Через редактор меняются только разделы из `admin/config.yml`. Тексты главной страницы, меню, подвал, оформление и страница 404 — в коде.
 
-## Хостинг: Netlify
+## Хостинг: GitHub Pages (сайт) и Netlify (редактор и запасной адрес)
 
-- Сборка: `node tools/build.mjs`, публикуется корень репозитория (`netlify.toml`). Каждый push в `main` и каждое сохранение в редакторе запускают сборку; через 1–2 минуты изменения на сайте.
+Каждый push в `main` и каждое сохранение в редакторе запускают две независимые сборки; через 1–2 минуты изменения на обоих адресах.
+
+### GitHub Pages — основной адрес
+
+- `.github/workflows/pages.yml`: `node tools/build.mjs`, затем в `_site/` копируются только публичные файлы (без `admin/`, `content/`, `tools/`, `partials/`) и публикуются на Pages. Включается один раз: Settings → Pages → Source: **GitHub Actions**.
+- Сайт лежит в подпапке `/elena-vovk/`, поэтому все ссылки в коде относительные (`css/base.css`, а не `/css/base.css`); пути к загрузкам вида `/uploads/…` из редактора страницы превращают в относительные (`safeUrl`, `up`). В `404.html` при публикации `<base href="/">` заменяется на `<base href="/elena-vovk/">`.
+- `/elena-vovk/admin/` на Pages — заглушка, которая переводит в редактор на Netlify с сохранением `#…_token=` из писем.
+- Адрес сайта для canonical, og и sitemap — константа `SITE` в `tools/build.mjs` и `site_url` в `admin/config.yml`; в статических страницах он вписан в `<head>`.
+
+### Netlify — редактор и запасной адрес
+
+- Сборка: `node tools/build.mjs`, публикуется корень репозитория (`netlify.toml`).
 - Заголовки: долгий кэш для `/fonts/*` и `/img/*`; `X-Robots-Tag: noindex` для `/admin/*`.
 - Netlify отдаёт страницы без `.html` (`/tests` вместо `/tests.html`) — ссылки в коде всё равно пишутся с `.html`.
-- `.github/workflows/build.yml` — запасной ручной запуск сборки (только `workflow_dispatch`), на Netlify не влияет.
+- `.github/workflows/build.yml` — ручной запуск сборки с коммитом сгенерированных файлов в репозиторий (только `workflow_dispatch`), на опубликованный сайт не влияет.
 
 ### Вход в редактор: Netlify Identity + Git Gateway
 

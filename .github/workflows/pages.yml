@@ -1,0 +1,60 @@
+# Publishes the site to GitHub Pages (https://flyingsteps11.github.io/elena-vovk/) on every push to main,
+# including each save in the editor. The editor itself stays on Netlify (https://elena-vovk.netlify.app/admin/):
+# its sign-in works only there, and its saves land in this repository, which starts this run.
+# Turned on once in Settings → Pages → Source: GitHub Actions.
+name: Publish to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# runs go one after another, so the newest push is always the one left on the site
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/build.mjs
+      - name: Put together the public files
+        run: |
+          mkdir _site
+          cp -r *.html og.jpg sitemap.xml css js img fonts data uploads works news games tests _site/
+          # GitHub Pages serves this page for any missing address under /elena-vovk/, so its paths start there
+          sed -i 's|<base href="/">|<base href="/elena-vovk/">|' _site/404.html
+          # /admin/ here leads to the editor on Netlify, keeping invite and password-reset links working
+          mkdir _site/admin
+          cat > _site/admin/index.html <<'EOF'
+          <!doctype html>
+          <html lang="ru">
+          <head>
+          <meta charset="utf-8">
+          <meta name="robots" content="noindex">
+          <title>Редактор сайта</title>
+          <script>location.replace('https://elena-vovk.netlify.app/admin/' + location.hash)</script>
+          </head>
+          <body><p>Редактор сайта: <a href="https://elena-vovk.netlify.app/admin/">elena-vovk.netlify.app/admin/</a></p></body>
+          </html>
+          EOF
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4

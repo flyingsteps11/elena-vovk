@@ -1,11 +1,11 @@
-# Editor for the site: Decap CMS on Netlify. Editors sign in with e-mail and password
-# (Netlify Identity, invite only); their saves go to GitHub through Netlify Git Gateway.
-# Every entry is its own file in content/; tools/build.mjs (run by Netlify on every save)
-# joins them into data/<section>.json, which the pages read.
+# Editor for the site: Decap CMS on Netlify (https://elena-vovk.netlify.app/admin/). Editors sign in with e-mail
+# and password (Netlify Identity, invite only); their saves go to GitHub through Netlify Git Gateway.
+# Every entry is its own file in content/; on every save GitHub Actions runs tools/build.mjs and publishes the site
+# to GitHub Pages (.github/workflows/pages.yml), Netlify builds its own copy the same way (netlify.toml).
 
 locale: ru
-site_url: https://elena-vovk.netlify.app
-display_url: https://elena-vovk.netlify.app
+site_url: https://flyingsteps11.github.io/elena-vovk/
+display_url: https://flyingsteps11.github.io/elena-vovk/
 logo_url: /admin/logo.svg
 
 backend:
